@@ -1,0 +1,18 @@
+:root{
+    --DarkestBlue-:#242f3a ;
+    --DarkBlue- : #495867 ;
+    --Blue- : #577399 ;
+    --LightBlue- : #abc7df ;
+    --LightestBlue- : #c7e0f5 ;
+    --LightRed- : #fb5a4f ;
+    --Red- : #d63024 ;
+    --DarkRed- : #811710 ;
+    --WhiteBlue- : #ebebfd ;
+    --White- : #FFFFFF ;
+    --Black- : #000000 ;
+    --DarkGrey- : #3d3d3d ;
+    --Grey- : #7a7a7a ;
+    --LightGrey- : #bdbdbd ;
+    --Transparent-:rgba(255, 255, 255, 0);
+    --Shadow-:rgba(0, 0, 0, 0.219);
+}
