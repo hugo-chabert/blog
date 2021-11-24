@@ -1,0 +1,51 @@
+@import url(root.css);
+
+@import url(font.css);
+
+
+.header{
+    background-color: var(--LightBlue-);
+    padding-top: 1%; padding-left: 1%; padding-right: 1%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.titreHeader{
+    display: flex;
+    justify-content: center;
+    font-size: 400%;
+    font-family: Vogue;
+}
+
+.links{
+    display: flex;
+    flex-direction: row;
+}
+
+.linkHeader{
+    text-decoration: none;
+    color: var(--Black-);
+    margin: 1%;
+}
+
+.linkHeader:hover{
+    color: var(--DarkestBlue-);
+}
+
+
+.gaucheHeader{
+    display: flex;
+    flex-direction: row;
+    font-size: 150%;
+    width: 50%;
+}
+
+.droiteHeader{
+    display: flex;
+    flex-direction: row;
+    font-size: 150%;
+    justify-content: center;
+    justify-content: right;
+    width: 50%;
+}

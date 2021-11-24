@@ -1,0 +1,40 @@
+@import url(root.css);
+
+.footer{
+    width: 100%;
+    margin: 0;
+    background: var(--LightestBlue-);
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.footer1{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 33.333%;
+}
+
+.footer2{
+    width: 33.333%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer3{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 33.333%;
+}
+
+.socialMedia{
+    width: 25px;
+    margin: 3px;
+}
+
+.socialMedia2{
+    width: 40px;
+}
