@@ -25,7 +25,7 @@ a{
     min-height:400px;
     max-height:750px;
     min-width:300px;
-    color:#eee;
+    color: var(--White-);
 }
 
 .header:after{
@@ -50,7 +50,7 @@ a{
     -webkit-transform: translateZ(0); backface-visibility: hidden;
     scale : (1.0, 1.0);
     transform: translateZ(0);
-    background:#1B2030 url(https://images.unsplash.com/photo-1571993142257-eae0b44cf0f1?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ) 50% 0 no-repeat;
+    background:var(--DarkestBlue-) url(https://images.unsplash.com/photo-1571993142257-eae0b44cf0f1?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ) 50% 0 no-repeat;
     background-size:100%;
     background-attachment:fixed;
     animation: grow 360s  linear 10ms infinite;
@@ -59,7 +59,7 @@ a{
 }
 
 .header a{
-    color:#eee
+    color:var(--White-)
 }
 
 
@@ -67,7 +67,7 @@ a{
     width:100%;
     padding:15% 10% 0 10%;
     text-align:center;
-    text-shadow:0 2px 3px rgba(0,0,0,0.2)
+    text-shadow:0 2px 3px var(--Shadow-);
 }
 
 .author{
@@ -82,7 +82,7 @@ a{
 }
 
 .info h1{
-    font-size:300%
+    font-size:500%
 }
 
 
@@ -101,6 +101,7 @@ a{
 .content h1{
     text-align: center;
     font-size: 400%;
+    font-family: Entanglement;
 }
 .contentArticle{
     display: flex;
@@ -112,8 +113,8 @@ a{
     display: flex;
     flex-direction: column ;
     align-items: center;
-    box-shadow:0 2px 3px rgba(0,0,0,0.3);
-    gap: 48px;
+    box-shadow:0 2px 3px var(--Shadow-);
+    gap: 41px;
     width: 30%;
     padding: 1%;
     letter-spacing: 1px;
@@ -122,7 +123,7 @@ a{
     display: flex;
     flex-direction: column ;
     align-items: center;
-    box-shadow:0 2px 3px rgba(0,0,0,0.3);
+    box-shadow:0 2px 3px var(--Shadow-);
     gap: 41px;
     width: 30%;
     padding: 1%;
@@ -132,14 +133,14 @@ a{
     display: flex;
     flex-direction: column ;
     align-items: center;
-    box-shadow:0 2px 3px rgba(0,0,0,0.3);
+    box-shadow:0 2px 3px var(--Shadow-);
     gap: 40px;
     width: 30%;
     padding: 1%;
     letter-spacing: 1px;
 }
 .imgArticleIndex{
-    box-shadow: 0 8px 8px  rgba(0,0,0,0.3); ;
+    box-shadow: 0 8px 8px  var(--Shadow-);
 }
 
 /*BOUTON*/
