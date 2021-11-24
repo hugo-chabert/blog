@@ -1,14 +1,11 @@
 <?php
 session_start();
 require('fonctions/fonctionR.php');
-//var_dump($_SESSION);
-
-var_dump($_POST);
 ?>
 <html >
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="css/inscription.css" />
+        <link rel="stylesheet" href="../css/inscription.css" />
         <title>Inscription</title>
     </head>
 <body>

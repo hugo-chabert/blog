@@ -6,8 +6,8 @@ session_start();
 <html >
     <head>
         <meta charset="utf-8" />
-        <link rel="stylesheet" href="css/inscription.css" />
-        <title>Inscription</title>
+        <link rel="stylesheet" href="../css/inscription.css" />
+        <title>Connexion</title>
     </head>
 <body>
 <header>
