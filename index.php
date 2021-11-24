@@ -14,7 +14,7 @@
         <main>
             <div class="header">
                 <div class="info">
-                    <h1>Bienvenue</h1>
+                   <h1>Bienvenue <br> chez <br> Addict N' Shoes </h1> 
                 </div>
             </div>
             <div class="content">
