@@ -1,11 +1,10 @@
 <?php
 $nomFichier = basename (__FILE__);
-require 'footer.php';
+require 'header.php';
 session_start();
 require('fonctions/fonctionR.php');
-
 ?>
-<html >
+<html>
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="../css/inscription.css" />
@@ -33,3 +32,7 @@ require('fonctions/fonctionR.php');
 </footer>
 </body>
 </html>
+
+<?php
+require 'footer.php';
+?>

@@ -23,8 +23,5 @@
         </div>
     </div>
 </header>
-<main>
-
-</main>
 </body>
 </html>
