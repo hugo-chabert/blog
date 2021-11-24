@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>css/header.css" rel="stylesheet">
-</head>
-<body>
+<link href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>css/header.css" rel="stylesheet">
 <header>
     <div class="header">
-        <div class="titreHeader">
-            ADDICT N' SHOES
-        </div>
         <div class="links">
             <div class="gaucheHeader">
                 <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>index.php" class="linkHeader">ACCUEIL</a>
@@ -23,5 +14,3 @@
         </div>
     </div>
 </header>
-</body>
-</html>

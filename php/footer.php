@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <link href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>css/footer.css" rel="stylesheet">
-</head>
-<body>
-<main>
-
-</main>
+<link href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>css/footer.css" rel="stylesheet">
 <footer>
     <div class="footer">
         <div class="footer1">
@@ -24,7 +15,3 @@
         </div>
     </div>
 </footer>
-
-</body>
-</html>
-

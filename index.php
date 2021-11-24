@@ -1,6 +1,5 @@
 <?php
 $nomFichier = basename (__FILE__);
-require 'php/header.php';
 session_start();
 require('php/fonctions/fonctionR.php');
 ?>
@@ -14,13 +13,13 @@ require('php/fonctions/fonctionR.php');
         <title>Accueil</title>
     </head>
     <body>
-        <header>
-
-        </header>
+        <?php
+            require 'php/header.php';
+        ?>
         <main>
-            <div class="header">
+            <div class="header1">
                 <div class="info">
-                   <h1>Bienvenue <br> chez <br> Addict N' Shoes </h1> 
+                    <h1>Bienvenue <br> chez <br> Addict N' Shoes </h1>
                 </div>
             </div>
             <div class="content">
@@ -65,8 +64,8 @@ require('php/fonctions/fonctionR.php');
                 </div>
             </div>
         </main>
+        <?php
+        require 'php/footer.php';
+        ?>
     </body>
 </html>
-<?php
-require 'php/footer.php';
-?>
