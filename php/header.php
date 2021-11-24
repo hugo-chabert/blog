@@ -8,7 +8,7 @@
 <header>
     <div class="header">
         <div class="titreHeader">
-            ADDICT X SHOES
+            ADDICT N' SHOES
         </div>
         <div class="links">
             <div class="gaucheHeader">
