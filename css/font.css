@@ -22,3 +22,7 @@
     font-family:Vogue;
     src: url(../font/Vogue.ttf);
 }
+@font-face {
+    font-family:Elekable;
+    src: url(../font/OverseerItalic-qqV1.ttf);
+}
