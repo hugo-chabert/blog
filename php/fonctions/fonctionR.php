@@ -1,7 +1,7 @@
 <?php
 
 function connect_database() {
-    $bdd =  mysqli_connect('localhost', 'root', 'root', 'blog');
+    $bdd =  mysqli_connect('localhost', 'root', '', 'blog');
     mysqli_set_charset($bdd, 'utf8');
     return $bdd;
 }
@@ -32,6 +32,7 @@ function connect_user() {
                 else {
                 header('Location: profil.php');
                 $_SESSION['user'] = $fetch;
+                $_SESSION['login'] = $login;
                 }
             }
         }
@@ -73,7 +74,7 @@ function new_user() {
                 echo'<p style="color:#FF0000";> <strong> This login is already use</strong></p>';
             }
             else  {
-                $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droit) VALUES ('$email','$login','$pw_hash', 1)");
+                $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: connexion.php');
             }
         }

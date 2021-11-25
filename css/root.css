@@ -1,14 +1,17 @@
 :root{
     --DarkestBlue-:#242f3a ;
-    --DarkBlue- : #495867 ;
+    --DarkerBlue-:#13375c ;
+    --DarkBlue- : #3c5670 ;
     --Blue- : #577399 ;
     --LightBlue- : #abc7df ;
+    --LighterBlue- : #72a9da ;
     --LightestBlue- : #c7e0f5 ;
     --LightRed- : #fb5a4f ;
     --RedError- : #ff0000 ;
     --Red- : #d63024 ;
     --DarkRed- : #811710 ;
     --WhiteBlue- : #ebebfd ;
+    --WhiteGrey- : #fafafa ;
     --White- : #FFFFFF ;
     --Black- : #000000 ;
     --DarkGrey- : #3d3d3d ;
@@ -16,5 +19,10 @@
     --LightGrey- : #bdbdbd ;
     --Transparent-:rgba(255, 255, 255, 0);
     --Shadow-:rgba(0, 0, 0, 0.39);
+    --Color1-:#152535 ;
+    --Color2-:#243f5a ;
+    --Color3-:#31567a ;
+    --Color4-:#3f6f9e ;
+    --Color5-:#518ecc ;
 }
 
