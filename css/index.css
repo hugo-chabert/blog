@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,400i,600,600i');
 @import url(root.css);
 @import url(font.css);
-html,body,main{
-    margin:0;
-    padding:0;
-    scroll-behavior: smooth;
-    position: relative;
-}
 /*Image Accueil*/
 a{
     text-decoration:none

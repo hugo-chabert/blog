@@ -2,21 +2,24 @@
 
 @import url(font.css);
 
+html,body,main{
+    margin:0;
+    padding:0;
+    scroll-behavior: smooth;
+    position: relative;
+}
 
 .header{
     background-color: var(--LightBlue-);
-    padding-top: 1%; padding-left: 1%; padding-right: 1%;
+    padding-top: 0.1%; padding-bottom: 0.1%;
+    padding-right: 1%; padding-left: 1%;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    font-family: Dreams;
+    font-size: 90%;
 }
 
-.titreHeader{
-    display: flex;
-    justify-content: center;
-    font-size: 400%;
-    font-family: Vogue;
-}
 
 .links{
     display: flex;

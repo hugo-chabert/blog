@@ -1,0 +1,15 @@
+@import url(root.css);
+
+
+html,body,main{
+    height: 100%;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+th, td{
+    border : 3px solid var(--DarkBlue-);
+    color: var(--DarkRed-);
+}
