@@ -6,6 +6,7 @@
     --LightBlue- : #abc7df ;
     --LighterBlue- : #72a9da ;
     --LightestBlue- : #c7e0f5 ;
+    --LightestBlue2- : #f1f9ff ;
     --LightRed- : #fb5a4f ;
     --RedError- : #ff0000 ;
     --Red- : #d63024 ;
@@ -24,5 +25,11 @@
     --Color3-:#31567a ;
     --Color4-:#3f6f9e ;
     --Color5-:#518ecc ;
+    --Color6- :#530000 ;
+    --Color7- : #850000;
+    --Color8- : #b60000;
+    --Color9- : #e20101;
+    --Color10- : #ff2222;
+
 }
 

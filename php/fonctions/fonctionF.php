@@ -19,10 +19,17 @@ function DecoOrCo(){// Fonction permettant de savoir si le user est connecté ou
             </style>';
     }
 }
+function Reco(){// Fonction permettant de Reconnexion
+    if (isset($_POST['reconnexion'])) {
+        session_destroy();
+        header('Location: ../connexion.php');
+    }
+}
 function ChangeEmail(){
     if (isset($_SESSION['login'])) {
         $username = $_SESSION['login'];
         if (isset($_POST['submit'])) {
+            $user_email = $_SESSION['user']['email'];
             $email = $_POST['email'];
             $newemail = $_POST['newemail'];
             $repeatnewemail = $_POST['repeatnewemail'];
@@ -34,9 +41,12 @@ function ChangeEmail(){
                     $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND email = '$email'");
                     $rows = mysqli_num_rows($Requete);
-                    if ($rows==1) {
+                    if ($newemail == $user_email){
+                        echo "<p>Votre ancienne Email est identique</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+                    }
+                    else if ($rows==1) {
                         $newpass = mysqli_query($Bdd, "UPDATE utilisateurs SET email='$newemail' WHERE login='$username'");
-                        die("Votre Email a bien été modifié. Vous pouvez retourner dans l'onglet Profil juste <a href='profil.php'>ici</a>.");
+                        die("<p>Votre Email a bien été modifié. Vous pouvez retourner dans l'onglet Profil</p> <button class='modif'><a class='a'href='profil.php'> Retour </a></button>");
                     }
                     else{
                         echo "<p>Votre ancien Email est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
@@ -60,16 +70,27 @@ function ChangeLogin(){
         $username = $_SESSION['login'];
         if (isset($_POST['submit'])) {
             $login = $_POST['login'];
+            $user_login = $_SESSION['user']['login'];
+            $user_id = $_SESSION['user']['id'];
             $newlogin = $_POST['newlogin'];
             $repeatnewlogin = $_POST['repeatnewlogin'];
             if ($login && $newlogin && $repeatnewlogin) {
                 if ($newlogin == $repeatnewlogin) {
                     $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND login = '$login'");
+                    $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
                     $rows = mysqli_num_rows($Requete);
-                    if ($rows==1) {
+                    $rows_error = mysqli_num_rows($requete_error);
+                    if ($newlogin == $user_login){
+                        echo "<p>Votre ancien Login est identique</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+                    }
+                    else if($rows_error==1){
+                        echo "<p>Ce Login est déjà utilisé </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+                    }
+                    else if ($rows==1) {
                         $newpre = mysqli_query($Bdd, "UPDATE utilisateurs SET login='$newlogin' WHERE login='$username'");
-                        die("Votre Login a bien été modifié. Vous pouvez retourner dans l'onglet Profil juste <a href='profil.php'>ici</a>.");
+                        session_destroy();
+                        header('Location: connexion.php');
                     }
                     else{
                         echo "<p>Votre ancien Login est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
@@ -89,39 +110,35 @@ function ChangeLogin(){
     }
 }
 function ChangeMdp(){
-    if (isset($_SESSION['login'])) {
-        $username = $_SESSION['login'];
-        if (isset($_POST['submit'])) {
-            $password = $_POST['password'];
-            $newpassword = $_POST['newpassword'];
-            $repeatnewpassword = $_POST['repeatnewpassword'];
-            $pw_hash = password_hash($newpassword, PASSWORD_DEFAULT);
-            if ($password && $newpassword && $repeatnewpassword) {
-                if ($newpassword == $repeatnewpassword) {
-                    $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
-                    $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND password = '$password'");
-                    $rows = mysqli_num_rows($Requete);
-                    if ($rows==1) {
-                        $newpass = mysqli_query($Bdd, "UPDATE utilisateurs SET password='$pw_hash' WHERE login='$username'");
-                        die("Votre Mot de passe a bien été modifié. Vous pouvez retourner dans l'onglet Profil juste <a href='profil.php'>ici</a>.");
-                    }
-                    else{
-                        echo "<p>Votre ancien mot de passe est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
-                    }
-                }
-                else{
-                    echo "<p>Les deux champs doivent être identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
-                }
-            }
-            else{
-                echo "<p>Veuillez saisir tous les champs</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
-            }
+    $Bdd = connect_database();
+    if (isset($_POST['password']) && isset($_POST['newpassword']) && isset($_POST['repeatnewpassword'])){
+        $id = $_SESSION['user']['id'];
+        $password = $_SESSION['user']['password'];
+        $oldpassword = $_POST['password'];
+        $newpassword = $_POST['newpassword'];
+        $repeatnewpassword = $_POST['repeatnewpassword'];
+        $new_password_hash = password_hash($newpassword, PASSWORD_DEFAULT);
+        if ($password == NULL || $newpassword == NULL || $repeatnewpassword == NULL ){
+            echo "<p>Veuillez saisir tous les champs</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+        }
+        else if(password_verify($oldpassword, $password) == false){
+            echo "<p>Votre ancien Password est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>" ;
+        }
+        else if ($newpassword != $repeatnewpassword){
+            echo "<p>Les deux champs doivent être identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+        }
+        else{
+            $requete_select_pwd = mysqli_query($Bdd, "SELECT * FROM `utilisateurs` WHERE password = '$password' ");
+            $requete_update_pwd = mysqli_query($Bdd, "UPDATE utilisateurs SET password = '$new_password_hash' WHERE id = '$id'");
+            session_destroy();
+            header('Location: connexion.php');
         }
     }
     else{
-        header("Location:connexion.php");
+        echo '<p><br>Remplissez tous les champs</p><style>p{ font-size: 1.4em;}</style> ';
     }
 }
+
 function Info(){
     if (isset($_SESSION['login'])){
         $ConnectedUser = $_SESSION['login'];

@@ -19,19 +19,16 @@ require('fonctions/fonctionF.php');
         <main>
         <div class="Container">
             <div class="avert-form">
-                <div class="avert">
-                    <h2> &#9888;&#65039; Attention!! &#9888;&#65039; <br> Si vous modifier votre Login vous devrez vous reconnecter.</h2>
-                </div>
                 <div class="form">
                     <form method="POST" action="">
-                        <input class="input" type="text" name="login" placeholder = 'Votre ancien Login'>
-                        <input class="input" type="text" name="newlogin" placeholder = 'Votre nouveau Login'>
-                        <input class="input" type="text" name="repeatnewlogin" placeholder = 'Répétez votre nouveau Login'><br/><br/>
+                        <input class="input" type="text" name="email" placeholder = 'Votre ancien Email'>
+                        <input class="input" type="text" name="newemail" placeholder = 'Votre nouveau Email'>
+                        <input class="input" type="text" name="repeatnewemail" placeholder = 'Répétez votre nouveau Email'><br/><br/>
                         <div class="button-button">
                             <button class="modif" type="submit" value="Valider" name = 'submit' >Valider</button>
-                            <button class = 'modif'><a class ='a' href="profil.php"> Annuler </a></button>
+                            <button class = 'modif'><a class ='a' href="profil.php">  Annuler </a></button>
                         </div>
-                        <?php ChangeLogin();?>
+                        <?php ChangeEmail();?>
                     </form>
                 </div>
             </div>
@@ -39,5 +36,3 @@ require('fonctions/fonctionF.php');
 
     </body>
 </html>
-
-

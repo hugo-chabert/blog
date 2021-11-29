@@ -46,10 +46,10 @@ html,body,main {
     box-shadow:0 2px 3px var(--Shadow-);
 }
 .box-info h2 {
-    font-size: 250%;
+    font-size: 200%;
     text-align: center;
     font-family: Vogue;
-    margin-top: 0;
+    margin-bottom: 20%;
 }
 .box-change h2{
     font-size: 150%;
@@ -113,6 +113,57 @@ html,body,main {
 }
 
 .modif:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteBlue-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+.deco {
+    font-family: Dreams;
+    width: 150px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.deco:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color6-), var(--Color7-), var(--Color8-), var(--Color9-), var(--Color10-), var(--Color9-), var(--Color8-),  var(--Color7-), var(--Color6-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.deco:active {
+    color: var(--White-);
+    text-decoration: underline;
+}
+.deco:active:after {
+    background: transparent;
+}
+.deco:hover:before {
+    opacity: 1;
+}
+.deco:after {
     z-index: -1;
     content: '';
     position: absolute;

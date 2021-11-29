@@ -1,7 +1,10 @@
-<?php $nomFichier = basename (__FILE__); 
+<?php $nomFichier = basename (__FILE__);
  require ('fonctions/fonctionF.php');
 session_start();
 Deconnect();
+if(!isset($_SESSION['login'])){
+    header('Location: ../index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,12 +23,13 @@ Deconnect();
                 <div class="box-change-info">
                     <div class="box-change">
                         <h2 class="welcome-msg"><?php if(isset($_SESSION['login'])){echo 'Bonjour, <br><a>'.$_SESSION['login'].'</a> vous etes bien connecte.';}?></h2>
-                        <button class="modif"><a href = "change-login.php">Modifier votre Login</a></button>
-                        <button class="modif"><a href = "">Modifier votre Email</a></button>
-                        <button class="modif"><a href = "">Modifier votre Mot de passe</a></button>
-                        <form action="" method = "POST" ><input type = "submit" name = "deconnexion" value ='Deconnexion'></input></form>
+                        <a href = "change-login.php"><button class="modif">Modifier votre Login</button></a>
+                        <a href = "change-email.php"><button class="modif">Modifier votre Email</button></a>
+                        <a href = "change-password.php"><button class="modif">Modifier votre Mot de passe</button></a>
+                        <form action="" method = "POST" ><button class = "deco" type = "submit" name = "deconnexion" value ='Deconnexion'>Déconnexion</buttton></form>
                     </div>
-                    <div class="box-info"> 
+                    <div class="box-info">
+                        <h2>Informations</h2>
                         <?php if(isset($_SESSION['login'])){echo Info();}?>
                     </div>
                 </div>
