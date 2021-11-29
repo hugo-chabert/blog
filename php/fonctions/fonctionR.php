@@ -6,6 +6,7 @@ function connect_database() {
     return $bdd;
 }
 
+
 function connect_user() {
     $bdd =  connect_database();
     if (isset($_POST['login']) && isset($_POST['password'])) {
@@ -43,6 +44,32 @@ function connect_user() {
         echo 'Please complete all fields';
     }
 }
+function select_categorie() {
+    $bdd = connect_database();
+    if (isset($_POST['txt_article']) && isset($_POST['article_categorie'])) {
+        $txt_article = $_POST['txt_article'];
+        $article_categorie = $_POST['article_categorie'];
+        if ($txt_article != NULL && $article_categorie != NULL) {
+            $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
+            articles.date AS created_at, utilisateurs.login AS created_by FROM categories INNER JOIN articles INNER JOIN utilisateurs
+            WHERE articles.id_categorie = categories.id && utilisateurs.id_droits = articles.id_utilisateur");
+            $fetch= mysqli_fetch_all($request_select_article_w_categorie, MYSQLI_ASSOC);
+            var_dump($fetch);
+            if ($request_select_article_w_categorie == TRUE) {
+                echo 'ok';
+                // ? si article_name existe mais categorie diff de bdd alors c bon
+                // ? si article name existe et categorie de bdd meme alors c pas bon
+                if ($fetch == null) {
+                    echo 'creer';
+                    //INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ()
+                    //$request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$txt_article','$article_categorie',1337 ) ");
+                 } else {
+                    echo 'existant';
+                }
+            }
+        }
+    }
+}
 
 function new_user() {
     $bdd =  connect_database();
@@ -73,7 +100,7 @@ function new_user() {
                 echo'<p style="color:#FF0000";> <strong> This login is already use</strong></p>';
             }
             else  {
-                $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droit) VALUES ('$email','$login','$pw_hash', 1)");
+                $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: connexion.php');
             }
         }
@@ -82,4 +109,6 @@ function new_user() {
         echo 'Please complete all fields';
     }
 }
+
+
 ?>
