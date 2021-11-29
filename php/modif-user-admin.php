@@ -25,7 +25,7 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
         ?>
         <main>
             <div class="container">
-                <table class="tableau">
+                <table>
                     <tr>
                         <th>Login</th>
                         <th>Email</th>
