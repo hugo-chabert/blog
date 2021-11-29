@@ -1,15 +1,77 @@
 @import url(root.css);
 
 
-html,body,main{
-    height: 100%;
+main{
+    background-color: var(--White-);
+    font-family: Dreams;
 }
 
 table{
     border-collapse: collapse;
+    min-width: 35%;
+    margin: 5%;
+    height: 300px;
 }
 
 th, td{
     border : 3px solid var(--DarkBlue-);
     color: var(--DarkRed-);
+}
+
+.tableau{
+    width: 200px;
+}
+
+.container{
+    background-color: var(--WhiteBlue-);
+    margin: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.containerCAT{
+    background-color: var(--WhiteBlue-);
+    margin: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Tabs{
+    display: flex;
+    margin: 5%;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.Texts{
+    display: flex;
+    margin: 5%;
+    text-align: center;
+    justify-content: space-around;
+}
+
+.createUser{
+    text-align: center;
+}
+
+.modif{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.modifGD{
+    display: flex;
+    flex-direction: column;
+}
+
+.alone{
+    margin: 3%;
+}
+
+.alone2{
+    margin-bottom: 5%;
+    margin-right: 23%; margin-left: 23%;
 }

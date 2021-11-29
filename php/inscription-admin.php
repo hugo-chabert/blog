@@ -22,7 +22,6 @@ verif_admin();
         <input type="text" id="login" name="login" placeholder="Login"/>
         <input type="password" id="password" name="password" placeholder="Password"/>
         <input type="password" id="Confirmedpassword" name="Confirmedpassword" placeholder="Confirmed Password"/>
-        <input type="text" id="role" name="role" placeholder="Role"/>
         <input class="button" type="submit" value="Login"/>
     </form>
     <?php new_user_admin(); ?>
