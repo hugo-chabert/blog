@@ -102,6 +102,7 @@ a{
     width: 30%;
     padding: 1%;
     letter-spacing: 1px;
+    text-align: justify;
 }
 .article2{
     display: flex;
@@ -112,6 +113,7 @@ a{
     width: 30%;
     padding: 1%;
     letter-spacing: 1px;
+    text-align: justify;
 }
 .article3{
     display: flex;
@@ -122,6 +124,7 @@ a{
     width: 30%;
     padding: 1%;
     letter-spacing: 1px;
+    text-align: justify;
 }
 .imgArticleIndex{
     box-shadow: 0 8px 8px  var(--Shadow-);
@@ -134,8 +137,8 @@ a{
     height: 50px;
     border: none;
     outline: none;
-    color: #fff;
-    background: #111;
+    color: var(--White-);
+    background: var(--Black-);
     cursor: pointer;
     position: relative;
     z-index: 0;
@@ -162,7 +165,7 @@ a{
 }
 
 .glow:active {
-    color: rgb(0, 0, 0);
+    color: var(--Black-);
     text-decoration: underline;
 }
 
@@ -180,7 +183,7 @@ a{
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: var(--Black-);
     left: 0;
     top: 0;
     border-radius: 10px;

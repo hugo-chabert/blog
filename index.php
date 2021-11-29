@@ -29,10 +29,10 @@ require('php/fonctions/fonctionR.php');
                         <img class = 'imgArticleIndex' src="http://cdn.shopify.com/s/files/1/0496/4325/8009/products/baskets-air-jordan-1-retro-high-og-sp-travis-scott-fragment-military-blue-air-jordan-kikikickz-604686_1200x1200.jpg?v=1626432662" alt="TS Aj1" width = '104%'>
                         <p class="textArticle">
                             La collaboration entre la marque au Jumpman, Jacques Berman Webster II AKA Travis Scott
-                            et Hiroshi Fujiwara, entre dans sa seconde phase. La Air Jordan One Retro High Military Blue passe à une 
-                            coupe basse. En incluant la Playstation, c’est la 3ème du genre. L’édition limitée conserve l’essence 
-                            de sa grande soeur. Les logos (Cactus Jack & Lightning Bolt) sont toujours à la même place. Des pointes 
-                            de bleu apparaissent ici et là. A la différence, la AJ1 x Travis Scott x Fragment x Low OG SP Sail 
+                            et Hiroshi Fujiwara, entre dans sa seconde phase. La Air Jordan One Retro High Military Blue passe à une
+                            coupe basse. En incluant la Playstation, c’est la 3ème du genre. L’édition limitée conserve l’essence
+                            de sa grande soeur. Les logos (Cactus Jack & Lightning Bolt) sont toujours à la même place. Des pointes
+                            de bleu apparaissent ici et là. A la différence, la AJ1 x Travis Scott x Fragment x Low OG SP Sail
                             Muslin dispose d’une Black Toe. Ce détail emprunté à un colorway de 1985.
                         </p>
                         <button class="glow" type="button"><b>Lire la suite</b></button>
