@@ -1,9 +1,20 @@
 <?php
 
 function connect_database() {
-    $bdd =  mysqli_connect('localhost', 'root', '', 'blog');
+    $bdd =  mysqli_connect('localhost', 'root', 'root', 'blog');
     mysqli_set_charset($bdd, 'utf8');
     return $bdd;
+}
+
+function select_form() {
+
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+    foreach ($row2 as  $value) {
+        echo "<option value=\"categorie\" name=".$value["nom"]." >" . $value["nom"] . "</option>";
+    }
+     return $row2;
 }
 
 
@@ -33,7 +44,6 @@ function connect_user() {
                 else {
                 header('Location: profil.php');
                 $_SESSION['user'] = $fetch;
-                $_SESSION['login'] = $login;
                 }
             }
         }
@@ -53,17 +63,20 @@ function select_categorie() {
         if ($txt_article != NULL && $article_categorie != NULL) {
             $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
             articles.date AS created_at, utilisateurs.login AS created_by FROM categories INNER JOIN articles INNER JOIN utilisateurs
-            WHERE articles.id_categorie = categories.id && utilisateurs.id_droits = articles.id_utilisateur");
+            WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
             $fetch= mysqli_fetch_all($request_select_article_w_categorie, MYSQLI_ASSOC);
+            echo '<pre>';
             var_dump($fetch);
+            echo '</pre>';
             if ($request_select_article_w_categorie == TRUE) {
                 echo 'ok';
                 // ? si article_name existe mais categorie diff de bdd alors c bon
                 // ? si article name existe et categorie de bdd meme alors c pas bon
                 if ($fetch == null) {
                     echo 'creer';
+
                     //INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ()
-                    //$request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$txt_article','$article_categorie',1337 ) ");
+                    //$request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$txt_article','$article_categorie',10 ) ");
                  } else {
                     echo 'existant';
                 }
@@ -71,6 +84,31 @@ function select_categorie() {
         }
     }
 }
+
+function create_article() {
+    $bdd = connect_database();
+    $txt_article = $_POST['txt_article'];
+    $article_categorie = $_POST['categories'];
+    $request_search = mysqli_query($bdd,"SELECT * FROM categories ");
+    echo '<pre>';
+    var_dump($request_search);
+    echo '</pre>';
+    $ok = 'zer';
+    // ! modifier les values de la requete par les info de la SESSION
+    $request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$ok', 10, 1)");
+    echo '<pre>';
+    var_dump($request_create_article);
+    echo '</pre>';
+    // ! $count= mysqli_num_rows($request_search);
+    //if(isset($_POST['article_categorie']) && $_POST['article_categorie'] == 'style')
+
+}
+
+
+
+
+
+
 
 function new_user() {
     $bdd =  connect_database();
