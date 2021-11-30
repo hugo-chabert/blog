@@ -2,8 +2,9 @@
 $nomFichier = basename (__FILE__);
 session_start();
 require('fonctions/fonctionR.php');
-
-create_article();
+$bdd = connect_database();
+$sql = mysqli_query($bdd, "SELECT * FROM categories");
+$row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -17,19 +18,14 @@ create_article();
 <?php require 'header.php';?>
 <body>
     <form method="post">
-        <input type="text" id="txt_article" name="txt_article" placeholder="Créer un Article">
+        <input type="text" name="txt_article" placeholder="Créer un Article">
         <select name="categories">
             <option value="">--Choisissez une catégorie d'article à ajouter--</option>
-            <?php    $bdd = connect_database();
-                    $sql = mysqli_query($bdd, "SELECT * FROM categories");
-                    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
-                    foreach ($row2 as  $value) {
-                        echo "<option value=\"categorie\" name=".$value["nom"]." >" . $value["nom"] . "</option>";
-                    }
-            ?>
+            <?php  foreach ($row2 as  $value) {
+                    echo "<option value=".$value["nom"]." name=".$value["id"]." >" .$value["nom"]. "</option>";
+            }?>
         </select>
-
-        <input  type="submit" value="Envoyer"/>
+        <input  type="submit" name="envoyer" value="Envoyer"/>
     </form>
 </body>
 <?php require 'footer.php';?>

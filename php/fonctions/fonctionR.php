@@ -85,23 +85,24 @@ function select_categorie() {
     }
 }
 
-function create_article() {
-    $bdd = connect_database();
-    $txt_article = $_POST['txt_article'];
-    $article_categorie = $_POST['categories'];
-    $request_search = mysqli_query($bdd,"SELECT * FROM categories ");
-    echo '<pre>';
-    var_dump($request_search);
-    echo '</pre>';
-    $ok = 'zer';
-    // ! modifier les values de la requete par les info de la SESSION
-    $request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$ok', 10, 1)");
-    echo '<pre>';
-    var_dump($request_create_article);
-    echo '</pre>';
-    // ! $count= mysqli_num_rows($request_search);
-    //if(isset($_POST['article_categorie']) && $_POST['article_categorie'] == 'style')
 
+function create_article() {
+    $dbhost     = "localhost";
+    $dbname     = "blog";
+    $dbuser     = "root";
+    $dbpass     = "root";
+
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    if(isset($_POST['txt_article'])) {
+        $title = $_POST['txt_article'];
+        $sth = $conn->prepare("SELECT id FROM categories");
+        $sth->execute();
+        $result = $sth->fetchAll();
+        
+        $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES (:title, 10,1)";
+        $q = $conn->prepare($sql);
+        $q->execute(array(':title'=>$title));
+    }
 }
 
 
