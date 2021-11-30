@@ -57,12 +57,14 @@ function connect_user() {
 }
 function select_categorie() {
     $bdd = connect_database();
-    if (isset($_POST['txt_article']) && isset($_POST['article_categorie'])) {
+    if (isset($_POST['txt_article']) && isset($_POST['categories'])) {
         $txt_article = $_POST['txt_article'];
-        $article_categorie = $_POST['article_categorie'];
-        if ($txt_article != NULL && $article_categorie != NULL) {
+        $categories = $_POST['categories'];
+        if ($txt_article != NULL && $categories != NULL) {
             $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
-            articles.date AS created_at, utilisateurs.login AS created_by FROM categories INNER JOIN articles INNER JOIN utilisateurs
+            articles.date AS created_at, utilisateurs.login AS created_by FROM categories
+            INNER JOIN articles
+            INNER JOIN utilisateurs
             WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
             $fetch= mysqli_fetch_all($request_select_article_w_categorie, MYSQLI_ASSOC);
             echo '<pre>';
@@ -86,22 +88,37 @@ function select_categorie() {
 }
 
 
+function auto_list() {
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+
+    foreach ($row2 as  $value) {
+        echo "<option value=".$value["nom"]." name=".$value["nom"]." >" .$value["nom"]. "</option>";
+    }
+    return $value;
+}
+
+
+
 function create_article() {
+    // ! configuration
     $dbhost     = "localhost";
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
 
+    // ! database connection
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     if(isset($_POST['txt_article'])) {
         $title = $_POST['txt_article'];
-        $sth = $conn->prepare("SELECT id FROM categories");
-        $sth->execute();
-        $result = $sth->fetchAll();
-        
-        $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES (:title, 10,1)";
+        $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
+        (:title, 10,1)";
         $q = $conn->prepare($sql);
         $q->execute(array(':title'=>$title));
+        echo '<pre>';
+        var_dump($q);
+        echo '</pre>';
     }
 }
 
