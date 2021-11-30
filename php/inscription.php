@@ -3,11 +3,16 @@ $nomFichier = basename (__FILE__);
 require 'header.php';
 session_start();
 require('fonctions/fonctionR.php');
+if (isset($_SESSION['user'])){
+  header('Location: profil.php');
+}
 ?>
 <html>
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="../css/inscription.css" />
+        <link href="../css/root.css" rel="stylesheet">
+        <link href="../css/font.css" rel="stylesheet">
         <title>Inscription</title>
     </head>
   <body>
@@ -21,8 +26,8 @@ require('fonctions/fonctionR.php');
               <input type="text" id="login" name="login" placeholder="Login"/>
               <input type="password" id="password" name="password" placeholder="Password"/>
               <input type="password" id="Confirmedpassword" name="Confirmedpassword" placeholder="Confirmed Password"/>
-              <input class="button" type="submit" value="Login"/>
-              <p class="message">Already registered ? <a href="connexion.php"><strong>Log in</strong></a></p>
+              <button class="button" type="submit" >S'incrire</button>
+              <p class="message">Déjà un compte ? <a class = 'link' href="connexion.php"><strong>Connectez vous !!</strong></a></p>
           </form>
           <?php new_user(); ?>
         </div>

@@ -38,7 +38,7 @@ function ChangeEmail(){
                     echo'<p style="color:#FF0000";> <strong> Please enter a valid email ex: user@wanadoo.com </strong></p>';
                 }
                 else if ($newemail == $repeatnewemail) {
-                    $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
+                    $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND email = '$email'");
                     $rows = mysqli_num_rows($Requete);
                     if ($newemail == $user_email){
@@ -76,17 +76,18 @@ function ChangeLogin(){
             $repeatnewlogin = $_POST['repeatnewlogin'];
             if ($login && $newlogin && $repeatnewlogin) {
                 if ($newlogin == $repeatnewlogin) {
-                    $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
+                    $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND login = '$login'");
-                    $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
+                    //! $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
                     $rows = mysqli_num_rows($Requete);
-                    $rows_error = mysqli_num_rows($requete_error);
+                    //! $rows_error = mysqli_num_rows($requete_error);
+                    //! var_dump($requete_error);
                     if ($newlogin == $user_login){
                         echo "<p>Votre ancien Login est identique</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
                     }
-                    else if($rows_error==1){
-                        echo "<p>Ce Login est déjà utilisé </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
-                    }
+                    //! else if($rows_error==1){
+                    //!     echo "<p>Ce Login est déjà utilisé </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+                    //! }
                     else if ($rows==1) {
                         $newpre = mysqli_query($Bdd, "UPDATE utilisateurs SET login='$newlogin' WHERE login='$username'");
                         session_destroy();
@@ -142,7 +143,7 @@ function ChangeMdp(){
 function Info(){
     if (isset($_SESSION['login'])){
         $ConnectedUser = $_SESSION['login'];
-        $Bdd = mysqli_connect('localhost', 'root', '', 'blog') or die('Erreur');
+        $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
         $Requete =  mysqli_query($Bdd, "SELECT * FROM `utilisateurs` INNER JOIN `droits` WHERE utilisateurs.id_droits = droits.id and  `login` = '".$ConnectedUser."'");
         $rows = mysqli_num_rows($Requete);
         if ($rows == 1){

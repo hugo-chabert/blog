@@ -1,5 +1,4 @@
 @import url(root.css);
-
 @import url(font.css);
 
 html,body,main{
@@ -20,7 +19,7 @@ html,body,main{
     display: flex;
     justify-content: center;
     font-size: 400%;
-    font-family: Vogue;
+    font-family: Dreams;
 }
 
 .links{
@@ -30,6 +29,7 @@ html,body,main{
 
 .linkHeader{
     text-decoration: none;
+    font-family: Dreams;
     color: var(--Black-);
     margin: 1%;
 }
