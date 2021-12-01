@@ -14,7 +14,7 @@ function select_form() {
     foreach ($row2 as  $value) {
         echo "<option value=\"categorie\" name=".$value["nom"]." >" . $value["nom"] . "</option>";
     }
-     return $row2;
+    return $row2;
 }
 
 
@@ -42,7 +42,6 @@ function connect_user() {
                     echo'<p style="color:#FF0000";> <strong> Password invalid </strong></p>';
                 }
                 else {
-                header('Location: profil.php');
                 $_SESSION['user'] = $fetch;
                 }
             }
@@ -79,7 +78,7 @@ function select_categorie() {
 
                     //INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ()
                     //$request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$txt_article','$article_categorie',10 ) ");
-                 } else {
+                } else {
                     echo 'existant';
                 }
             }
@@ -99,7 +98,17 @@ function auto_list() {
     return $value;
 }
 
-
+function test(){
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+    foreach ($row2 as  $value) {
+        $requete = mysqli_query($bdd, "SELECT * FROM categories WHERE nom='".$value['nom']."'");
+        if($value['nom'] == $_POST['test']){
+            echo $value['nom'];
+        }
+    }
+}
 
 function create_article() {
     // ! configuration
@@ -107,25 +116,19 @@ function create_article() {
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-
+    $id_user = $_SESSION['user']['id'];
     // ! database connection
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     if(isset($_POST['txt_article'])) {
         $title = $_POST['txt_article'];
         $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
-        (:title, 10,1)";
+        (:title,:id_user,10)";
         $q = $conn->prepare($sql);
-        $q->execute(array(':title'=>$title));
-        echo '<pre>';
-        var_dump($q);
-        echo '</pre>';
+        $q->bindParam('title' ,$title ,PDO::PARAM_STR);
+        $q->bindParam('id_user' ,$id_user ,PDO::PARAM_INT);
+        $q->execute();
     }
 }
-
-
-
-
-
 
 
 function new_user() {

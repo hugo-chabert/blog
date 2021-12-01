@@ -3,6 +3,7 @@ $nomFichier = basename (__FILE__);
 require 'header.php';
 session_start();
 require('fonctions/fonctionR.php');
+var_dump($_SESSION);
 ?>
 <html>
     <head>

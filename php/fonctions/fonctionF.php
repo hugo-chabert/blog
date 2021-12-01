@@ -10,8 +10,8 @@ function Deconnect(){// Fonction permettant de Deconnexion
     }
 }
 function DecoOrCo(){// Fonction permettant de savoir si le user est connecté ou pas
-    if (isset($_SESSION['login'])){
-        echo '<p class ="p">Bienvenu(e),<br>'.$_SESSION['login'].' Vous êtes connecté</p>
+    if (isset($_SESSION['user']['login'])){
+        echo '<p class ="p">Bienvenu(e),<br>'.$_SESSION['user']['login'].' Vous êtes connecté</p>
             <style>
             .p{
                 font-size:1.4em;
@@ -26,8 +26,8 @@ function Reco(){// Fonction permettant de Reconnexion
     }
 }
 function ChangeEmail(){
-    if (isset($_SESSION['login'])) {
-        $username = $_SESSION['login'];
+    if (isset($_SESSION['user'])) {
+        $username = $_SESSION['user']['login'];
         if (isset($_POST['submit'])) {
             $user_email = $_SESSION['user']['email'];
             $email = $_POST['email'];
@@ -66,8 +66,8 @@ function ChangeEmail(){
     }
 }
 function ChangeLogin(){
-    if (isset($_SESSION['login'])) {
-        $username = $_SESSION['login'];
+    if (isset($_SESSION['user'])) {
+        $username = $_SESSION['user']['login'];
         if (isset($_POST['submit'])) {
             $login = $_POST['login'];
             $user_login = $_SESSION['user']['login'];
@@ -140,8 +140,8 @@ function ChangeMdp(){
 }
 
 function Info(){
-    if (isset($_SESSION['login'])){
-        $ConnectedUser = $_SESSION['login'];
+    if (isset($_SESSION['user'])){
+        $ConnectedUser = $_SESSION['user']['login'];
         $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
         $Requete =  mysqli_query($Bdd, "SELECT * FROM `utilisateurs` INNER JOIN `droits` WHERE utilisateurs.id_droits = droits.id and  `login` = '".$ConnectedUser."'");
         $rows = mysqli_num_rows($Requete);

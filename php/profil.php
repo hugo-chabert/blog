@@ -2,9 +2,10 @@
 require ('fonctions/fonctionF.php');
 session_start();
 Deconnect();
-if(!isset($_SESSION['login'])){
+if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
+var_dump($_SESSION['user']);
 ?>
 
 <!DOCTYPE html>

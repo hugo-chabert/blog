@@ -10,7 +10,7 @@ function connect_database() {
 function verif_admin(){
     $bdd =  connect_database();
     if(!empty($_SESSION['user'])){
-        $login = $_SESSION['login'];
+        $login = $_SESSION['user']['login'];
         $id_droits = '1337';
         $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='".$login."' AND id_droits='".$id_droits."'");
         $Row= mysqli_num_rows($requete);
