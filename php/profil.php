@@ -5,7 +5,6 @@ Deconnect();
 if(!isset($_SESSION['user'])){
     header('Location: ../index.php');
 }
-var_dump($_SESSION['user']);
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +22,7 @@ var_dump($_SESSION['user']);
             <div class="Container">
                 <div class="box-change-info">
                     <div class="box-change">
-                        <h2 class="welcome-msg"><?php if(isset($_SESSION['login'])){echo 'Bonjour, <br><a>'.$_SESSION['login'].'</a> vous etes bien connecte.';}?></h2>
+                        <h2 class="welcome-msg"><?php if(isset($_SESSION['user']['login'])){echo 'Bonjour, <br><a>'.$_SESSION['user']['login'].'</a> vous etes bien connecte.';}?></h2>
                         <a href = "change-login.php"><button class="modif">Modifier votre Login</button></a>
                         <a href = "change-email.php"><button class="modif">Modifier votre Email</button></a>
                         <a href = "change-password.php"><button class="modif">Modifier votre Mot de passe</button></a>
@@ -31,7 +30,7 @@ var_dump($_SESSION['user']);
                     </div>
                     <div class="box-info">
                         <h2>Informations</h2>
-                        <?php if(isset($_SESSION['login'])){echo Info();}?>
+                        <?php if(isset($_SESSION['user']['login'])){echo Info();}?>
                     </div>
                 </div>
             </div>

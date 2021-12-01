@@ -6,16 +6,22 @@ function connect_database() {
     return $bdd;
 }
 
-function select_form() {
-
-    $bdd = connect_database();
-    $sql = mysqli_query($bdd, "SELECT * FROM categories");
-    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
-    foreach ($row2 as  $value) {
-        echo "<option value=\"categorie\" name=".$value["nom"]." >" . $value["nom"] . "</option>";
+function verif_admin_modo(){
+    $bdd =  connect_database();
+    if(!empty($_SESSION['user'])){
+        $login = $_SESSION['user']['login'];
+        $id_droits = '42';
+        $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='".$login."' AND id_droits>='".$id_droits."'");
+        $Row= mysqli_num_rows($requete);
+        if($Row != 1){
+            header('Location: ../index.php');
+        }
     }
-    return $row2;
+    else{
+        header('Location: ../index.php');
+    }
 }
+
 
 
 function connect_user() {
@@ -43,6 +49,7 @@ function connect_user() {
                 }
                 else {
                 $_SESSION['user'] = $fetch;
+                header('Location: profil.php');
                 }
             }
         }
@@ -93,22 +100,11 @@ function auto_list() {
     $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
 
     foreach ($row2 as  $value) {
-        echo "<option value=".$value["nom"]." name=".$value["nom"]." >" .$value["nom"]. "</option>";
+        echo "<option value=".$value["id"]." name=".$value["nom"]." >" .$value["nom"]. "</option>";
     }
     return $value;
 }
 
-function test(){
-    $bdd = connect_database();
-    $sql = mysqli_query($bdd, "SELECT * FROM categories");
-    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
-    foreach ($row2 as  $value) {
-        $requete = mysqli_query($bdd, "SELECT * FROM categories WHERE nom='".$value['nom']."'");
-        if($value['nom'] == $_POST['test']){
-            echo $value['nom'];
-        }
-    }
-}
 
 function create_article() {
     // ! configuration
@@ -116,17 +112,27 @@ function create_article() {
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-    $id_user = $_SESSION['user']['id'];
+
     // ! database connection
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-    if(isset($_POST['txt_article'])) {
-        $title = $_POST['txt_article'];
-        $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
-        (:title,:id_user,10)";
-        $q = $conn->prepare($sql);
-        $q->bindParam('title' ,$title ,PDO::PARAM_STR);
-        $q->bindParam('id_user' ,$id_user ,PDO::PARAM_INT);
-        $q->execute();
+    if(isset($_POST['txt_article']) && isset($_POST['cat'])) {
+        if (!$_POST['txt_article']) {
+            echo 'champ vide comme mes couilles';
+        }
+        elseif ($_POST['cat'] == "choose") {
+            echo 'champ vide comme les couilles à hugo';
+        }  else {
+            $title = $_POST['txt_article'];
+            $id_user = $_SESSION['user']['id'];
+            $id_cat = $_POST['cat'];
+            $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
+            (:title,:id_user,:id_cat)";
+            $q = $conn->prepare($sql);
+            $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+            $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
+            $q->execute();
+        }
     }
 }
 

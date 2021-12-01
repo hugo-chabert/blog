@@ -2,7 +2,8 @@
 $nomFichier = basename (__FILE__);
 session_start();
 require('fonctions/fonctionR.php');
-$bdd = connect_database();
+
+verif_admin_modo();
 ?>
 
 <!DOCTYPE html>
@@ -15,13 +16,13 @@ $bdd = connect_database();
 <body>
     <form method="post">
         <input type="text" name="txt_article" placeholder="Créer un Article">
-        <select name="categories">
-            <option value="" name="test">--Choisissez une catégorie d'article à ajouter--</option>
-            <?php  auto_list();?>
+        <select name="cat">
+            <option value="choose" name="choose">--Choisissez une catégorie d'article à ajouter--</option>
+            <?php  $value = auto_list();?>
         </select>
         <input  type="submit" name="envoyer" value="Envoyer"/>
     </form>
-    <?php  create_article()?>
+    <?php  create_article();?>
 </body>
 <?php require 'footer.php';?>
 </html>
