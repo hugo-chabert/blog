@@ -1,9 +1,9 @@
 <?php $nomFichier = basename (__FILE__);
- require ('fonctions/fonctionF.php');
+require ('fonctions/fonctionF.php');
 session_start();
 Deconnect();
 if(!isset($_SESSION['login'])){
-    header('Location: ../index.php');
+    header('Location: connexion.php');
 }
 ?>
 
@@ -30,7 +30,7 @@ if(!isset($_SESSION['login'])){
                     </div>
                     <div class="box-info">
                         <h2>Informations</h2>
-                        <?php if(isset($_SESSION['login'])){echo Info();}?>
+                        <?php if(isset($_SESSION['user']['login'])){echo Info();}?>
                     </div>
                 </div>
             </div>

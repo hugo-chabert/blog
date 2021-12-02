@@ -25,8 +25,8 @@ require('php/fonctions/fonctionR.php');
                 </div>
             </div>
             <div class="content">
-                <h1>Actualites</h1>
-                <div class="contentArticle">
+                <h1> <a class = 'link-article' href="#content-article"> Actualites </a></h1>
+                <div id = 'content-article' class="contentArticle">
                     <div class="article">
                         <img class = 'imgArticleIndex' src="http://cdn.shopify.com/s/files/1/0496/4325/8009/products/baskets-air-jordan-1-retro-high-og-sp-travis-scott-fragment-military-blue-air-jordan-kikikickz-604686_1200x1200.jpg?v=1626432662" alt="TS Aj1" width = '104%'>
                         <p class="textArticle">

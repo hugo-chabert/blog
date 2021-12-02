@@ -1,8 +1,5 @@
 <?php
 require ('fonctionR.php');
-function CreateArticle(){
-    $Bdd = connect_database();
-}
 function Deconnect(){// Fonction permettant de Deconnexion
     if (isset($_POST['deconnexion'])) {
         session_destroy();
@@ -139,7 +136,6 @@ function ChangeMdp(){
         echo '<p><br>Remplissez tous les champs</p><style>p{ font-size: 1.4em;}</style> ';
     }
 }
-
 function Info(){
     if (isset($_SESSION['login'])){
         $ConnectedUser = $_SESSION['login'];
@@ -156,5 +152,43 @@ function Info(){
         }
     }
 }
+
+function Recup_articles(){
+    $Bdd = connect_database();
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at, utilisateurs.login AS created_by, articles.id AS article_id FROM categories
+                                        INNER JOIN articles
+                                        INNER JOIN utilisateurs
+                                        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
+    $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
+    foreach ($articles as $article){
+        echo"
+        <div class='articles'>
+            <p>".$article['article_name']."</p>
+            <div class='wrapper'>
+            <a href='#demo-modal".$article['article_id']."'><button class='button'>Test Modal</button></a>
+            </div>
+
+            <div id='demo-modal".$article['article_id']."' class='modal'>
+                <div class='modal-content'>
+                    <h1>Bonjour</h1>
+
+                    <p>
+                        ".$article['article_name']."
+                    </p>
+
+                    <div class='modal-footer'>
+                        Créé par <u>".$article['created_by']."</u></a><br>
+                        dans la catégorie <u>".$article['category_name']."</u><br>
+                        le <u>".$article['created_at']."</u>
+                    </div>
+
+                    <a href='#' class='modal-close'>&times;</a>
+                </div>
+            </div>
+        </div>";
+    }
+}
+
+
 
 ?>
