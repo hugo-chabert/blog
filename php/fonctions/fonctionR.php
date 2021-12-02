@@ -61,38 +61,83 @@ function connect_user() {
         echo 'Please complete all fields';
     }
 }
-function select_categorie() {
+function recup_article() {
     $bdd = connect_database();
-    if (isset($_POST['txt_article']) && isset($_POST['categories'])) {
-        $txt_article = $_POST['txt_article'];
-        $categories = $_POST['categories'];
-        if ($txt_article != NULL && $categories != NULL) {
-            $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
-            articles.date AS created_at, utilisateurs.login AS created_by FROM categories
-            INNER JOIN articles
-            INNER JOIN utilisateurs
-            WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
-            $fetch= mysqli_fetch_all($request_select_article_w_categorie, MYSQLI_ASSOC);
-            echo '<pre>';
-            var_dump($fetch);
-            echo '</pre>';
-            if ($request_select_article_w_categorie == TRUE) {
-                echo 'ok';
-                // ? si article_name existe mais categorie diff de bdd alors c bon
-                // ? si article name existe et categorie de bdd meme alors c pas bon
-                if ($fetch == null) {
-                    echo 'creer';
+    $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name,
+        articles.article AS article_name,
+        articles.date AS created_at,
+        utilisateurs.login AS created_by,
+        articles.id AS id_article
+        FROM articles
+        INNER JOIN categories
+        INNER JOIN utilisateurs
+        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
+    $fetch= mysqli_fetch_assoc($request_select_article_w_categorie);
+    if ($request_select_article_w_categorie == TRUE) {
+        // echo '<pre>';
+        // var_dump($fetch);
+        // echo '</pre>';
+    }
+    return $fetch;
+}
 
-                    //INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ()
-                    //$request_create_article = mysqli_query($bdd,"INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES ('$txt_article','$article_categorie',10 ) ");
-                } else {
-                    echo 'existant';
-                }
-            }
+function convert_time() {
+    $bdd = connect_database();
+    $request = mysqli_query($bdd,"SELECT date FROM articles");
+    $recup = mysqli_fetch_assoc($request);
+    $timestamp = $recup["date"];
+
+    //echo $timestamp;
+    foreach ($recup as $key => $value) {
+        echo strftime('%A', strtotime($timestamp)).' '.strftime('%e', strtotime($timestamp)).' '.strftime('%B', strtotime($timestamp)).' '.strftime('%Y', strtotime($timestamp)).' '.strftime('%T', strtotime($timestamp));
+    }
+}
+
+function disp_com() {
+
+    $bdd = connect_database();
+    $recup_atc= recup_article();
+    $compt= 0;
+    $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
+    id_article,
+    utilisateurs.login AS commented_by,
+    commentaires.date AS created_at
+    FROM commentaires
+    INNER JOIN articles
+    INNER JOIN utilisateurs
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
+    $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
+    foreach($recup as $com) {
+        if ($recup_atc["id_article"] == $com["id_article"]) {
+            $compt++;
+            echo '<div class="tchoutch">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
         }
     }
 }
 
+function disp_count() {
+    $bdd = connect_database();
+    $recup_atc= recup_article();
+    $compteur= 0;
+    $request1 = mysqli_query($bdd,"SELECT commentaire AS comment_is,
+    id_article,
+    utilisateurs.login AS commented_by,
+    commentaires.date AS created_at
+    FROM commentaires
+    INNER JOIN articles
+    INNER JOIN utilisateurs
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
+    $recup_com = mysqli_fetch_all($request1, MYSQLI_ASSOC);
+    foreach($recup_com as $r) {
+        if ($recup_atc["id_article"] == $r["id_article"]) {
+            $compteur++;
+        }
+    }
+    $id_article = $recup_atc["id_article"];
+    $request = mysqli_query($bdd,"SELECT count(commentaire) FROM `commentaires` WHERE id_article='$id_article' ");
+    $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
+    echo $compteur.' ';
+}
 
 function auto_list() {
     $bdd = connect_database();
@@ -107,20 +152,18 @@ function auto_list() {
 
 
 function create_article() {
-    // ! configuration
+
     $dbhost     = "localhost";
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-
-    // ! database connection
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     if(isset($_POST['txt_article']) && isset($_POST['cat'])) {
         if (!$_POST['txt_article']) {
-            echo 'champ vide comme mes couilles';
+            echo '';
         }
         elseif ($_POST['cat'] == "choose") {
-            echo 'champ vide comme les couilles à hugo';
+            echo 'Veuillez choisir une catégorie';
         }  else {
             $title = $_POST['txt_article'];
             $id_user = $_SESSION['user']['id'];
