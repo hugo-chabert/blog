@@ -74,9 +74,6 @@ function recup_article() {
         WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
     $fetch= mysqli_fetch_assoc($request_select_article_w_categorie);
     if ($request_select_article_w_categorie == TRUE) {
-        // echo '<pre>';
-        // var_dump($fetch);
-        // echo '</pre>';
     }
     return $fetch;
 }
@@ -87,7 +84,6 @@ function convert_time() {
     $recup = mysqli_fetch_assoc($request);
     $timestamp = $recup["date"];
 
-    //echo $timestamp;
     foreach ($recup as $key => $value) {
         echo strftime('%A', strtotime($timestamp)).' '.strftime('%e', strtotime($timestamp)).' '.strftime('%B', strtotime($timestamp)).' '.strftime('%Y', strtotime($timestamp)).' '.strftime('%T', strtotime($timestamp));
     }
@@ -114,6 +110,7 @@ function disp_com() {
         }
     }
 }
+
 
 function disp_count() {
     $bdd = connect_database();
@@ -150,6 +147,30 @@ function auto_list() {
     return $value;
 }
 
+function new_com() {
+    $dbhost     = "localhost";
+    $dbname     = "blog";
+    $dbuser     = "root";
+    $dbpass     = "root";
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    if (!$_SESSION) {
+        echo 'Veuillez vous connecter pour poster un commentaire.';
+    } else {
+        echo '<p class="comm" >Votre commentaire :<br /><textarea name="commentaire" rows="10%" cols="90%"></textarea></p>';
+        if (isset($_POST["commentaire"]) && $_POST["commentaire"] != NULL) {
+            $send_comm = $_POST["commentaire"];
+            $id_user = $_SESSION['user']['id'];
+            $sql = "INSERT INTO commentaires (commentaire, id_utilisateur, id_article) VALUES (:commentaire, :id_user, 76)";
+            $q = $conn->prepare($sql);
+            $q->bindValue('commentaire' ,$send_comm ,PDO::PARAM_STR);
+            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+            $q->execute();
+            header('Location: article.php');
+        } else {
+            echo '<p class="comm" >Veuillez écrire quelque chose dans votre commentaire</p>';
+        }
+    }
+}
 
 function create_article() {
 
