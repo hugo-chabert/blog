@@ -1,6 +1,6 @@
 /*PARAMETRE PAGE*/
 html,body,main{
-    height: 100%;
+    height: auto;
     width: 100%;
     margin:0;
     padding:0;
@@ -74,10 +74,11 @@ html,body,main{
     background: var(--WhiteBlue-);
     padding: 1% 2%;
 }
-
-.modal-footer a{
-    text-align: right;
-    color: var(--DarkGrey-);
+.modal-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .modal-close {
@@ -92,7 +93,7 @@ html,body,main{
 
 .button {
     font-family: Dreams;
-    width: 150px;
+    width: 100%;
     height: 50px;
     border: none;
     outline: none;
@@ -141,7 +142,57 @@ html,body,main{
     top: 0;
     border-radius: 10px;
 }
-
+.button-com {
+    font-family: Dreams;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button-com:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color1bis-), var(--Color2bis-), var(--Color3bis-), var(--Color4bis-), var(--Color5bis-), var(--Color4bis-), var(--Color3bis-),  var(--Color2bis-), var(--Color1bis-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button-com:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button-com:active:after {
+    background: transparent;
+}
+.button-com:hover:before {
+    opacity: 1;
+}
+.button-com:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
 @keyframes glowing {
     0% { background-position: 0 0; }
     50% { background-position: 400% 0; }
@@ -152,4 +203,5 @@ html,body,main{
 
 .articles{
     background-color: var(--WhiteBlue-);
+    border-radius: 5px;
 }

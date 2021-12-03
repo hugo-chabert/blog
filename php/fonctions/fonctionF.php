@@ -155,7 +155,7 @@ function Info(){
 
 function Recup_articles(){
     $Bdd = connect_database();
-    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at, utilisateurs.login AS created_by, articles.id AS article_id FROM categories
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id FROM categories 
                                         INNER JOIN articles
                                         INNER JOIN utilisateurs
                                         WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
@@ -165,21 +165,22 @@ function Recup_articles(){
         <div class='articles'>
             <p>".$article['article_name']."</p>
             <div class='wrapper'>
-            <a href='#demo-modal".$article['article_id']."'><button class='button'>Test Modal</button></a>
+            <a href='#demo-modal".$article['article_id']."'><button class='button'>Plus d'informations</button></a>
             </div>
 
             <div id='demo-modal".$article['article_id']."' class='modal'>
                 <div class='modal-content'>
-                    <h1>Bonjour</h1>
+                    <h1>".$article['article_title']."</h1>
 
                     <p>
                         ".$article['article_name']."
                     </p>
 
                     <div class='modal-footer'>
-                        Créé par <u>".$article['created_by']."</u></a><br>
+                        <p>Créé par <u>".$article['created_by']."</u></a><br>
                         dans la catégorie <u>".$article['category_name']."</u><br>
-                        le <u>".$article['created_at']."</u>
+                        le <u>".$article['created_at']."</u></p>
+                        <a href ='article.php'><button class='button-com'> Voir/Laisser un commentaire</button></a>
                     </div>
 
                     <a href='#' class='modal-close'>&times;</a>
@@ -189,6 +190,30 @@ function Recup_articles(){
     }
 }
 
+//! function Upload_image(){
 
+//!     $Bdd = connect_database();
+//!     if($Bdd) {
+//!     echo "connecte";
+//!     }
+//!     else{
+//!         echo"Non connecte";
+//!     }
+
+//!     if(isset($_POST['images_user'])) {
+//!         $filename = $_FILES['uploadfile']['name'] ;
+//!         $filetmpname = $_FILES['uploadfile']['tmp_name'];
+//!         $folder = '../images_user/';
+
+//!         move_uploaded_file($filetmpname, $folder.$filename);
+
+//!         $sql = "INSERT INTO `images` (`imagename`)  VALUES ('$filename')";
+//!         $qry = mysqli_query($Bdd,  $sql);
+//!         if( $qry) {
+//!             echo "</br>image uploadé";
+//!         }
+//!     }
+
+//! }
 
 ?>
