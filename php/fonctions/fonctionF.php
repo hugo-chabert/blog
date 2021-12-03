@@ -1,8 +1,5 @@
 <?php
 require ('fonctionR.php');
-function CreateArticle(){
-    $Bdd = connect_database();
-}
 function Deconnect(){// Fonction permettant de Deconnexion
     if (isset($_POST['deconnexion'])) {
         session_destroy();
@@ -78,15 +75,16 @@ function ChangeLogin(){
                 if ($newlogin == $repeatnewlogin) {
                     $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND login = '$login'");
-                    $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
+                    //! $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
                     $rows = mysqli_num_rows($Requete);
-                    $rows_error = mysqli_num_rows($requete_error);
+                    //! $rows_error = mysqli_num_rows($requete_error);
+                    //! var_dump($requete_error);
                     if ($newlogin == $user_login){
                         echo "<p>Votre ancien Login est identique</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
                     }
-                    else if($rows_error==1){
-                        echo "<p>Ce Login est déjà utilisé </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
-                    }
+                    //! else if($rows_error==1){
+                    //!     echo "<p>Ce Login est déjà utilisé </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
+                    //! }
                     else if ($rows==1) {
                         $newpre = mysqli_query($Bdd, "UPDATE utilisateurs SET login='$newlogin' WHERE login='$username'");
                         session_destroy();
@@ -138,7 +136,6 @@ function ChangeMdp(){
         echo '<p><br>Remplissez tous les champs</p><style>p{ font-size: 1.4em;}</style> ';
     }
 }
-
 function Info(){
     if (isset($_SESSION['user'])){
         $ConnectedUser = $_SESSION['user']['login'];
@@ -155,5 +152,68 @@ function Info(){
         }
     }
 }
+
+function Recup_articles(){
+    $Bdd = connect_database();
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id FROM categories 
+                                        INNER JOIN articles
+                                        INNER JOIN utilisateurs
+                                        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
+    $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
+    foreach ($articles as $article){
+        echo"
+        <div class='articles'>
+            <p>".$article['article_name']."</p>
+            <div class='wrapper'>
+            <a href='#demo-modal".$article['article_id']."'><button class='button'>Plus d'informations</button></a>
+            </div>
+
+            <div id='demo-modal".$article['article_id']."' class='modal'>
+                <div class='modal-content'>
+                    <h1>".$article['article_title']."</h1>
+
+                    <p>
+                        ".$article['article_name']."
+                    </p>
+
+                    <div class='modal-footer'>
+                        <p>Créé par <u>".$article['created_by']."</u></a><br>
+                        dans la catégorie <u>".$article['category_name']."</u><br>
+                        le <u>".$article['created_at']."</u></p>
+                        <a href ='article.php'><button class='button-com'> Voir/Laisser un commentaire</button></a>
+                    </div>
+
+                    <a href='#' class='modal-close'>&times;</a>
+                </div>
+            </div>
+        </div>";
+    }
+}
+
+//! function Upload_image(){
+
+//!     $Bdd = connect_database();
+//!     if($Bdd) {
+//!     echo "connecte";
+//!     }
+//!     else{
+//!         echo"Non connecte";
+//!     }
+
+//!     if(isset($_POST['images_user'])) {
+//!         $filename = $_FILES['uploadfile']['name'] ;
+//!         $filetmpname = $_FILES['uploadfile']['tmp_name'];
+//!         $folder = '../images_user/';
+
+//!         move_uploaded_file($filetmpname, $folder.$filename);
+
+//!         $sql = "INSERT INTO `images` (`imagename`)  VALUES ('$filename')";
+//!         $qry = mysqli_query($Bdd,  $sql);
+//!         if( $qry) {
+//!             echo "</br>image uploadé";
+//!         }
+//!     }
+
+//! }
 
 ?>

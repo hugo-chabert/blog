@@ -38,14 +38,14 @@ function connect_user() {
                 $sql_password= $fetch['password'];
             }
             else {
-                echo'<p style="color:#FF0000";> <strong> Account not found</strong></p>';
+                echo'<p>Compte inexistant</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
             }
             if ($count == 1) {
                 if ($pw != $pw_confirmed) {
-                    echo'<p style="color:#FF0000";> <strong> Your password and your confirmed password is wrong</strong></p>';
+                    echo'<p>Mot de passe non identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else if (password_verify($pw, $sql_password) == FALSE) {
-                    echo'<p style="color:#FF0000";> <strong> Password invalid </strong></p>';
+                    echo'<p>Mot de passe incorrect </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else {
                 $_SESSION['user'] = $fetch;
@@ -54,11 +54,11 @@ function connect_user() {
             }
         }
         else {
-            echo'<p style="color:#FF0000";> <strong> You have an empty fields</strong></p>';
+            echo'<p>Remplissez tous les champs</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
         }
     }
     else {
-        echo 'Please complete all fields';
+        echo 'Veuillez saisir tous les champs';
     }
 }
 function recup_article() {
@@ -190,23 +190,23 @@ function new_user() {
         $request_verif_email = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE email='$email' ");
         $check_is_use_email= mysqli_num_rows($request_verif_email);
         if ($password != $Confirmedpassword) {
-            echo'<p style="color:#FF0000";> <strong> Your password and your confirmed password is wrong</strong></p>';
+            echo'<p>Mot de passe Non identique</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
         }
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo'<p style="color:#FF0000";> <strong> Please enter a valid email ex: user@wanadoo.com </strong></p>';
+            echo'<p>Veuillez entrer une adresse valide</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
         }
         else if ($check_is_use_email == 1) {
-            echo'<p style="color:#FF0000";> <strong> This email is already use</strong></p>';
+            echo'<p>Cette addresse est déjà utilisée</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
         }
         else if ($login == NULL ||  $email == NULL || $password == NULL || $Confirmedpassword == NULL ) {
-            echo'<p style="color:#FF0000";> <strong> You have an empty fields</strong></p>';
+            echo'<p>Remplissez tous les champs</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
         }
         else {
             $request_verif_login = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $check_is_use_login= mysqli_num_rows($request_verif_login);
             $pw_hash = password_hash($password, PASSWORD_DEFAULT);
             if($check_is_use_login == 1) {
-                echo'<p style="color:#FF0000";> <strong> This login is already use</strong></p>';
+                echo'<p>Ce Login est déjà utilisé</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
             }
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
@@ -215,7 +215,7 @@ function new_user() {
         }
     }
     else {
-        echo 'Please complete all fields';
+        echo 'Veuillez saisir tous les champs';
     }
 }
 
