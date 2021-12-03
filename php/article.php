@@ -1,6 +1,7 @@
 <?php
 $nomFichier = basename (__FILE__);
 require('fonctions/fonctionR.php');
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +16,7 @@ require('fonctions/fonctionR.php');
 <main>
     <div class="container">
         <?php
-            $article = recup_article(); ?>
+            $article = recup_article(); var_dump($article);?>
             <div id="styleTitre"><h1> <?php echo $article['article_name']; ?></h1></div>
             <div id="styleTitreTime"> <?php echo convert_time(); ?> </div>
             <div id='styleTitreCat'> Catégorie :  <?php echo $article['category_name'];?> </div>
@@ -25,6 +26,10 @@ require('fonctions/fonctionR.php');
         <h3 class="styleTitre"> <?php disp_count(); ?>COMMENTAIRES</h3>
     </div>
     <?php  disp_com(); ?>
+    <form method="post" >
+        <?php new_com(); ?>
+        <input  type="submit" name"envoyer" value="Envoyer"/>
+    </form>
 
 </main>
 </body>
