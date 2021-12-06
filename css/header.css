@@ -48,15 +48,16 @@ html,body,main{
     flex-direction: row;
     font-size: 150%;
     width: 50%;
+    align-items: center;
 }
 
 .droiteHeader{
     display: flex;
     flex-direction: row;
     font-size: 150%;
-    justify-content: center;
     justify-content: right;
     width: 50%;
+    align-items: center;
 }
 
 .deco2 {

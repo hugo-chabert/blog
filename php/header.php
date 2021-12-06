@@ -9,9 +9,23 @@
             <div class="droiteHeader">
                 <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/inscription.php" class="linkHeader">INSCRIPTION</a>');} ?>
                 <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/connexion.php" class="linkHeader">CONNEXION</a>');} ?>
+                <?php if(!empty($_SESSION['user'])){if($_SESSION['user']['id_droits'] == '1337'){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/admin.php" class="linkHeader">ADMIN</a>');}} ?>
                 <?php if(!empty($_SESSION['user'])){echo ('<form action="" method = "POST" class="decoButton"><button class = "deco2" type = "submit" name = "deconnexion" value ="Deconnexion">DECONNEXION</button></form>');} ?>
                 <?php if(!empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/profil.php" class="linkHeader"><img class="imgProfil" src="'); if($nomFichier != "index.php"){ echo "../";}; echo ('images/profil.png"></a></a>');} ?>
             </div>
         </div>
     </div>
 </header>
+<?php
+if (isset($_POST['deconnexion'])) {
+    session_destroy();
+    if($nomFichier != 'index.php'){
+        header('Location: ../index.php');
+        exit();
+    }
+    else if($nomFichier == 'index.php'){
+        header('Location: index.php');
+        exit();
+    }
+}
+?>
