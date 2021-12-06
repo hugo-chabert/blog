@@ -1,0 +1,50 @@
+@import url(font.css);
+
+
+.container {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.kommeAnTher {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+#styleTitre h1{
+    font-style: italic;
+    font-family:  Dreams;
+}
+
+#styleTitreTime {
+    padding-bottom: 20px;
+    font-size: 10px;
+    margin: 0;
+    font-family:  Dreams;
+}
+#styleTitreCat{
+    font-size: 15px;
+    margin: 0;
+    font-family:  Dreams;
+}
+#styleTitreCreateBy {
+    font-size: 15px;
+    margin: 0;
+    font-family:  Dreams;
+}
+
+.tchoutch {
+    margin: 5px;
+    padding-left: 3px;
+    border: 1px solid black;
+}
+.comm {
+    margin: 5px;
+    padding-left: 3px;
+}

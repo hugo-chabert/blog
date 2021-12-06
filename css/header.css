@@ -7,6 +7,7 @@ html,body,main{
     scroll-behavior: smooth;
     position: relative;
 }
+
 .header{
     background-color: var(--LightBlue-);
     padding-top: 0.25%; padding-bottom: 0.25%;
@@ -14,6 +15,8 @@ html,body,main{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    font-family: Dreams;
+    font-size: 90%;
 }
 
 .titreHeader{

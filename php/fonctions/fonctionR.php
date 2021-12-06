@@ -6,6 +6,24 @@ function connect_database() {
     return $bdd;
 }
 
+function verif_admin_modo(){
+    $bdd =  connect_database();
+    if(!empty($_SESSION['user'])){
+        $login = $_SESSION['user']['login'];
+        $id_droits = '42';
+        $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='".$login."' AND id_droits>='".$id_droits."'");
+        $Row= mysqli_num_rows($requete);
+        if($Row != 1){
+            header('Location: ../index.php');
+        }
+    }
+    else{
+        header('Location: ../index.php');
+    }
+}
+
+
+
 function connect_user() {
     $bdd =  connect_database();
     if (isset($_POST['login']) && isset($_POST['password'])) {
@@ -30,9 +48,8 @@ function connect_user() {
                     echo'<p>Mot de passe incorrect </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else {
-                header('Location: profil.php');
                 $_SESSION['user'] = $fetch;
-                $_SESSION['login'] = $login;
+                header('Location: profil.php');
                 }
             }
         }
@@ -44,6 +61,145 @@ function connect_user() {
         echo 'Veuillez saisir tous les champs';
     }
 }
+function recup_article() {
+    $bdd = connect_database();
+    $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name,
+        articles.article AS article_name,
+        articles.date AS created_at,
+        utilisateurs.login AS created_by,
+        articles.id AS id_article
+        FROM articles
+        INNER JOIN categories
+        INNER JOIN utilisateurs
+        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
+    $fetch= mysqli_fetch_assoc($request_select_article_w_categorie);
+    if ($request_select_article_w_categorie == TRUE) {
+    }
+    return $fetch;
+}
+
+function convert_time() {
+    $bdd = connect_database();
+    $request = mysqli_query($bdd,"SELECT date FROM articles");
+    $recup = mysqli_fetch_assoc($request);
+    $timestamp = $recup["date"];
+
+    foreach ($recup as $key => $value) {
+        echo strftime('%A', strtotime($timestamp)).' '.strftime('%e', strtotime($timestamp)).' '.strftime('%B', strtotime($timestamp)).' '.strftime('%Y', strtotime($timestamp)).' '.strftime('%T', strtotime($timestamp));
+    }
+}
+
+function disp_com() {
+
+    $bdd = connect_database();
+    $recup_atc= recup_article();
+    $compt= 0;
+    $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
+    id_article,
+    utilisateurs.login AS commented_by,
+    commentaires.date AS created_at
+    FROM commentaires
+    INNER JOIN articles
+    INNER JOIN utilisateurs
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
+    $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
+    foreach($recup as $com) {
+        if ($recup_atc["id_article"] == $com["id_article"]) {
+            $compt++;
+            echo '<div class="tchoutch">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+        }
+    }
+}
+
+
+function disp_count() {
+    $bdd = connect_database();
+    $recup_atc= recup_article();
+    $compteur= 0;
+    $request1 = mysqli_query($bdd,"SELECT commentaire AS comment_is,
+    id_article,
+    utilisateurs.login AS commented_by,
+    commentaires.date AS created_at
+    FROM commentaires
+    INNER JOIN articles
+    INNER JOIN utilisateurs
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
+    $recup_com = mysqli_fetch_all($request1, MYSQLI_ASSOC);
+    foreach($recup_com as $r) {
+        if ($recup_atc["id_article"] == $r["id_article"]) {
+            $compteur++;
+        }
+    }
+    $id_article = $recup_atc["id_article"];
+    $request = mysqli_query($bdd,"SELECT count(commentaire) FROM `commentaires` WHERE id_article='$id_article' ");
+    $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
+    echo $compteur.' ';
+}
+
+function auto_list() {
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+
+    foreach ($row2 as  $value) {
+        echo "<option value=".$value["id"]." name=".$value["nom"]." >" .$value["nom"]. "</option>";
+    }
+    return $value;
+}
+
+function new_com() {
+    $dbhost     = "localhost";
+    $dbname     = "blog";
+    $dbuser     = "root";
+    $dbpass     = "root";
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    if (!$_SESSION) {
+        echo 'Veuillez vous connecter pour poster un commentaire.';
+    } else {
+        echo '<p class="comm" >Votre commentaire :<br /><textarea name="commentaire" rows="10%" cols="90%"></textarea></p>';
+        if (isset($_POST["commentaire"]) && $_POST["commentaire"] != NULL) {
+            $send_comm = $_POST["commentaire"];
+            $id_user = $_SESSION['user']['id'];
+            $sql = "INSERT INTO commentaires (commentaire, id_utilisateur, id_article) VALUES (:commentaire, :id_user, 76)";
+            $q = $conn->prepare($sql);
+            $q->bindValue('commentaire' ,$send_comm ,PDO::PARAM_STR);
+            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+            $q->execute();
+            header('Location: article.php');
+        } else {
+            echo '<p class="comm" >Veuillez écrire quelque chose dans votre commentaire</p>';
+        }
+    }
+}
+
+function create_article() {
+
+    $dbhost     = "localhost";
+    $dbname     = "blog";
+    $dbuser     = "root";
+    $dbpass     = "root";
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    if(isset($_POST['txt_article']) && isset($_POST['cat'])) {
+        if (!$_POST['txt_article']) {
+            echo '';
+        }
+        elseif ($_POST['cat'] == "choose") {
+            echo 'Veuillez choisir une catégorie';
+        }  else {
+            $title = $_POST['txt_article'];
+            $id_user = $_SESSION['user']['id'];
+            $id_cat = $_POST['cat'];
+            $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
+            (:title,:id_user,:id_cat)";
+            $q = $conn->prepare($sql);
+            $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+            $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
+            $q->execute();
+        }
+    }
+}
+
 
 function new_user() {
     $bdd =  connect_database();
@@ -83,4 +239,6 @@ function new_user() {
         echo 'Veuillez saisir tous les champs';
     }
 }
+
+
 ?>

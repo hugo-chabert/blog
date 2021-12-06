@@ -2,8 +2,8 @@
 require ('fonctions/fonctionF.php');
 session_start();
 Deconnect();
-if(!isset($_SESSION['login'])){
-    header('Location: connexion.php');
+if(!isset($_SESSION['user'])){
+    header('Location: ../index.php');
 }
 ?>
 
@@ -22,7 +22,7 @@ if(!isset($_SESSION['login'])){
             <div class="Container">
                 <div class="box-change-info">
                     <div class="box-change">
-                        <h2 class="welcome-msg"><?php if(isset($_SESSION['login'])){echo 'Bonjour, <br><a>'.$_SESSION['login'].'</a> vous etes bien connecte.';}?></h2>
+                        <h2 class="welcome-msg"><?php if(isset($_SESSION['user']['login'])){echo 'Bonjour, <br><a>'.$_SESSION['user']['login'].'</a> vous etes bien connecte.';}?></h2>
                         <a href = "change-login.php"><button class="modif">Modifier votre Login</button></a>
                         <a href = "change-email.php"><button class="modif">Modifier votre Email</button></a>
                         <a href = "change-password.php"><button class="modif">Modifier votre Mot de passe</button></a>
