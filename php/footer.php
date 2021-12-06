@@ -2,7 +2,6 @@
 <footer>
     <div class="footer">
         <div class="footer1">
-            
         </div>
         <div class="footer2">
             Copyright © 2021 Hugo, François & Remi. All Rights Reserved

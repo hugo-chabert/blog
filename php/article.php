@@ -1,6 +1,6 @@
 <?php
 $nomFichier = basename (__FILE__);
-require('fonctions/fonctionR.php');
+require('fonctions/fonction.php');
 session_start();
 ?>
 
@@ -15,12 +15,11 @@ session_start();
 <body>
 <main>
     <div class="container">
-        <?php
-            $article = recup_article(); var_dump($article);?>
-            <div id="styleTitre"><h1> <?php echo $article['article_name']; ?></h1></div>
-            <div id="styleTitreTime"> <?php echo convert_time(); ?> </div>
-            <div id='styleTitreCat'> Catégorie :  <?php echo $article['category_name'];?> </div>
-            <div id='styleTitreCreateBy'> Créer par :  <?php echo $article['created_by'];?> </div>
+        <?php $article = recup_article();?>
+        <div id="styleTitre"><h1> <?php echo $article['article_name']; ?></h1></div>
+        <div id="styleTitreTime"> <?php echo convert_time(); ?> </div>
+        <div id='styleTitreCat'> Catégorie :  <?php echo $article['category_name'];?> </div>
+        <div id='styleTitreCreateBy'> Créer par :  <?php echo $article['created_by'];?> </div>
     </div>
     <div class="kommeAnTher">
         <h3 class="styleTitre"> <?php disp_count(); ?>COMMENTAIRES</h3>
@@ -30,7 +29,6 @@ session_start();
         <?php new_com(); ?>
         <input  type="submit" name"envoyer" value="Envoyer"/>
     </form>
-
 </main>
 </body>
 <?php require 'footer.php';?>

@@ -2,7 +2,7 @@
 $nomFichier = basename (__FILE__);
 require 'header.php';
 session_start();
-require('fonctions/fonctionH.php');
+require('fonctions/fonction.php');
 verif_admin();
 ?>
 <html>

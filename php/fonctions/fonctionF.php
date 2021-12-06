@@ -1,5 +1,7 @@
 <?php
-require ('fonctionR.php');
+require ('fonction.php');
+
+
 function Deconnect(){// Fonction permettant de Deconnexion
     if (isset($_POST['deconnexion'])) {
         session_destroy();
@@ -130,6 +132,7 @@ function ChangeMdp(){
             $requete_update_pwd = mysqli_query($Bdd, "UPDATE utilisateurs SET password = '$new_password_hash' WHERE id = '$id'");
             session_destroy();
             header('Location: connexion.php');
+            exit();
         }
     }
     else{
@@ -155,39 +158,45 @@ function Info(){
 
 function Recup_articles(){
     $Bdd = connect_database();
-    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id FROM categories 
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
+    articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
+                                        FROM categories
                                         INNER JOIN articles
                                         INNER JOIN utilisateurs
                                         WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
     $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
     foreach ($articles as $article){
-        echo"
+        ?>
         <div class='articles'>
-            <p>".$article['article_name']."</p>
+            <p><?=$article['article_title']?></p>
             <div class='wrapper'>
-            <a href='#demo-modal".$article['article_id']."'><button class='button'>Plus d'informations</button></a>
+            <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
             </div>
 
-            <div id='demo-modal".$article['article_id']."' class='modal'>
+            <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                 <div class='modal-content'>
-                    <h1>".$article['article_title']."</h1>
+                    <h1><?=$article['article_title']?></h1>
 
                     <p>
-                        ".$article['article_name']."
+                    <?=$article['article_name']?>
                     </p>
 
                     <div class='modal-footer'>
-                        <p>Créé par <u>".$article['created_by']."</u></a><br>
-                        dans la catégorie <u>".$article['category_name']."</u><br>
-                        le <u>".$article['created_at']."</u></p>
-                        <a href ='article.php'><button class='button-com'> Voir/Laisser un commentaire</button></a>
+                        <p>Créé par <u> <?= $article['created_by']?></u></a><br>
+                        dans la catégorie <u> <?= $article['category_name'] ?></u><br>
+                        le <u><?= $article['created_at']?></u></p>
+                        <form method="get" action="article.php">
+                        <button class="button-com" type="submit" name="<?= $article['article_id']?>" id="<?= $article['article_id']?>" >Voir/Laisser un commentaire</button>
+                        </form>
                     </div>
 
                     <a href='#' class='modal-close'>&times;</a>
                 </div>
             </div>
-        </div>";
+        </div>
+        <?php
     }
+    return $article;
 }
 
 //! function Upload_image(){

@@ -1,7 +1,7 @@
 <?php
 $nomFichier = basename (__FILE__);
 session_start();
-require('php/fonctions/fonctionR.php');
+require('php/fonctions/fonction.php');
 ?>
 <!DOCTYPE html>
 <html>

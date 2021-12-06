@@ -1,7 +1,7 @@
 <?php
 session_start();
 $nomFichier = basename (__FILE__);
-require('fonctions/fonctionH.php');
+require('fonctions/fonction.php');
 
 verif_admin();
 $bdd = connect_database();

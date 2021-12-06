@@ -1,7 +1,8 @@
 <?php
 $nomFichier = basename (__FILE__);
-require ('fonctions/fonctionF.php');
+require ('fonctions/fonction.php');
 session_start();
+var_dump($_GET);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +23,7 @@ session_start();
                     <div class="box-articles">
                         <?php
                         Recup_articles();
+                        pagination();
                         ?>
                     </div>
                     <div class="box-page">

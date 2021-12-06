@@ -2,7 +2,7 @@
 $nomFichier = basename (__FILE__);
 require 'header.php';
 session_start();
-require('fonctions/fonctionR.php');
+require('fonctions/fonction.php');
 if (isset($_SESSION['user'])){
   header('Location: profil.php');
 }
