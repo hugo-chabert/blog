@@ -29,17 +29,20 @@ html,body,main{
     align-items: center;
     padding: 3%;
     flex-direction: column;
-    width: 40%;
+    width: 60%;
     height: 80%;
-    gap: 10%;
+    gap: 20px;
 }
 .articles{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 2%;
-    width: 80%;
+    width: 50%;
     text-align: justify;
+    background-color: var(--WhiteBlue-);
+    border-radius: 5px;
+    font-size: 120%;
 }
 
 /*PARAMETRE MODAL*/
@@ -201,7 +204,3 @@ html,body,main{
 
 /*PARAMETRE ARTICLES*/
 
-.articles{
-    background-color: var(--WhiteBlue-);
-    border-radius: 5px;
-}
