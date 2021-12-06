@@ -41,10 +41,7 @@ function connect_user() {
                 echo'<p>Compte inexistant</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
             }
             if ($count == 1) {
-                if ($pw != $pw_confirmed) {
-                    echo'<p>Mot de passe non identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
-                }
-                else if (password_verify($pw, $sql_password) == FALSE) {
+                if (password_verify($pw, $sql_password) == FALSE) {
                     echo'<p>Mot de passe incorrect </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else {

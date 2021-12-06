@@ -155,7 +155,7 @@ function Info(){
 
 function Recup_articles(){
     $Bdd = connect_database();
-    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id FROM categories 
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id FROM categories
                                         INNER JOIN articles
                                         INNER JOIN utilisateurs
                                         WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");

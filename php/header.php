@@ -7,9 +7,10 @@
                 <a href="" class="linkHeader">CATEGORIES</a>
             </div>
             <div class="droiteHeader">
-                <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>php/inscription.php" class="linkHeader">INSCRIPTION</a>
-                <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>php/connexion.php" class="linkHeader">CONNEXION</a>
-                <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>php/profil.php" class="linkHeader"><img class="imgProfil" src="<?php if($nomFichier != 'index.php'){ echo '../';} ?>images/profil.png"></a></a>
+                <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/inscription.php" class="linkHeader">INSCRIPTION</a>');} ?>
+                <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/connexion.php" class="linkHeader">CONNEXION</a>');} ?>
+                <?php if(!empty($_SESSION['user'])){echo ('<form action="" method = "POST" class="decoButton"><button class = "deco2" type = "submit" name = "deconnexion" value ="Deconnexion">DECONNEXION</button></form>');} ?>
+                <?php if(!empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/profil.php" class="linkHeader"><img class="imgProfil" src="'); if($nomFichier != "index.php"){ echo "../";}; echo ('images/profil.png"></a></a>');} ?>
             </div>
         </div>
     </div>
