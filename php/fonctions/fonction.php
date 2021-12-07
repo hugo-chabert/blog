@@ -39,7 +39,6 @@ function connect_user() {
     if (isset($_POST['login']) && isset($_POST['password'])) {
         $login = $_POST['login'];
         $pw= $_POST['password'];
-        $pw_confirmed=$_POST['Confirmedpassword'];
         if ($login != NULL && $pw != NULL) {
             $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $count= mysqli_num_rows($requete);
@@ -51,10 +50,7 @@ function connect_user() {
                 echo'<p>Compte inexistant</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
             }
             if ($count == 1) {
-                if ($pw != $pw_confirmed) {
-                    echo'<p>Mot de passe non identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
-                }
-                else if (password_verify($pw, $sql_password) == FALSE) {
+                if (password_verify($pw, $sql_password) == FALSE) {
                     echo'<p>Mot de passe incorrect </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else {
