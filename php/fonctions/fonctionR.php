@@ -29,7 +29,6 @@ function connect_user() {
     if (isset($_POST['login']) && isset($_POST['password'])) {
         $login = $_POST['login'];
         $pw= $_POST['password'];
-        $pw_confirmed=$_POST['Confirmedpassword'];
         if ($login != NULL && $pw != NULL) {
             $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $count= mysqli_num_rows($requete);
