@@ -4,7 +4,14 @@
         <div class="links">
             <div class="gaucheHeader">
                 <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>index.php" class="linkHeader">ACCUEIL</a>
-                <a href="" class="linkHeader">CATEGORIES</a>
+                <div class="dropdown">
+                    <a>CATEGORIES</a>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
             </div>
             <div class="droiteHeader">
                 <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/inscription.php" class="linkHeader">INSCRIPTION</a>');} ?>
