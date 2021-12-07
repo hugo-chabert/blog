@@ -1,0 +1,140 @@
+html,body,main{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    padding:0;
+    scroll-behavior: smooth;
+    font-family: Dreams;
+}
+a{
+    text-decoration: none;
+    color: var(--Black-);
+}
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box-form{
+    box-shadow: 0 8px 8px  var(--Shadow-);
+    background-color: var(--White-);
+    width: 40%;
+    height: 65%;
+    padding: 5%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.box-form h1{
+    font-size: 140%;
+}
+
+.form{
+    box-shadow:0 2px 3px var(--Shadow-);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5%;
+    background-color: var(--WhiteGrey-);
+    padding: 5%;
+    width: 70%;
+    height: 90%;
+}
+
+input:nth-child(1){
+    font-family: Dreams;
+    letter-spacing: 1px;
+    font-size: 130%;
+    width: 80%;
+    height: 12%;
+    border: none;
+    background-color: var(--WhiteBlue-);
+}
+select:nth-child(2){
+    font-family: Dreams;
+    letter-spacing: 1px;
+    font-size: 130%;
+    height: 12%;
+    width: 80% ;
+    border: none;
+    background-color: var(--WhiteBlue-);
+
+}
+textarea:nth-child(3){
+    font-family: Dreams;
+    letter-spacing: 1px;
+    font-size: 130%;
+    height: 60%;
+    width: 95%;
+    border: none;
+    text-align: start;
+    background-color: var(--WhiteBlue-);
+}
+.annuler-submit{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    height: 11%;
+}
+.button {
+    font-family: Dreams;
+    width: 40%;
+    height: 100%;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color1bis-), var(--Color2bis-), var(--Color3bis-), var(--Color4bis-), var(--Color5bis-), var(--Color4bis-), var(--Color3bis-),  var(--Color2bis-), var(--Color1bis-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button:active:after {
+    background: transparent;
+}
+.button:hover:before {
+    opacity: 1;
+}
+.button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
