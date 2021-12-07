@@ -1,7 +1,7 @@
 <?php
 $nomFichier = basename (__FILE__);
 session_start();
-require('fonctions/fonctionR.php');
+require('fonctions/fonction.php');
 
 verif_admin_modo();
 ?>
@@ -15,7 +15,8 @@ verif_admin_modo();
 <?php require 'header.php';?>
 <body>
     <form method="post">
-        <input type="text" name="txt_article" placeholder="Créer un Article">
+        <input type="textarea" name="txt_article" placeholder="Description de l'article">
+        <input type="text" name="nom_article" placeholder="Nom de l'article">
         <select name="cat">
             <option value="choose" name="choose">--Choisissez une catégorie d'article à ajouter--</option>
             <?php  $value = auto_list();?>
