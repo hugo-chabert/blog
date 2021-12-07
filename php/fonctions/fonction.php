@@ -14,10 +14,12 @@ function verif_admin_modo(){
         $Row= mysqli_num_rows($requete);
         if($Row != 1){
             header('Location: ../index.php');
+            exit();
         }
     }
     else{
         header('Location: ../index.php');
+        exit();
     }
 }
 
@@ -678,12 +680,41 @@ function Recup_articles(){
 }
 
 function pagination() {
-    $messagesParPage=5;
     $bdd = connect_database();
-    $retour_total=mysqli_query($bdd, "SELECT COUNT(*) AS id FROM articles");
-    $donnees_total=mysqli_fetch_all($retour_total,MYSQLI_ASSOC);
-    var_dump($donnees_total);
-    //$total=$donnees_total['total'];
-    //$nombreDePages=ceil($total/$messagesParPage);
+    $sql = "SELECT * FROM articles ORDER BY date DESC";
+    $requete = mysqli_query($bdd, $sql);
+    $fetch = mysqli_fetch_all($requete, MYSQLI_ASSOC);
+    return $fetch;
+
 }
+
+// function create_article() {
+
+//     $dbhost     = "localhost";
+//     $dbname     = "blog";
+//     $dbuser     = "root";
+//     $dbpass     = "root";
+//     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+//     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
+//         if (!$_POST['txt_article']) {
+//             echo '';
+//         }
+//         elseif ($_POST['cat'] == "choose") {
+//             echo 'Veuillez choisir une catégorie';
+//         }  else {
+//             $title = $_POST['txt_article'];
+//             $id_user = $_SESSION['user']['id'];
+//             $id_cat = $_POST['cat'];
+//             $nom_article = $_POST['nom_article'];
+//             $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
+//             (:title,:nom_article, :id_user,:id_cat)";
+//             $q = $conn->prepare($sql);
+//             $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+//             $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
+//             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+//             $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
+//             $q->execute();
+//         }
+//     }
+// }
 ?>
