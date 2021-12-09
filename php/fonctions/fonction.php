@@ -665,7 +665,58 @@ function Recup_articles(){
                         <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
                         </form>
                     </div>
+                    <a href='#' class='modal-close'>&times;</a>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+    return $articles;
+}
 
+function Recup_articles2(){
+    if(isset($_GET['page']) && !empty($_GET['page'])){
+        $currentPage = (int) strip_tags($_GET['page']);
+    }
+    else{
+        $currentPage = 1;
+    }
+    $Bdd = connect_database();
+    $sql_count = "SELECT COUNT(*) AS nb_articles FROM articles";
+    $requete_count = mysqli_query($Bdd, $sql_count);
+    $fetch_count = mysqli_fetch_assoc($requete_count);
+    $nbArticles = (int) $fetch_count['nb_articles'];
+    $parPage = 5;
+    // ! ceil Arrondit au nombre supérieur
+    $pages = ceil($nbArticles / $parPage);
+    $premier = ($currentPage * $parPage) - $parPage;
+    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
+    articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
+                                        FROM categories
+                                        INNER JOIN articles
+                                        INNER JOIN utilisateurs
+                                        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur
+                                        ORDER BY date DESC LIMIT $premier, $parPage ");
+    $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
+    foreach ($articles as $article){
+        ?>
+        <div class='articles'>
+            <p><?=$article['article_title']?></p>
+            <div class='wrapper'>
+            <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+            </div>
+            <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
+                <div class='modal-content'>
+                    <h1><?=$article['article_title']?></h1>
+                    <p><?=$article['article_name']?></p>
+                    <div class='modal-footer'>
+                        <p>Créé par <u> <?= $article['created_by']?></u></a><br>
+                        dans la catégorie <u> <?= $article['category_name'] ?></u><br>
+                        le <u><?= $article['created_at']?></u></p>
+                        <form method="get">
+                        <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                        </form>
+                    </div>
                     <a href='#' class='modal-close'>&times;</a>
                 </div>
             </div>
