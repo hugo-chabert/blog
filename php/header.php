@@ -12,6 +12,7 @@
                         <a href="#">Link 3</a>
                     </div>
                 </div>
+                <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>php/articles.php" class="linkHeader">ARTICLES</a>
             </div>
             <div class="droiteHeader">
                 <?php if(empty($_SESSION['user'])){echo ('<a href="'); if($nomFichier != 'index.php'){ echo '../';} echo ('php/inscription.php" class="linkHeader">INSCRIPTION</a>');} ?>
