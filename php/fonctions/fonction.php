@@ -636,45 +636,7 @@ function recup_article() {
 }
 
 
-
 function Recup_articles(){
-    $Bdd = connect_database();
-    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
-    articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
-                                        FROM categories
-                                        INNER JOIN articles
-                                        INNER JOIN utilisateurs
-                                        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur ");
-    $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
-    foreach ($articles as $article){
-        ?>
-        <div class='articles'>
-            <p><?=$article['article_title']?></p>
-            <div class='wrapper'>
-            <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
-            </div>
-            <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
-                <div class='modal-content'>
-                    <h1><?=$article['article_title']?></h1>
-                    <p><?=$article['article_name']?></p>
-                    <div class='modal-footer'>
-                        <p>Créé par <u> <?= $article['created_by']?></u></a><br>
-                        dans la catégorie <u> <?= $article['category_name'] ?></u><br>
-                        le <u><?= $article['created_at']?></u></p>
-                        <form method="get">
-                        <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
-                        </form>
-                    </div>
-                    <a href='#' class='modal-close'>&times;</a>
-                </div>
-            </div>
-        </div>
-        <?php
-    }
-    return $articles;
-}
-
-function Recup_articles2(){
     if(isset($_GET['page']) && !empty($_GET['page'])){
         $currentPage = (int) strip_tags($_GET['page']);
     }
@@ -682,6 +644,9 @@ function Recup_articles2(){
         $currentPage = 1;
     }
     $Bdd = connect_database();
+    if(isset($_GET['categorie'])){
+        $id_cat = $_GET['categorie'];
+    }
     $sql_count = "SELECT COUNT(*) AS nb_articles FROM articles";
     $requete_count = mysqli_query($Bdd, $sql_count);
     $fetch_count = mysqli_fetch_assoc($requete_count);
@@ -690,78 +655,103 @@ function Recup_articles2(){
     // ! ceil Arrondit au nombre supérieur
     $pages = ceil($nbArticles / $parPage);
     $premier = ($currentPage * $parPage) - $parPage;
-    $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
-    articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
-                                        FROM categories
-                                        INNER JOIN articles
-                                        INNER JOIN utilisateurs
-                                        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur
-                                        ORDER BY date DESC LIMIT $premier, $parPage ");
-    $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
-    foreach ($articles as $article){
-        ?>
-        <div class='articles'>
-            <p><?=$article['article_title']?></p>
-            <div class='wrapper'>
-            <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
-            </div>
-            <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
-                <div class='modal-content'>
-                    <h1><?=$article['article_title']?></h1>
-                    <p><?=$article['article_name']?></p>
-                    <div class='modal-footer'>
-                        <p>Créé par <u> <?= $article['created_by']?></u></a><br>
-                        dans la catégorie <u> <?= $article['category_name'] ?></u><br>
-                        le <u><?= $article['created_at']?></u></p>
-                        <form method="get">
-                        <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
-                        </form>
+    if(isset($id_cat)){
+        if(is_numeric($id_cat)){
+            $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
+            articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
+                                                FROM categories
+                                                INNER JOIN articles
+                                                INNER JOIN utilisateurs
+                                                WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur && categories.id = $id_cat
+                                                ORDER BY date DESC LIMIT $premier, $parPage ");
+            $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
+            $requete_recup_categories = mysqli_query($Bdd, "SELECT * FROM categories ");
+            $categories = mysqli_fetch_all($requete_recup_categories, MYSQLI_ASSOC);
+            foreach ($articles as $article){
+                ?>
+                <div class='articles'>
+                    <p><?=$article['article_title']?></p>
+                    <div class='wrapper'>
+                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
                     </div>
-                    <a href='#' class='modal-close'>&times;</a>
+                    <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
+                        <div class='modal-content'>
+                            <h1><?=$article['article_title']?></h1>
+                            <p><?=$article['article_name']?></p>
+                            <div class='modal-footer'>
+                                <p>Créé par <u> <?= $article['created_by']?></u></a><br>
+                                dans la catégorie <u> <?= $article['category_name'] ?></u><br>
+                                le <u><?= $article['created_at']?></u></p>
+                                <form method="get">
+                                <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                                </form>
+                            </div>
+                            <a href='#' class='modal-close'>&times;</a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        }
+        else{
+            echo 'GROS FAIT GAFFE';
+        }
+    }
+    else if(!isset($id_cat)){
+        $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
+        articles.date AS created_at,articles.nom_article AS article_title, utilisateurs.login AS created_by, articles.id AS article_id
+                                            FROM categories
+                                            INNER JOIN articles
+                                            INNER JOIN utilisateurs
+                                            WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur
+                                            ORDER BY date DESC LIMIT $premier, $parPage ");
+        $articles = mysqli_fetch_all($requete_recup_articles, MYSQLI_ASSOC);
+        $requete_recup_categories = mysqli_query($Bdd, "SELECT * FROM categories ");
+        $categories = mysqli_fetch_all($requete_recup_categories, MYSQLI_ASSOC);
+        foreach ($articles as $article){
+            ?>
+            <div class='articles'>
+                <p><?=$article['article_title']?></p>
+                <div class='wrapper'>
+                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+                </div>
+                <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
+                    <div class='modal-content'>
+                        <h1><?=$article['article_title']?></h1>
+                        <p><?=$article['article_name']?></p>
+                        <div class='modal-footer'>
+                            <p>Créé par <u> <?= $article['created_by']?></u></a><br>
+                            dans la catégorie <u> <?= $article['category_name'] ?></u><br>
+                            le <u><?= $article['created_at']?></u></p>
+                            <form method="get">
+                            <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                            </form>
+                        </div>
+                        <a href='#' class='modal-close'>&times;</a>
+                    </div>
                 </div>
             </div>
-        </div>
+            <?php
+        }
+    }
+}
+
+function show_categories() {
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+    foreach ($row2 as $value_cat) {
+        ?>
+        <form methode="get">
+        <?php
+        echo "<a href='articles.php?categorie=".$value_cat['id']."'>".$value_cat["nom"]."</a>";
+        ?>
+        </form>
         <?php
     }
-    return $articles;
+    if(isset($_GET['categorie'])){
+        $id_cat = $_GET['categorie'];
+    }
 }
 
-function pagination() {
-    $bdd = connect_database();
-    $sql = "SELECT * FROM articles ORDER BY date DESC";
-    $requete = mysqli_query($bdd, $sql);
-    $fetch = mysqli_fetch_all($requete, MYSQLI_ASSOC);
-    return $fetch;
-
-}
-
-// function create_article() {
-
-//     $dbhost     = "localhost";
-//     $dbname     = "blog";
-//     $dbuser     = "root";
-//     $dbpass     = "root";
-//     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-//     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
-//         if (!$_POST['txt_article']) {
-//             echo '';
-//         }
-//         elseif ($_POST['cat'] == "choose") {
-//             echo 'Veuillez choisir une catégorie';
-//         }  else {
-//             $title = $_POST['txt_article'];
-//             $id_user = $_SESSION['user']['id'];
-//             $id_cat = $_POST['cat'];
-//             $nom_article = $_POST['nom_article'];
-//             $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
-//             (:title,:nom_article, :id_user,:id_cat)";
-//             $q = $conn->prepare($sql);
-//             $q->bindValue('title' ,$title ,PDO::PARAM_STR);
-//             $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
-//             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
-//             $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
-//             $q->execute();
-//         }
-//     }
-// }
 ?>
