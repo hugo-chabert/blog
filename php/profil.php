@@ -1,5 +1,5 @@
 <?php $nomFichier = basename (__FILE__);
-require ('fonctions/fonctionF.php');
+require ('fonctions/fonction.php');
 session_start();
 Deconnect();
 if(!isset($_SESSION['user'])){

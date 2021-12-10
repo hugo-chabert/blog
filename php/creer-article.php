@@ -1,7 +1,8 @@
 <?php
 $nomFichier = basename (__FILE__);
 session_start();
-require('fonctions/fonctionR.php');
+require('fonctions/fonction.php');
+
 verif_admin_modo();
 ?>
 

@@ -1,10 +1,7 @@
 <?php
+require ('fonctionF.php');
+require ('fonction.php');
 
-function connect_database() {
-    $bdd =  mysqli_connect('localhost', 'root', 'root', 'blog');
-    mysqli_set_charset($bdd, 'utf8');
-    return $bdd;
-}
 
 function verif_admin_modo(){
     $bdd =  connect_database();
@@ -59,18 +56,18 @@ function connect_user() {
 }
 function recup_article() {
     $bdd = connect_database();
+    $get_id_atc = Recup_articles();
+    $id= $_GET[$get_id_atc["id"]];
     $request_select_article_w_categorie = mysqli_query($bdd, "SELECT categories.nom AS category_name,
-        articles.article AS article_name,
-        articles.date AS created_at,
-        utilisateurs.login AS created_by,
-        articles.id AS id_article
-        FROM articles
-        INNER JOIN categories
-        INNER JOIN utilisateurs
-        WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur");
+    articles.article AS article_name,
+    articles.date AS created_at,
+    utilisateurs.login AS created_by,
+    articles.id AS id_article
+    FROM articles
+    INNER JOIN categories
+    INNER JOIN utilisateurs
+    WHERE articles.id_categorie = categories.id && utilisateurs.id = articles.id_utilisateur && articles.id = '$id' ");
     $fetch= mysqli_fetch_assoc($request_select_article_w_categorie);
-    if ($request_select_article_w_categorie == TRUE) {
-    }
     return $fetch;
 }
 
@@ -162,6 +159,7 @@ function new_com() {
             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
             $q->execute();
             header('Location: article.php');
+            exit();
         } else {
             echo '<p class="comm" >Veuillez écrire quelque chose dans votre commentaire</p>';
         }
