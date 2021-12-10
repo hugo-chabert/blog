@@ -39,9 +39,8 @@ html,body,main{
 }
 
 .linkHeader:hover{
-    color: var(--DarkestBlue-);
+    color: var(--Color4bis-);
 }
-
 
 .gaucheHeader{
     display: flex;
