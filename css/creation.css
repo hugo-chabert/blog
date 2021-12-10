@@ -31,7 +31,9 @@ a{
     align-items: center;
 }
 .box-form h1{
-    font-size: 140%;
+    font-size: 180%;
+    color: var(--Grey-);
+    text-align: center;
 }
 
 .form{
@@ -41,9 +43,9 @@ a{
     align-items: center;
     gap: 5%;
     background-color: var(--WhiteGrey-);
-    padding: 5%;
-    width: 70%;
-    height: 90%;
+    padding: 7%;
+    width: 90%;
+    height: 95%;
 }
 
 input:nth-child(1){
@@ -84,7 +86,7 @@ textarea:nth-child(3){
 }
 .button {
     font-family: Dreams;
-    width: 40%;
+    width: 30%;
     height: 100%;
     border: none;
     outline: none;

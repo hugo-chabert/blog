@@ -16,7 +16,9 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
 <html>
     <head>
         <meta charset="UTF-8">
-        <link href="../css/admin.css" rel="stylesheet">
+        <link href="../css/user.css" rel="stylesheet">
+        <link href="../css/root.css" rel="stylesheet">
+        <link href="../css/font.css" rel="stylesheet">
         <title>Modification des utilisateurs</title>
     </head>
     <body>
@@ -25,68 +27,69 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
         ?>
         <main>
             <div class="container">
-                <table>
-                    <tr>
-                        <th>Login</th>
-                        <th>Email</th>
-                        <th>Rôle</th>
-                    </tr>
-                    <tr><?php
-                        foreach($Users as $User){
-                            echo '<tr><td>'.$User['login'].'</td>';
-                            echo '<td>'.$User['email'].'</td>';
-                            echo '<td>'.$User['nom'].'</td>';
-                        }?>
-                    </tr>
-                </table>
-                <div class="createUser">
-                    <a href='inscription-admin.php'>Creer un nouvel utilisateur</a>
-                </div>
-                <div class="modif">
-                    <div class="modifGD">
+                <div class="table-button">
+                    <div class="table">
+                        <table>
+                            <tr>
+                                <th>Login</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                            </tr>
+                            <tr><?php
+                                foreach($Users as $User){
+                                    echo '<tr><td>'.$User['login'].'</td>';
+                                    echo '<td>'.$User['email'].'</td>';
+                                    echo '<td>'.$User['nom'].'</td>';
+                                }?>
+                            </tr>
+                        </table>
+                        <div class="createUser">
+                            <a href='inscription-admin.php'> <button class = 'button4'> Creer un nouvel utilisateur</button></a>
+                            <a href='admin.php'> <button class = 'button3'> Retour</button></a>
+                        </div>
+                    </div>
+                    <div class="modif">
                         <div class="alone">
-                            Modifier le rôle
-                            <form action="" method="post">
-                                <input type="text" name="login" placeholder="Entrez le login de l'utilisateur"/></br>
-                                <select name="role_change">
+                            <h3>Modifier le rôle</h3>
+                            <form class ='form-modif' action="" method="post">
+                                <input class = 'modif-zone' type="text" name="login" placeholder="Entrez le login de l'utilisateur"/></br>
+                                <select class = 'modif-zone' name="role_change">
                                     <option value="user">Utilisateur</option>
                                     <option value="modo">Modérateur</option>
                                 </select></br>
-                                <input class="button" type="submit" value="Changer"/>
+                                <button class="button" type="submit" >Changer</button>
                             </form>
                             <?php
                                 change_role();
                             ?>
                         </div>
                         <div class="alone">
-                            Changer le login d'un utilisateur
-                            <form action="" method="post">
-                                <input type="text" name="loginChange" placeholder="Entrez le login de l'utilisateur"/></br>
-                                <input type="text" name="loginChangeN" placeholder="Entrez le nouveau login"/></br>
-                                <input class="button" type="submit" value="Changer"/>
+                            <h3>Changer le login d'un utilisateur</h3>
+                            <form class ='form-modif' action="" method="post">
+                                <input class = 'modif-zone' type="text" name="loginChange" placeholder="Entrez le login de l'utilisateur"/></br>
+                                <input class = 'modif-zone' type="text" name="loginChangeN" placeholder="Entrez le nouveau login"/></br>
+                                <button class="button" type="submit" >Changer</button>
                             </form>
                             <?php
                                 change_login_user();
                             ?>
                         </div>
-                    </div>
-                    <div class="modifGD">
                         <div class="alone">
-                            Supprimer un utilisateur
-                            <form action="" method="post">
-                                <input type="text" name="loginSupp" placeholder="Entrez le login de l'utilisateur"/></br>
-                                <input class="button" type="submit" value="Supprimer"/>
+                            <h3>Supprimer un utilisateur</h3>
+                            <form class ='form-modif' action="" method="post">
+                                <input class = 'modif-zone' type="text" name="loginSupp" placeholder="Entrez le login de l'utilisateur"/></br>
+                                <button class="button2" type="submit" >Supprimer</button>
                             </form>
                             <?php
                                 delete_user();
                             ?>
                         </div>
                         <div class="alone">
-                            Changer l'Email d'un utilisateur
-                            <form action="" method="post">
-                                <input type="text" name="emailChange" placeholder="Entrez l'Email de l'utilisateur"/></br>
-                                <input type="text" name="emailChangeN" placeholder="Entrez le nouvel Email"/></br>
-                                <input class="button" type="submit" value="Changer"/>
+                            <h3>Changer l'Email d'un utilisateur</h3>
+                            <form class ='form-modif' action="" method="post">
+                                <input class = 'modif-zone' type="text" name="emailChange" placeholder="Entrez l'Email de l'utilisateur"/></br>
+                                <input class = 'modif-zone' type="text" name="emailChangeN" placeholder="Entrez le nouvel Email"/></br>
+                                <button class="button" type="submit" >Changer</button>
                             </form>
                             <?php
                                 change_email_user();

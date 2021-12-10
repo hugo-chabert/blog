@@ -1,0 +1,300 @@
+html,body,main{
+    height: 100%;
+    width: 100%;
+    margin:0;
+    padding:0;
+    scroll-behavior: smooth;
+    font-family: Dreams;
+}
+.container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.table{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: var(--WhiteGrey-);
+    width: 60%;
+    padding: 1%;
+    box-shadow:0 2px 3px var(--Shadow-);
+}
+.table-button{
+    display: flex ;
+    flex-direction: column ;
+    padding-top: 1%;
+    gap:10px;
+    align-items: center;
+    background-color: var(--White-);
+    width: 95%;
+    height: 90%;
+    box-shadow: 0 8px 8px  var(--Shadow-);
+}
+.createUser{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+}
+.modif{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+.form-modif{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+table{
+    border-collapse: collapse;
+    border: 4px inset var(--Blue-);
+    margin: 5%;
+    height: 300px;
+    min-width: 35%;
+    box-shadow: 6px 7px 9px -2px var(--Shadow-);
+}
+th{
+    border : 1px solid var(--DarkBlue-);
+    color: var(--Color4bis-);
+    text-align: center;
+    background-color: var(--WhiteBlue-);
+}
+td{
+    border-bottom : 1px solid var(--DarkBlue-);
+    border-right : 1px solid var(--DarkBlue-);
+    color: var(--Black-);
+    background-color: var(--White-);
+    text-align: center;
+}
+.button {
+    font-family: Dreams;
+    width: 40%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color1bis-), var(--Color2bis-), var(--Color3bis-), var(--Color4bis-), var(--Color5bis-), var(--Color4bis-), var(--Color3bis-),  var(--Color2bis-), var(--Color1bis-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button:active:after {
+    background: transparent;
+}
+.button:hover:before {
+    opacity: 1;
+}
+.button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+.button2 {
+    font-family: Dreams;
+    width: 40%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button2:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color6-), var(--Color7-), var(--Color8-), var(--Color9-), var(--Color10-), var(--Color9-), var(--Color8-),  var(--Color7-), var(--Color6-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button2:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button2:active:after {
+    background: transparent;
+}
+.button2:hover:before {
+    opacity: 1;
+}
+.button2:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+.button4 {
+    font-family: Dreams;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button4:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color1bis-), var(--Color2bis-), var(--Color3bis-), var(--Color4bis-), var(--Color5bis-), var(--Color4bis-), var(--Color3bis-),  var(--Color2bis-), var(--Color1bis-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button4:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button4:active:after {
+    background: transparent;
+}
+.button4:hover:before {
+    opacity: 1;
+}
+.button4:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+.button3 {
+    font-family: Dreams;
+    width: 120%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button3:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color6-), var(--Color7-), var(--Color8-), var(--Color9-), var(--Color10-), var(--Color9-), var(--Color8-),  var(--Color7-), var(--Color6-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button3:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button3:active:after {
+    background: transparent;
+}
+.button3:hover:before {
+    opacity: 1;
+}
+.button3:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.modif-zone{
+    border: none;
+    background-color: var(--WhiteBlue-);
+    width: 70%;
+    height: 40px;
+    font-family: Dreams;
+    font-size: 100%;
+}
+.alone{
+    width: 25%;
+    text-align: center;
+}

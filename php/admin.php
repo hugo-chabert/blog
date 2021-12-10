@@ -17,6 +17,8 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
     <head>
         <meta charset="UTF-8">
         <link href="../css/admin.css" rel="stylesheet">
+        <link href="../css/root.css" rel="stylesheet">
+        <link href="../css/font.css" rel="stylesheet">
         <title>Admin</title>
     </head>
     <body>
@@ -24,39 +26,41 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
             require 'header.php';
         ?>
         <main>
-            <div class="container">
-                <div class="Tabs">
-                    <table class="table1">
-                        <tr>
-                            <th>Login</th>
-                            <th>Email</th>
-                            <th>Rôle</th>
-                        </tr>
-                        <tr><?php
-                            foreach($Users as $User){
-                                echo '<tr><td>'.$User['login'].'</td>';
-                                echo '<td>'.$User['email'].'</td>';
-                                echo '<td>'.$User['nom'].'</td>';
-                            }?>
-                        </tr>
-                    </table>
-                    <table class="table2">
-                        <tr>
-                            <th>Catégories</th>
-                        </tr>
-                        <tr><?php
-                            foreach($Cate as $C){
-                                echo '<tr><td>'.$C['nom'].'</td>';
-                            }?>
-                        </tr>
-                    </table>
-                </div>
-                <div class="Texts">
-                    <div>
-                        <a href='modif-user-admin.php'>Gestion des utilisateurs</a>
+            <div class="Container">
+                <div class="container-tab">
+                    <div class="Tabs">
+                        <table class="table1">
+                            <tr>
+                                <th>Login</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                            </tr>
+                            <tr><?php
+                                foreach($Users as $User){
+                                    echo '<tr><td>'.$User['login'].'</td>';
+                                    echo '<td>'.$User['email'].'</td>';
+                                    echo '<td>'.$User['nom'].'</td>';
+                                }?>
+                            </tr>
+                        </table>
+                        <table class="table2">
+                            <tr>
+                                <th>Catégories</th>
+                            </tr>
+                            <tr><?php
+                                foreach($Cate as $C){
+                                    echo '<tr><td>'.$C['nom'].'</td>';
+                                }?>
+                            </tr>
+                        </table>
                     </div>
-                    <div>
-                        <a href='modif-cat-admin.php'>Gestion des catégories</a>
+                    <div class="button-gestion">
+                        <div>
+                            <a href='modif-user-admin.php'> <button class ='button'> Gestion des utilisateurs </button></a>
+                        </div>
+                        <div>
+                            <a href='modif-cat-admin.php'><button class ='button'> Gestion des catégories </button></a>
+                        </div>
                     </div>
                 </div>
             </div>

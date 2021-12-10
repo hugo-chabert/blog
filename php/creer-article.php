@@ -20,7 +20,7 @@ verif_admin_modo();
         <main>
             <div class="container">
                 <div class="box-form">
-                    <h1>Impressionnez nous en ecrivant votre plus bel article !!</h1>
+                    <h1>Impressionnez nous en ecrivant votre plus bel article !!!</h1>
                     <form class ='form' method="post">
                         <input type="text" name="nom_article" placeholder="Titre de l'Article">
                         <select name="cat">

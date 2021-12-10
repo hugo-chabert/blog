@@ -35,14 +35,12 @@ html,body,main{
     text-decoration: none;
     font-family: Dreams;
     color: var(--Black-);
-    margin-top: 1%;margin-bottom: 1%;
-    margin-right: 2%;margin-left: 2%;
+    margin: 1%;
 }
 
 .linkHeader:hover{
-    color: var(--DarkestBlue-);
+    color: var(--Color4bis-);
 }
-
 
 .gaucheHeader{
     display: flex;
