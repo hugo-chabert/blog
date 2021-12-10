@@ -27,7 +27,7 @@ session_start();
     <?php  disp_com(); ?>
     <form method="post" >
         <?php new_com(); ?>
-        <input  type="submit" name"envoyer" value="Envoyer"/>
+        <input  type="submit" name="envoyer" value="Envoyer"/>
     </form>
 </main>
 </body>
