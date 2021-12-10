@@ -7,7 +7,14 @@
                 <div class="dropdown">
                     <a>CATEGORIES</a>
                     <div class="dropdown-content">
-                        <?php show_categories();?>
+                        <?php
+                            if($nomFichier == 'index.php'){
+                                show_categories_index();
+                            }
+                            else{
+                                show_categories();
+                            }
+                        ?>
                     </div>
                 </div>
                 <a href="<?php if($nomFichier != 'index.php'){ echo '../';} ?>php/articles.php" class="linkHeader">ARTICLES</a>

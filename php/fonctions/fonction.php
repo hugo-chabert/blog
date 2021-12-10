@@ -694,7 +694,7 @@ function Recup_articles(){
             }
         }
         else{
-            echo 'GROS FAIT GAFFE';
+            echo 'Catégorie inexistante !!';
         }
     }
     else if(!isset($id_cat)){
@@ -745,6 +745,24 @@ function show_categories() {
         <form methode="get">
         <?php
         echo "<a href='articles.php?categorie=".$value_cat['id']."'>".$value_cat["nom"]."</a>";
+        ?>
+        </form>
+        <?php
+    }
+    if(isset($_GET['categorie'])){
+        $id_cat = $_GET['categorie'];
+    }
+}
+
+function show_categories_index() {
+    $bdd = connect_database();
+    $sql = mysqli_query($bdd, "SELECT * FROM categories");
+    $row2 = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+    foreach ($row2 as $value_cat) {
+        ?>
+        <form methode="get">
+        <?php
+        echo "<a href='php/articles.php?categorie=".$value_cat['id']."'>".$value_cat["nom"]."</a>";
         ?>
         </form>
         <?php
