@@ -33,21 +33,18 @@ $place = 0;
                         <p class="textArticle">
                         <?php recup_article_index(0); ?>
                         </p>
-                        <button class="glow" type="button"><b>Lire la suite</b></button>
                     </div>
                     <div class="article2">
                         <img class = 'imgArticleIndex' src="https://www.sneakerstyle.fr/wp-content/uploads/2020/06/off-white-x-air-jordan-4-wmns-sail-CV9388-100.jpg" alt="OW AJ4" width = '100%'>
                         <p class="textArticle">
                         <?php recup_article_index(1); ?>
                         </p>
-                        <button class="glow" type="button"><b>Lire la suite</b></button>
                     </div>
                     <div class="article3">
                     <img class = 'imgArticleIndex' src="https://mivintagelabel.com/wp-content/uploads/2020/10/Air-Jordan-1-x-Dior-2.jpg" alt="OW AF1" width = '94%'>
                         <p class="textArticle">
                         <?php recup_article_index(2); ?>
                         </p>
-                        <button class="glow" type="button"><b>Lire la suite</b></button>
                     </div>
                 </div>
             </div>

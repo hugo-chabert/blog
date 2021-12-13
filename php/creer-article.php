@@ -31,7 +31,7 @@ verif_admin_modo();
                         <?php create_article(); ?>
                         <div class="annuler-submit">
                             <button class = 'button' type="submit" name="envoyer"> Créer l'article</button>
-                            <button class = 'button'><a href="profil.php"> Annuler</a></button>
+                            <button class = 'button2'><a href="profil.php"> Annuler</a></button>
                         </div>
                     </form>
                 </div>

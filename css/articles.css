@@ -95,7 +95,10 @@ html,body,main{
     text-decoration: none;
 }
 /*PARAMETRE  BUTTON MODAL*/
-
+a{
+    text-decoration: none;
+    color: var(--Black-);
+}
 .button {
     font-family: Dreams;
     width: 100%;
