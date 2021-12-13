@@ -68,6 +68,17 @@ function connect_user() {
     }
 }
 
+function recup_nb_com() {
+    $bdd = connect_database();
+    $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
+    id_utilisateur AS id_users
+    FROM commentaires
+    GROUP BY id_utilisateur");
+    $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
+    foreach ($recup_info_profil as $nb_com) {
+        echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
+    }
+}
 
 function disp_com() {
 
@@ -86,7 +97,11 @@ function disp_com() {
     foreach($recup as $com) {
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
-            echo '<div class="tchoutch">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+            echo '<div class="ComAndProfil">';
+            //recup_nb_com();
+            echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+            echo '</div>';
+
         }
     }
 }
