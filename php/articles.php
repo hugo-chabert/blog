@@ -2,6 +2,7 @@
 $nomFichier = basename (__FILE__);
 require ('fonctions/fonction.php');
 session_start();
+
 if(isset($_GET['page']) && !empty($_GET['page'])){
     $currentPage = (int) strip_tags($_GET['page']);
 }
