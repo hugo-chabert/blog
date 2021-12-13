@@ -87,7 +87,7 @@ textarea:nth-child(3){
 .button {
     font-family: Dreams;
     width: 30%;
-    height: 100%;
+    height: 45px;
     border: none;
     outline: none;
     color: var(--Black-);
@@ -125,6 +125,57 @@ textarea:nth-child(3){
     opacity: 1;
 }
 .button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+.button2 {
+    font-family: Dreams;
+    width: 30%;
+    height: 45px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button2:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color6-), var(--Color7-), var(--Color8-), var(--Color9-), var(--Color10-), var(--Color9-), var(--Color8-),  var(--Color7-), var(--Color6-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button2:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button2:active:after {
+    background: transparent;
+}
+.button2:hover:before {
+    opacity: 1;
+}
+.button2:after {
     z-index: -1;
     content: '';
     position: absolute;

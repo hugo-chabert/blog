@@ -698,7 +698,7 @@ function Recup_articles(){
                                 dans la catégorie <u> <?= $article['category_name'] ?></u><br>
                                 le <u><?= $article['created_at']?></u></p>
                                 <form method="get">
-                                <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                                <?php echo "<button class ='button-com'><a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a></button>"; ?>
                                 </form>
                             </div>
                             <a href='#' class='modal-close'>&times;</a>
@@ -739,7 +739,7 @@ function Recup_articles(){
                             dans la catégorie <u> <?= $article['category_name'] ?></u><br>
                             le <u><?= $article['created_at']?></u></p>
                             <form method="get">
-                            <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                            <?php echo "<button class ='button-com'><a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a></button>"; ?>
                             </form>
                         </div>
                         <a href='#' class='modal-close'>&times;</a>
