@@ -1,7 +1,24 @@
-@import url(font.css);
-
-
+html,body,main {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    scroll-behavior: smooth;
+    font-family: Dreams;
+}
 .container {
+    width: 100%;
+    height: 100%;
+}
+
+.containALL {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerArticle {
 
     display: flex;
     flex-direction: column;
@@ -9,15 +26,22 @@
     align-items: center;
 
 }
-.kommeAnTher {
+.commentaires {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    width: 100%;
+    height: fit-content;
     margin-top: 10px;
     margin-bottom: 10px;
+    background-color: blue;
 
 }
-
-#styleTitre h1{
+.styleTitreCom {
+    text-align: center;
+    font-family:  Dreams;
+}
+.styleTitreCom h1{
     font-style: italic;
     font-family:  Dreams;
 }
@@ -39,12 +63,30 @@
     font-family:  Dreams;
 }
 
-.tchoutch {
-    margin: 5px;
-    padding-left: 3px;
-    border: 1px solid black;
-}
 .comm {
     margin: 5px;
     padding-left: 3px;
+}
+.ComAndProfil{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.show_profil {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin: 0.5%;
+    padding: 1%;
+    width: 20%;
+}
+
+.show_com {
+
+    width: 80%;
+    height: 200px;
+    margin: 0.5%;
+    padding: 1%;
+    border: 1px solid black;
 }

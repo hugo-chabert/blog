@@ -72,6 +72,17 @@ function connect_user() {
     }
 }
 
+function recup_nb_com() {
+    $bdd = connect_database();
+    $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
+    id_utilisateur AS id_users
+    FROM commentaires
+    GROUP BY id_utilisateur");
+    $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
+    foreach ($recup_info_profil as $nb_com) {
+        echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
+    }
+}
 
 function disp_com() {
 
@@ -90,7 +101,11 @@ function disp_com() {
     foreach($recup as $com) {
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
-            echo '<div class="tchoutch">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+            echo '<div class="ComAndProfil">';
+            recup_nb_com();
+            echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+            echo '</div>';
+
         }
     }
 }
@@ -639,8 +654,6 @@ function recup_article() {
     return $fetch;
 }
 
-
-
 function Recup_articles(){
     $Bdd = connect_database();
     $requete_recup_articles = mysqli_query($Bdd, "SELECT categories.nom AS category_name, articles.article AS article_name,
@@ -687,34 +700,4 @@ function pagination() {
     return $fetch;
 
 }
-
-// function create_article() {
-
-//     $dbhost     = "localhost";
-//     $dbname     = "blog";
-//     $dbuser     = "root";
-//     $dbpass     = "root";
-//     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-//     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
-//         if (!$_POST['txt_article']) {
-//             echo '';
-//         }
-//         elseif ($_POST['cat'] == "choose") {
-//             echo 'Veuillez choisir une catégorie';
-//         }  else {
-//             $title = $_POST['txt_article'];
-//             $id_user = $_SESSION['user']['id'];
-//             $id_cat = $_POST['cat'];
-//             $nom_article = $_POST['nom_article'];
-//             $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
-//             (:title,:nom_article, :id_user,:id_cat)";
-//             $q = $conn->prepare($sql);
-//             $q->bindValue('title' ,$title ,PDO::PARAM_STR);
-//             $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
-//             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
-//             $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
-//             $q->execute();
-//         }
-//     }
-// }
 ?>
