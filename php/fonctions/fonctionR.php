@@ -26,7 +26,6 @@ function connect_user() {
     if (isset($_POST['login']) && isset($_POST['password'])) {
         $login = $_POST['login'];
         $pw= $_POST['password'];
-        $pw_confirmed=$_POST['Confirmedpassword'];
         if ($login != NULL && $pw != NULL) {
             $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $count= mysqli_num_rows($requete);
@@ -38,10 +37,7 @@ function connect_user() {
                 echo'<p>Compte inexistant</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
             }
             if ($count == 1) {
-                if ($pw != $pw_confirmed) {
-                    echo'<p>Mot de passe non identiques</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
-                }
-                else if (password_verify($pw, $sql_password) == FALSE) {
+                if (password_verify($pw, $sql_password) == FALSE) {
                     echo'<p>Mot de passe incorrect </p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>';
                 }
                 else {
@@ -187,13 +183,16 @@ function create_article() {
             $title = $_POST['txt_article'];
             $id_user = $_SESSION['user']['id'];
             $id_cat = $_POST['cat'];
-            $sql = "INSERT INTO articles (article,id_utilisateur,id_categorie) VALUES
-            (:title,:id_user,:id_cat)";
+            $nom_article = @$_POST['nom_article'];
+            $sql = "INSERT INTO articles (article,nom_article,id_utilisateur,id_categorie) VALUES
+            (:title,:nom_article,:id_user,:id_cat)";
             $q = $conn->prepare($sql);
             $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+            $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
             $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
             $q->execute();
+            header('Location: articles.php');
         }
     }
 }

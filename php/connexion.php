@@ -24,7 +24,6 @@ if (isset($_SESSION['user'])){
     <form action="" method="post" class="login-form">
         <input type="text" id="login" name="login" placeholder="Login"/>
         <input type="password" id="password" name="password" placeholder="Password"/>
-        <input type="password" id="Confirmedpassword" name="Confirmedpassword" placeholder="Confirmed Password"/>
         <button class="button" type="submit" > Se connecter</button>
         <p class="message">Pas de compte ? <a class = 'link' href="inscription.php"><strong>Inscrivez vous !</strong></a></p>
     </form>
