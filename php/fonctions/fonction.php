@@ -98,7 +98,7 @@ function disp_com() {
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
             echo '<div class="ComAndProfil">';
-            recup_nb_com();
+            //recup_nb_com();
             echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
             echo '</div>';
 

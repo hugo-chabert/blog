@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $nomFichier = basename (__FILE__);
 require('fonctions/fonction.php');
 session_start();
@@ -36,4 +37,5 @@ session_start();
 </main>
 </body>
 <?php require 'footer.php';?>
+<?php ob_end_flush();?>
 </html>
