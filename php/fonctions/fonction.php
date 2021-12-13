@@ -772,4 +772,20 @@ function show_categories_index() {
     }
 }
 
+function recup_article_index($place){
+    $bdd = connect_database();
+    if(isset($place)){
+        $requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id = (SELECT max(id)-$place FROM articles)");
+        $row = mysqli_fetch_all($requete, MYSQLI_ASSOC);
+        foreach($row as $value){
+            ?>
+            <form methode="get">
+            <?php
+            echo "<a>".$value["article"]."</a>";
+            ?>
+            </form>
+            <?php
+        }
+    }
+}
 ?>
