@@ -30,18 +30,10 @@ session_start();
             </div>
             <form method="post" >
                 <?php new_com(); ?>
-                <input  type="submit" name"envoyer" value="Envoyer"/>
+                <input  type="submit" name="envoyer" value="Envoyer"/>
             </form>
         </div>
     </div>
-    <div class="kommeAnTher">
-        <h3 class="styleTitre"> <?php disp_count(); ?>COMMENTAIRES</h3>
-    </div>
-    <?php  disp_com(); ?>
-    <form method="post" >
-        <?php new_com(); ?>
-        <input  type="submit" name="envoyer" value="Envoyer"/>
-    </form>
 </main>
 </body>
 <?php require 'footer.php';?>

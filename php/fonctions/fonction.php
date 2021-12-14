@@ -68,27 +68,16 @@ function connect_user() {
     }
 }
 
-function recup_nb_com() {
-    $bdd = connect_database();
-    $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
-    id_utilisateur AS id_users
-    FROM commentaires
-    GROUP BY id_utilisateur");
-    $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
-    foreach ($recup_info_profil as $nb_com) {
-        echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
-    }
-}
 
 function disp_com() {
-
     $bdd = connect_database();
     $recup_atc= recup_article();
     $compt= 0;
     $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
     id_article,
-    utilisateurs.login AS commented_by,
-    commentaires.date AS created_at
+    commentaires.id_utilisateur AS commented_by,
+    commentaires.date AS created_at,
+    utilisateurs.id AS id_users
     FROM commentaires
     INNER JOIN articles
     INNER JOIN utilisateurs
@@ -98,10 +87,26 @@ function disp_com() {
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
             echo '<div class="ComAndProfil">';
-            //recup_nb_com();
-            echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+            $id_util = $com['id_users'];
+            $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
+            id_utilisateur AS id_users
+            FROM commentaires
+            WHERE id_utilisateur = $id_util
+            GROUP BY id_utilisateur");
+            $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
+            foreach ($recup_info_profil as $nb_com) {
+                echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
+            }
+            $idUser = $com["commented_by"];
+            $idToLogin = mysqli_query($bdd,"SELECT * FROM utilisateurs WHERE $idUser = id");
+            $Row = mysqli_num_rows($idToLogin);
+            if($Row == 1){
+                $fetch_idToLogin = mysqli_fetch_all($idToLogin, MYSQLI_ASSOC);
+                foreach($fetch_idToLogin as $login){
+                    echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$login["login"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+                }
+            }
             echo '</div>';
-
         }
     }
 }
