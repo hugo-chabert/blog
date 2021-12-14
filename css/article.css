@@ -33,7 +33,8 @@ html,body,main {
     width: 90%;
     height: fit-content;
     margin: 0;
-    background-color: rgb(141, 141, 238);
+    background-color: var(--White-);
+    box-shadow: 0 8px 8px  var(--Shadow-);
 
 }
 .styleTitreCom {
@@ -76,10 +77,11 @@ html,body,main {
 .show_profil {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     margin: 0.5%;
     padding: 1%;
     width: 20%;
+    background-color: var(--WhiteGrey-);
+    box-shadow: 0 2px 3px  var(--Shadow-);
 }
 
 .show_com {
@@ -88,7 +90,8 @@ html,body,main {
     height: 200px;
     margin: 0.5%;
     padding: 1%;
-    border: 1px solid black;
+    background-color: var(--WhiteGrey-);
+    box-shadow: 0 2px 3px  var(--Shadow-);
 }
 .send_com{
     border: none;
