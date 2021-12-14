@@ -88,21 +88,23 @@ function disp_com() {
     $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
     id_article,
     utilisateurs.login AS commented_by,
-    commentaires.date AS created_at
+    commentaires.date AS created_at,
+    droits.nom AS role_user
     FROM commentaires
     INNER JOIN articles
     INNER JOIN utilisateurs
-    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
+    INNER JOIN droits
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur && droits.id=utilisateurs.id_droits");
     $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
+
     foreach($recup as $com) {
+        echo '<div class="ComAndProfil">';
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
-            echo '<div class="ComAndProfil">';
-            //recup_nb_com();
-            echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
-            echo '</div>';
-
+            echo '<div class="show_profil">Numero du commentaire : '.$compt.'</br>'.' Commenté par : '.$com["commented_by"].'</br>Rôle : '.$com["role_user"].'<br>le '.$com["created_at"].'</br></br></div>';
+            echo '<div class="show_com">'.$com["comment_is"].'</br></div>';
         }
+        echo '</div>';
     }
 }
 
@@ -151,7 +153,7 @@ function new_com() {
     if (!$_SESSION) {
         echo 'Veuillez vous connecter pour poster un commentaire.';
     } else {
-        echo '<p class="comm" >Votre commentaire :<br /><textarea name="commentaire" rows="10%" cols="90%"></textarea></p>';
+        echo '<p class="comm" >Votre commentaire :<br /><textarea class = "send_com" name="commentaire" rows="10%" cols="90%"></textarea></p>';
         if (isset($_POST["commentaire"]) && $_POST["commentaire"] != NULL) {
             $send_comm = $_POST["commentaire"];
             $id_user = $_SESSION['user']['id'];
@@ -164,8 +166,6 @@ function new_com() {
             $q->execute();
             header('Location: article.php?id='.$get_id_article);
             exit();
-        } else {
-            echo '<p class="comm" >Veuillez écrire un commentaire</p>';
         }
     }
 }

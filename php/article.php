@@ -10,6 +10,8 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <link href="../css/article.css" rel="stylesheet">
+    <link href="../css/font.css" rel="stylesheet">
+    <link href="../css/root.css" rel="stylesheet">
     <title>Article</title>
 </head>
 <?php require 'header.php';?>
@@ -30,18 +32,10 @@ session_start();
             </div>
             <form method="post" >
                 <?php new_com(); ?>
-                <input  type="submit" name"envoyer" value="Envoyer"/>
+                <button class = 'button' type="submit" name="envoyer"> Envoyer </button>
             </form>
         </div>
     </div>
-    <div class="kommeAnTher">
-        <h3 class="styleTitre"> <?php disp_count(); ?>COMMENTAIRES</h3>
-    </div>
-    <?php  disp_com(); ?>
-    <form method="post" >
-        <?php new_com(); ?>
-        <input  type="submit" name="envoyer" value="Envoyer"/>
-    </form>
 </main>
 </body>
 <?php require 'footer.php';?>
