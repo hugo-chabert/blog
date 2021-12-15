@@ -834,10 +834,14 @@ function recup_article_index($place){
             ?>
             <form methode="get">
             <?php
-            echo "<a>".$value["article"]."</a>";
+            echo "<a>".$value["article"]."</a></br></br></br>";
+            echo "<button class ='button'><a href='php/article.php?id=".$value['id']."'>Voir/Laisser un commentaire</a></button>";
             ?>
             </form>
             <?php
+        }
+        if(empty($row)){
+            echo '</br></br></br><a class="DELETE">Article supprimé</a>';
         }
     }
 }

@@ -3,7 +3,8 @@
 @import url(font.css);
 /*Image Accueil*/
 a{
-    text-decoration:none
+    text-decoration:none;
+    color: var(--Black-);
 }
 
 .header1{
@@ -134,3 +135,65 @@ a{
     box-shadow: 0 8px 8px  var(--Shadow-);
 }
 
+
+
+.button {
+    font-family: Dreams;
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: var(--Black-);
+    background: var(--Black-);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    font-size: 130%;
+}
+.button:before {
+    content: '';
+    background: linear-gradient(50deg, var(--Color1bis-), var(--Color2bis-), var(--Color3bis-), var(--Color4bis-), var(--Color5bis-), var(--Color4bis-), var(--Color3bis-),  var(--Color2bis-), var(--Color1bis-));
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+.button:active {
+    color: var(--Black-);
+    text-decoration: underline;
+}
+.button:active:after {
+    background: transparent;
+}
+.button:hover:before {
+    opacity: 1;
+}
+.button:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--WhiteGrey-);
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+
+.DELETE{
+    color: var(--Red-);
+}
