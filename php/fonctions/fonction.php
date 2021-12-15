@@ -75,45 +75,31 @@ function disp_com() {
     $compt= 0;
     $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
     id_article,
-    utilisateurs.login AS commented_by,
+    commentaires.id_utilisateur AS commented_by,
     commentaires.date AS created_at,
-    droits.nom AS role_user
+    utilisateurs.id AS id_users
     FROM commentaires
     INNER JOIN articles
     INNER JOIN utilisateurs
-    INNER JOIN droits
-    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur && droits.id=utilisateurs.id_droits");
+    WHERE id_article= articles.id && utilisateurs.id=articles.id_utilisateur");
     $recup = mysqli_fetch_all($request, MYSQLI_ASSOC);
-
     foreach($recup as $com) {
-        echo '<div class="ComAndProfil">';
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
-            echo '<div class="show_profil">Numero du commentaire : '.$compt.'</br>'.' Commenté par : '.$com["commented_by"].'</br>Rôle : '.$com["role_user"].'<br>le '.$com["created_at"].'</br></br></div>';
-            echo '<div class="show_com">'.$com["comment_is"].'</br></div>';
             echo '<div class="ComAndProfil">';
-            $id_util = $com['id_users'];
-            $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
-            id_utilisateur AS id_users
-            FROM commentaires
-            WHERE id_utilisateur = $id_util
-            GROUP BY id_utilisateur");
-            $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
-            foreach ($recup_info_profil as $nb_com) {
-                echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
-            }
             $idUser = $com["commented_by"];
             $idToLogin = mysqli_query($bdd,"SELECT * FROM utilisateurs WHERE $idUser = id");
             $Row = mysqli_num_rows($idToLogin);
             if($Row == 1){
                 $fetch_idToLogin = mysqli_fetch_all($idToLogin, MYSQLI_ASSOC);
                 foreach($fetch_idToLogin as $login){
-                    echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$login["login"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
+                    echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br></div></br>';
                 }
             }
+            echo '<div class="show_com">'.$com["comment_is"].'</br></div></br>';
             echo '</div>';
+
         }
-        echo '</div>';
     }
 }
 
