@@ -28,7 +28,6 @@ function convert_time() {
     $request = mysqli_query($bdd,"SELECT date FROM articles");
     $recup = mysqli_fetch_assoc($request);
     $timestamp = $recup["date"];
-
     foreach ($recup as $key => $value) {
         echo strftime('%A', strtotime($timestamp)).' '.strftime('%e', strtotime($timestamp)).' '.strftime('%B', strtotime($timestamp)).' '.strftime('%Y', strtotime($timestamp)).' '.strftime('%T', strtotime($timestamp));
     }
@@ -94,12 +93,18 @@ function disp_com() {
             if($Row == 1){
                 $fetch_idToLogin = mysqli_fetch_all($idToLogin, MYSQLI_ASSOC);
                 foreach($fetch_idToLogin as $login){
-                    echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br></div></br>';
+                    $idDroit = $login['id_droits'];
+                    $nomIdDroit = mysqli_query($bdd,"SELECT * FROM droits WHERE $idDroit = id");
+                    $Row2 = mysqli_num_rows($nomIdDroit);
+                    if($Row2 == 1){
+                        $fetch_nomIdDroit = mysqli_fetch_all($nomIdDroit, MYSQLI_ASSOC);
+                        foreach($fetch_nomIdDroit as $droit){
+                            echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br>Rôle : '.$droit["nom"].'</div></br>';
+                        }
+                    }
                 }
             }
-            echo '<div class="show_com">'.$com["comment_is"].'</br></div></br>';
-            echo '</div>';
-
+            echo '<div class="show_com">'.$com["comment_is"].'</br></div></br></div>';
         }
     }
 }
