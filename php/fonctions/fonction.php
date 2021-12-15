@@ -908,4 +908,66 @@ function show_article_admin(){
         }
     }
 }
+
+function change_article_nom(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleChange']) && !empty($_POST['articleChangeN'])){
+        $article = $_POST['articleChange'];
+        $Narticle = $_POST['articleChangeN'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article ='$article'");
+        $Rows = mysqli_num_rows($Requete);
+        if($Rows == 1){
+            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET nom_article = '$Narticle' WHERE nom_article = '$article'");
+            header('Location: modif-articles-admin.php');
+            exit();
+        }
+        else{
+            echo "Cet article n'existe pas";
+        }
+    }
+    else if(isset($_POST['articleChange']) || isset($_POST['articleChangeN'])){
+        echo 'Remplissez tout les champs';
+    }
+}
+
+function modif_article(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleModifName']) && !empty($_POST['articleModif'])){
+        $articleName = $_POST['articleModifName'];
+        $articleModif = $_POST['articleModif'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article ='$articleName'");
+        $Rows = mysqli_num_rows($Requete);
+        if($Rows == 1){
+            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET article = '$articleModif' WHERE nom_article = '$articleName'");
+            header('Location: modif-articles-admin.php');
+            exit();
+        }
+        else{
+            echo "Cet article n'existe pas";
+        }
+    }
+    else if(isset($_POST['articleModifName']) || isset($_POST['articleModif'])){
+        echo 'Remplissez tout les champs';
+    }
+}
+
+function delete_article(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleDelete'])){
+        $article = $_POST['articleDelete'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article='$article'");
+        $Rows = mysqli_num_rows($Requete);
+        if($Rows == 1){
+            $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE nom_article='$article'");
+            header('Location: modif-article-admin.php');
+            exit();
+        }
+        else{
+            echo "Cet article n'existe pas";
+        }
+    }
+    else if(isset($_POST['articleDelete'])){
+        echo 'Remplissez tout les champs';
+    }
+}
 ?>

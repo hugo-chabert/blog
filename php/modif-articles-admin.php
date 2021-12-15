@@ -41,34 +41,35 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                     </div>
                     <div class="modif">
                         <div class="alone2">
-                            <h3>Creer une catégorie</h3>
+                            <h3>Modifier un article</h3>
                             <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="categorieCreate" placeholder="Entrez le nom de la catégorie"/></br>
-                                <button class="button" type="submit"> Creer </button>
-                            </form>
-                            <?php
-                                create_categorie();
-                            ?>
-                        </div>
-                        <div class="alone2">
-                            <h3>Modifier une catégorie</h3>
-                            <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="categorieChange" placeholder="Entrez le nom de la catégorie"/></br>
-                                <input class = 'input-modif' type="text" name="categorieChangeN" placeholder="Entrez le nouveau nom"/></br>
+                                <input class = 'input-modif' type="text" name="articleModifName" placeholder="Entrez le nom de l'article"/></br>
+                                <input class = 'input-modif' type="text" name="articleModif" placeholder="Entrez le nouveau contenu de l'article"/></br>
                                 <button class="button" type="submit">Modifier</button>
                             </form>
                             <?php
-                                change_categorie();
+                                modif_article();
                             ?>
                         </div>
                         <div class="alone2">
-                            <h3>Supprimer une catégorie</h3>
+                            <h3>Modifier le nom d'un article</h3>
                             <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="categorieDelete" placeholder="Entrez le nom de la catégorie"/></br>
+                                <input class = 'input-modif' type="text" name="articleChange" placeholder="Entrez le nom de l'article"/></br>
+                                <input class = 'input-modif' type="text" name="articleChangeN" placeholder="Entrez le nouveau nom"/></br>
+                                <button class="button" type="submit">Modifier</button>
+                            </form>
+                            <?php
+                                change_article_nom();
+                            ?>
+                        </div>
+                        <div class="alone2">
+                            <h3>Supprimer un article</h3>
+                            <form class ='form-cat' action="" method="post">
+                                <input class = 'input-modif' type="text" name="articleDelete" placeholder="Entrez le nom de l'article"/></br>
                                 <button class="button" type="submit">Supprimer</button>
                             </form>
                             <?php
-                                delete_categorie();
+                                delete_article();
                             ?>
                         </div>
                         <div class="button-cancel">
