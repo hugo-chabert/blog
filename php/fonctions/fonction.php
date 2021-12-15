@@ -56,6 +56,7 @@ function connect_user() {
                 else {
                 $_SESSION['user'] = $fetch;
                 header('Location: profil.php');
+                exit();
                 }
             }
         }
@@ -227,6 +228,7 @@ function new_user() {
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: connexion.php');
+                exit();
             }
         }
     }
@@ -245,10 +247,12 @@ function verif_admin(){
         $Row= mysqli_num_rows($requete);
         if($Row != 1){
             header('Location: ../index.php');
+            exit();
         }
     }
     else{
         header('Location: ../index.php');
+        exit();
     }
 }
 
@@ -283,6 +287,7 @@ function new_user_admin() {
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: admin.php');
+                exit();
             }
         }
     }
@@ -309,6 +314,7 @@ function change_role(){
         if($Rows != 1){
             $Requete2 = mysqli_query($bdd, "UPDATE `utilisateurs` SET id_droits = '$id_droits' WHERE login = '$login'");
             header('Location: modif-user-admin.php');
+            exit();
         }
         else{
             echo "Vous n'avez pas le droit de changer le role d'un admin";
@@ -343,6 +349,7 @@ function delete_user(){
             if($Rows == 1){
                 $Requete2 = mysqli_query($bdd, "DELETE FROM utilisateurs WHERE login='$login'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
                 echo "Cet utilisateur n'existe pas";
@@ -370,6 +377,7 @@ function change_login_user(){
             if($Rows == 1){
                 $requete_change = mysqli_query($bdd, "UPDATE `utilisateurs` SET login = '$Nlogin' WHERE login = '$login'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
                 echo "Cet utilisateur n'existe pas";
@@ -400,6 +408,7 @@ function change_email_user(){
             else if($Rows == 1){
                 $requete_change = mysqli_query($bdd, "UPDATE `utilisateurs` SET email = '$Nemail' WHERE email = '$email'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
                 echo "Cet email n'existe pas";
@@ -423,6 +432,7 @@ function create_categorie(){
         if($Rows != 1){
             $RequeteInsert = mysqli_query($bdd, "INSERT INTO categories (nom) VALUES ('$categorie')");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
             echo 'Cette catégorie est déjà existante';
@@ -443,6 +453,7 @@ function change_categorie(){
         if($Rows == 1){
             $RequeteChange = mysqli_query($bdd, "UPDATE categories SET nom = '$Ncategorie' WHERE nom = '$categorie'");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
             echo "Cette catégorie n'existe pas";
@@ -462,6 +473,7 @@ function delete_categorie(){
         if($Rows == 1){
             $RequeteDelete =  mysqli_query($bdd, "DELETE FROM categories WHERE nom='$categorie'");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
             echo "Cette catégorie n'existe pas";
@@ -478,6 +490,7 @@ function Deconnect(){// Fonction permettant de Deconnexion
     if (isset($_POST['deconnexion'])) {
         session_destroy();
         header('Location: ../index.php');
+        exit();
     }
 }
 function DecoOrCo(){// Fonction permettant de savoir si le user est connecté ou pas
@@ -494,6 +507,7 @@ function Reco(){// Fonction permettant de Reconnexion
     if (isset($_POST['reconnexion'])) {
         session_destroy();
         header('Location: ../connexion.php');
+        exit();
     }
 }
 function ChangeEmail(){
@@ -534,6 +548,7 @@ function ChangeEmail(){
     }
     else{
         header("Location:connexion.php");
+        exit();
     }
 }
 function ChangeLogin(){
@@ -563,6 +578,7 @@ function ChangeLogin(){
                         $newpre = mysqli_query($Bdd, "UPDATE utilisateurs SET login='$newlogin' WHERE login='$username'");
                         session_destroy();
                         header('Location: connexion.php');
+                        exit();
                     }
                     else{
                         echo "<p>Votre ancien Login est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
@@ -579,6 +595,7 @@ function ChangeLogin(){
     }
     else{
         header("Location:connexion.php");
+        exit();
     }
 }
 function ChangeMdp(){
