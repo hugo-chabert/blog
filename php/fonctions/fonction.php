@@ -197,6 +197,8 @@ function create_article() {
             $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
             $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
             $q->execute();
+            header('Location: articles.php');
+            exit() ;
         }
     }
 }
