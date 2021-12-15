@@ -890,4 +890,22 @@ function pagination(){
             <?php
     }
 }
+
+function show_article_admin(){
+    $bdd = connect_database();
+    $requeteArticles = mysqli_query($bdd, "SELECT * FROM articles");
+    $Articles = mysqli_fetch_all($requeteArticles, MYSQLI_ASSOC);
+    foreach($Articles as $Art){
+        $idCate = $Art['id_categorie'];
+        $nomCate = mysqli_query($bdd,"SELECT * FROM categories WHERE $idCate = id");
+        $Row = mysqli_num_rows($nomCate);
+        if($Row == 1){
+            $fetch_nomCate = mysqli_fetch_all($nomCate, MYSQLI_ASSOC);
+            foreach($fetch_nomCate as $C){
+                echo '<tr><td>'.$Art['nom_article'].'</td>';
+                echo '<td>'.$C['nom'].'</td>';
+            }
+        }
+    }
+}
 ?>
