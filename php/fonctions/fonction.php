@@ -77,7 +77,8 @@ function disp_com() {
     id_article,
     commentaires.id_utilisateur AS commented_by,
     commentaires.date AS created_at,
-    utilisateurs.id AS id_users
+    utilisateurs.id AS id_users,
+    commentaires.id AS idCom
     FROM commentaires
     INNER JOIN articles
     INNER JOIN utilisateurs
@@ -99,7 +100,25 @@ function disp_com() {
                     if($Row2 == 1){
                         $fetch_nomIdDroit = mysqli_fetch_all($nomIdDroit, MYSQLI_ASSOC);
                         foreach($fetch_nomIdDroit as $droit){
-                            echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br>Rôle : '.$droit["nom"].'</div></br>';
+                            echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br>Rôle : '.$droit["nom"].'</br></br></br>';
+                            if(!empty($_SESSION['user'])){
+                                $login = $_SESSION['user']['login'];
+                                $id_droits = '1337';
+                                $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='".$login."' AND id_droits='".$id_droits."'");
+                                $Row69= mysqli_num_rows($requete);
+                                if($Row69 == 1){
+                                    echo '<form method = POST><button class = "deco2" type = "submit" name = "supprimer" value ="Supprimer">SUPPRIMER</button></form></div>';
+                                    if(isset($_POST['supprimer'])){
+                                        $idCom = $com['idCom'];
+                                        $DeleteCom = mysqli_query($bdd, "DELETE FROM commentaires WHERE id='$idCom'");
+                                        header('Location: articles.php');
+                                        exit();
+                                    }
+                                }
+                                else{
+                                    echo '</div>';
+                                }
+                            }
                         }
                     }
                 }
@@ -150,7 +169,7 @@ function new_com() {
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if (!$_SESSION) {
         echo 'Veuillez vous connecter pour poster un commentaire.';
     } else {
@@ -177,7 +196,7 @@ function create_article() {
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
         if (!$_POST['txt_article']) {
             echo '';
