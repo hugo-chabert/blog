@@ -115,9 +115,9 @@ function disp_com() {
                                         exit();
                                     }
                                 }
-                                else{
-                                    echo '</div>';
-                                }
+                            }
+                            else{
+                                echo '</div>';
                             }
                         }
                     }
@@ -994,5 +994,9 @@ function delete_article(){
     else if(isset($_POST['articleDelete'])){
         echo 'Remplissez tout les champs';
     }
+}
+
+function display_article(){
+    
 }
 ?>
