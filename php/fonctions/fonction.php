@@ -115,6 +115,9 @@ function disp_com() {
                                         exit();
                                     }
                                 }
+                                else{
+                                    echo '</div>';
+                                }
                             }
                             else{
                                 echo '</div>';
@@ -122,6 +125,9 @@ function disp_com() {
                         }
                     }
                 }
+            }
+            else{
+                echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : <a class="UserDelete">Utilisateur supprimé</a></br> le '.$com["created_at"].'</br></br></br></div>';
             }
             echo '<div class="show_com">'.$com["comment_is"].'</br></div></br></div>';
         }
@@ -725,7 +731,7 @@ function Recup_articles(){
                 <div class='articles'>
                     <p><?=$article['article_title']?></p>
                     <div class='wrapper'>
-                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
+                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
                     </div>
                     <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                         <div class='modal-content'>
@@ -766,7 +772,7 @@ function Recup_articles(){
             <div class='articles'>
                 <p><?=$article['article_title']?></p>
                 <div class='wrapper'>
-                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
+                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
                 </div>
                 <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                     <div class='modal-content'>
@@ -984,7 +990,7 @@ function delete_article(){
         $Rows = mysqli_num_rows($Requete);
         if($Rows == 1){
             $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE nom_article='$article'");
-            header('Location: modif-articles-admin.php');
+            header('Location: modif-article-admin.php');
             exit();
         }
         else{
