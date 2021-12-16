@@ -731,7 +731,7 @@ function Recup_articles(){
                 <div class='articles'>
                     <p><?=$article['article_title']?></p>
                     <div class='wrapper'>
-                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
                     </div>
                     <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                         <div class='modal-content'>
@@ -772,7 +772,7 @@ function Recup_articles(){
             <div class='articles'>
                 <p><?=$article['article_title']?></p>
                 <div class='wrapper'>
-                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
                 </div>
                 <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                     <div class='modal-content'>
