@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 $nomFichier = basename (__FILE__);
 require('fonctions/fonction.php');
@@ -103,4 +104,5 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
             require 'footer.php';
         ?>
     </body>
+    <?php  ob_end_flush();?>
 </html>

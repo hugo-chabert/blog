@@ -45,7 +45,7 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                             <h3>Modifier un article</h3>
                             <form class ='form-cat' action="" method="post">
                                 <input class = 'input-modif' type="text" name="articleModifName" placeholder="Entrez le nom de l'article"/></br>
-                                <input class = 'input-modif' type="text" name="articleModif" placeholder="Entrez le nouveau contenu de l'article"/></br>
+                                <textarea class = 'input-modif' type="text" name="articleModif" placeholder="Entrez le nouveau contenu de l'article"></textarea></br>
                                 <button class="button" type="submit">Modifier</button>
                             </form>
                             <?php
