@@ -180,7 +180,7 @@ function new_com() {
     if (!$_SESSION) {
         echo 'Veuillez vous connecter pour poster un commentaire.';
     } else {
-        echo '<p class="comm" >Votre commentaire :<br /><textarea class = "send_com" name="commentaire" rows="10%" cols="90%"></textarea></p>';
+        echo '<a class="comm" >Votre commentaire :<br /><textarea class = "send_com" name="commentaire" rows="10%" cols="90%"></textarea></a>';
         if (isset($_POST["commentaire"]) && $_POST["commentaire"] != NULL) {
             $send_comm = $_POST["commentaire"];
             $id_user = $_SESSION['user']['id'];
@@ -1009,7 +1009,7 @@ function display_article(){
     $display_article = mysqli_query($bdd, "SELECT * FROM articles WHERE id = '$id_article'");
     $ArticleD = mysqli_fetch_all($display_article, MYSQLI_ASSOC);
     foreach($ArticleD as $D){
-        echo "<a class='display_article'>".$D['article']."</a>";
+        echo "<div class = 'Controller'><div class='display_article'><p>".$D['article']."</p></div></div>";
     }
 }
 ?>

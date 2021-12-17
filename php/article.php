@@ -26,7 +26,7 @@ session_start();
                 <div id='styleTitreCat'> Catégorie :  <?php echo $article['category_name'];?> </div>
                 <div id='styleTitreCreateBy'> Créer par :  <?php echo $article['created_by'];?> </div>
             </div>
-            <div>
+            <div class = 'all'>
                 <?php display_article();recup_article(); ?>
             </div>
             <div class="commentaires">
