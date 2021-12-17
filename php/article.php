@@ -27,7 +27,7 @@ session_start();
                 <div id='styleTitreCreateBy'> Créer par :  <?php echo $article['created_by'];?> </div>
             </div>
             <div>
-                <?php recup_article(); ?>
+                <?php display_article();recup_article(); ?>
             </div>
             <div class="commentaires">
                 <h3 class="styleTitreCom"> <?php disp_count(); ?>COMMENTAIRES</h3>

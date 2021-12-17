@@ -157,3 +157,8 @@ html,body,main {
 .UserDelete{
     color: var(--Red-);
 }
+
+.display_article{
+    font-size: 150%;
+    color: green;
+}

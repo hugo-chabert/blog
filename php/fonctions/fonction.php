@@ -73,6 +73,7 @@ function disp_com() {
     $bdd = connect_database();
     $recup_atc= recup_article();
     $compt= 0;
+    $get_id_article = $_GET['id'];
     $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
     id_article,
     commentaires.id_utilisateur AS commented_by,
@@ -111,7 +112,7 @@ function disp_com() {
                                     if(isset($_POST['supprimer'])){
                                         $idCom = $com['idCom'];
                                         $DeleteCom = mysqli_query($bdd, "DELETE FROM commentaires WHERE id='$idCom'");
-                                        header('Location: articles.php');
+                                        header('Location: article.php?id='.$get_id_article);
                                         exit();
                                     }
                                 }
@@ -1003,6 +1004,12 @@ function delete_article(){
 }
 
 function display_article(){
-    
+    $bdd = connect_database();
+    $id_article = $_GET['id'];
+    $display_article = mysqli_query($bdd, "SELECT * FROM articles WHERE id = '$id_article'");
+    $ArticleD = mysqli_fetch_all($display_article, MYSQLI_ASSOC);
+    foreach($ArticleD as $D){
+        echo "<a class='display_article'>".$D['article']."</a>";
+    }
 }
 ?>
