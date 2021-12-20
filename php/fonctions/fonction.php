@@ -991,7 +991,7 @@ function delete_article(){
         $Rows = mysqli_num_rows($Requete);
         if($Rows == 1){
             $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE nom_article='$article'");
-            header('Location: modif-article-admin.php');
+            header('Location: modif-articles-admin.php');
             exit();
         }
         else{
