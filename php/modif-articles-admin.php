@@ -30,6 +30,7 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                     <div class="table-button">
                         <table>
                             <tr>
+                                <th>ID de l'Article</th>
                                 <th>Articles</th>
                                 <th>Catégorie</th>
                             </tr>
@@ -44,7 +45,7 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                         <div class="alone2">
                             <h3>Modifier un article</h3>
                             <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="articleModifName" placeholder="Entrez le nom de l'article"/></br>
+                                <input class = 'input-modif' type="text" name="articleModifName" placeholder="Entrez l'id de l'article"/></br>
                                 <textarea class = 'input-modif' type="text" name="articleModif" placeholder="Entrez le nouveau contenu de l'article"></textarea></br>
                                 <?php
                                     modif_article();
@@ -55,7 +56,7 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                         <div class="alone2">
                             <h3>Modifier le nom d'un article</h3>
                             <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="articleChange" placeholder="Entrez le nom de l'article"/></br>
+                                <input class = 'input-modif' type="text" name="articleChange" placeholder="Entrez l'id de l'article"/></br>
                                 <input class = 'input-modif' type="text" name="articleChangeN" placeholder="Entrez le nouveau nom"/></br>
                                 <?php
                                     change_article_nom();
@@ -66,7 +67,7 @@ $Users = mysqli_fetch_all($requeteUser, MYSQLI_ASSOC);
                         <div class="alone2">
                             <h3>Supprimer un article</h3>
                             <form class ='form-cat' action="" method="post">
-                                <input class = 'input-modif' type="text" name="articleDelete" placeholder="Entrez le nom de l'article"/></br>
+                                <input class = 'input-modif' type="text" name="articleDelete" placeholder="Entrez l'id de l'article"/></br>
                                 <?php
                                     delete_article();
                                 ?>

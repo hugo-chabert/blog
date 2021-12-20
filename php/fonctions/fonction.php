@@ -216,8 +216,7 @@ function create_article() {
             $id_user = $_SESSION['user']['id'];
             $id_cat = $_POST['cat'];
             $nom_article = $_POST['nom_article'];
-            $articleExist = mysqli_query($bdd, "SELECT * FROM articles
-                                                    WHERE nom_article = '".$nom_article."' AND id_categorie = '".$id_cat."'");
+            $articleExist = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article = '".$nom_article."' AND id_categorie = '".$id_cat."'");
             $check_if_same_cat= mysqli_num_rows($articleExist);
             if($check_if_same_cat == 1){
                 echo 'Cet article existe déjà';
@@ -343,23 +342,30 @@ function change_role(){
     if(!empty($_POST['login'])){
         $login = $_POST['login'];
         $role = '1337';
-        $Requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' AND id_droits='$role'");
+        $Requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login'");
         $Rows= mysqli_num_rows($Requete);
         foreach ($_POST as $key => $value) {
             if($value == 'user'){
                 $id_droits = '1';
             }
-            if($value == 'modo'){
+            else if($value == 'modo'){
                 $id_droits = '42';
             }
         }
-        if($Rows != 1){
-            $Requete2 = mysqli_query($bdd, "UPDATE `utilisateurs` SET id_droits = '$id_droits' WHERE login = '$login'");
-            header('Location: modif-user-admin.php');
-            exit();
+        if($Rows == 1){
+            $check_if_admin = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' AND id_droits='$role'");
+            $Rows420= mysqli_num_rows($check_if_admin);
+            if($Rows420 != 1){
+                $Requete2 = mysqli_query($bdd, "UPDATE `utilisateurs` SET id_droits = '$id_droits' WHERE login = '$login'");
+                header('Location: modif-user-admin.php');
+                exit();
+            }
+            else{
+                echo "<p>Vous n'avez pas le droit de changer le role d'un admin</p><style>p{color : var(--RedError-);}</style>";
+            }
         }
         else{
-            echo "<p>Vous n'avez pas le droit de changer le role d'un admin</p><style>p{color : var(--RedError-);}</style>";
+            echo "<p>Utilisateur inexistant</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['login'])){
@@ -943,7 +949,8 @@ function show_article_admin(){
         if($Row == 1){
             $fetch_nomCate = mysqli_fetch_all($nomCate, MYSQLI_ASSOC);
             foreach($fetch_nomCate as $C){
-                echo '<tr><td>'.$Art['nom_article'].'</td>';
+                echo '<tr><td>'.$Art['id'].'</td>';
+                echo '<td>'.$Art['nom_article'].'</td>';
                 echo '<td>'.$C['nom'].'</td>';
             }
         }
@@ -955,12 +962,24 @@ function change_article_nom(){
     if(!empty($_POST['articleChange']) && !empty($_POST['articleChangeN'])){
         $article = $_POST['articleChange'];
         $Narticle = $_POST['articleChangeN'];
-        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article ='$article'");
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$article'");
         $Rows = mysqli_num_rows($Requete);
+        $ArticleD = mysqli_fetch_all($Requete, MYSQLI_ASSOC);
+        foreach($ArticleD as $D){
+            $id_cat = $D['id_categorie'];
+        }
         if($Rows == 1){
-            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET nom_article = '$Narticle' WHERE nom_article = '$article'");
-            header('Location: modif-articles-admin.php');
-            exit();
+            $articleCheck = mysqli_query($bdd, "SELECT * FROM articles");
+            $articleExist = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article = '".$Narticle."' AND id_categorie = '".$id_cat."'");
+            $check_if_same_cat= mysqli_num_rows($articleExist);
+            if($check_if_same_cat != 1){
+                $RequeteChange = mysqli_query($bdd, "UPDATE articles SET nom_article = '$Narticle' WHERE id = '$article'");
+                header('Location: modif-articles-admin.php');
+                exit();
+            }
+            else{
+                echo "<p>Cet article existe déjà</p><style>p{color : var(--RedError-);}</style>";
+            }
         }
         else{
             echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
@@ -976,10 +995,10 @@ function modif_article(){
     if(!empty($_POST['articleModifName']) && !empty($_POST['articleModif'])){
         $articleName = $_POST['articleModifName'];
         $articleModif = $_POST['articleModif'];
-        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article ='$articleName'");
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$articleName'");
         $Rows = mysqli_num_rows($Requete);
         if($Rows == 1){
-            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET article = '$articleModif' WHERE nom_article = '$articleName'");
+            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET article = '$articleModif' WHERE id = '$articleName'");
             header('Location: modif-articles-admin.php');
             exit();
         }
@@ -996,10 +1015,10 @@ function delete_article(){
     $bdd = connect_database();
     if(!empty($_POST['articleDelete'])){
         $article = $_POST['articleDelete'];
-        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article='$article'");
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$article'");
         $Rows = mysqli_num_rows($Requete);
         if($Rows == 1){
-            $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE nom_article='$article'");
+            $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE id='$article'");
             header('Location: modif-articles-admin.php');
             exit();
         }
