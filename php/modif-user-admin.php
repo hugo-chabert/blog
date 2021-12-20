@@ -58,43 +58,46 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                                     <option value="user">Utilisateur</option>
                                     <option value="modo">Modérateur</option>
                                 </select></br>
+                                <?php
+                                    change_role();
+                                ?>
                                 <button class="button" type="submit" >Changer</button>
                             </form>
-                            <?php
-                                change_role();
-                            ?>
                         </div>
                         <div class="alone">
                             <h3>Changer le login d'un utilisateur</h3>
                             <form class ='form-modif' action="" method="post">
                                 <input class = 'modif-zone' type="text" name="loginChange" placeholder="Entrez le login de l'utilisateur"/></br>
                                 <input class = 'modif-zone' type="text" name="loginChangeN" placeholder="Entrez le nouveau login"/></br>
+                                <?php
+                                    change_login_user();
+                                ?>
                                 <button class="button" type="submit" >Changer</button>
                             </form>
-                            <?php
-                                change_login_user();
-                            ?>
+                            
                         </div>
                         <div class="alone">
                             <h3>Supprimer un utilisateur</h3>
                             <form class ='form-modif' action="" method="post">
                                 <input class = 'modif-zone' type="text" name="loginSupp" placeholder="Entrez le login de l'utilisateur"/></br>
+                                <?php
+                                    delete_user();
+                                ?>
                                 <button class="button2" type="submit" >Supprimer</button>
                             </form>
-                            <?php
-                                delete_user();
-                            ?>
+                            
                         </div>
                         <div class="alone">
                             <h3>Changer l'Email d'un utilisateur</h3>
                             <form class ='form-modif' action="" method="post">
                                 <input class = 'modif-zone' type="text" name="emailChange" placeholder="Entrez l'Email de l'utilisateur"/></br>
                                 <input class = 'modif-zone' type="text" name="emailChangeN" placeholder="Entrez le nouvel Email"/></br>
+                                <?php
+                                    change_email_user();
+                                ?>
                                 <button class="button" type="submit" >Changer</button>
                             </form>
-                            <?php
-                                change_email_user();
-                            ?>
+                            
                         </div>
                     </div>
                 </div>
