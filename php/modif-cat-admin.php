@@ -46,32 +46,32 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                             <h3>Creer une catégorie</h3>
                             <form class ='form-cat' action="" method="post">
                                 <input class = 'input-modif' type="text" name="categorieCreate" placeholder="Entrez le nom de la catégorie"/></br>
-                                <button class="button" type="submit"> Creer </button>
+                                <?php
+                                    create_categorie();
+                                ?>
+                            <button class="button" type="submit"> Creer </button>
                             </form>
-                            <?php
-                                create_categorie();
-                            ?>
                         </div>
                         <div class="alone2">
                             <h3>Modifier une catégorie</h3>
                             <form class ='form-cat' action="" method="post">
                                 <input class = 'input-modif' type="text" name="categorieChange" placeholder="Entrez le nom de la catégorie"/></br>
                                 <input class = 'input-modif' type="text" name="categorieChangeN" placeholder="Entrez le nouveau nom"/></br>
+                                <?php
+                                    change_categorie();
+                                ?>
                                 <button class="button" type="submit">Modifier</button>
                             </form>
-                            <?php
-                                change_categorie();
-                            ?>
                         </div>
                         <div class="alone2">
                             <h3>Supprimer une catégorie</h3>
                             <form class ='form-cat' action="" method="post">
                                 <input class = 'input-modif' type="text" name="categorieDelete" placeholder="Entrez le nom de la catégorie"/></br>
+                                <?php
+                                    delete_categorie();
+                                ?>
                                 <button class="button" type="submit">Supprimer</button>
                             </form>
-                            <?php
-                                delete_categorie();
-                            ?>
                         </div>
                         <div class="button-cancel">
                             <a href="admin.php"><button class='button2'>Retour</button></a>

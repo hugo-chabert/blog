@@ -74,7 +74,6 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                                 ?>
                                 <button class="button" type="submit" >Changer</button>
                             </form>
-                            
                         </div>
                         <div class="alone">
                             <h3>Supprimer un utilisateur</h3>
@@ -85,7 +84,6 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                                 ?>
                                 <button class="button2" type="submit" >Supprimer</button>
                             </form>
-                            
                         </div>
                         <div class="alone">
                             <h3>Changer l'Email d'un utilisateur</h3>
@@ -97,7 +95,6 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                                 ?>
                                 <button class="button" type="submit" >Changer</button>
                             </form>
-                            
                         </div>
                     </div>
                 </div>

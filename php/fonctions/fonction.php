@@ -896,7 +896,7 @@ function pagination(){
             <?php
         }
         else{
-            echo 'Catégorie inexistante !!';
+            echo '<p>Catégorie inexistante !!</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else if(!isset($id_cat)){
@@ -954,11 +954,11 @@ function change_article_nom(){
             exit();
         }
         else{
-            echo "Cet article n'existe pas";
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['articleChange']) || isset($_POST['articleChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -975,11 +975,11 @@ function modif_article(){
             exit();
         }
         else{
-            echo "Cet article n'existe pas";
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['articleModifName']) || isset($_POST['articleModif'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -995,11 +995,11 @@ function delete_article(){
             exit();
         }
         else{
-            echo "Cet article n'existe pas";
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['articleDelete'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
