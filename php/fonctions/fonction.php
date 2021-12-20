@@ -308,7 +308,7 @@ function new_user_admin() {
         $request_verif_email = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE email='$email' ");
         $check_is_use_email= mysqli_num_rows($request_verif_email);
         if ($password != $Confirmedpassword) {
-            echo'<p style="color:#FF0000";> <strong> Mot depasses non identiques</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Mot de passe non identiques</strong></p>';
         }
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo'<p style="color:#FF0000";> <strong> Entrez une adresse valide ex: user@wanadoo.com </strong></p>';
