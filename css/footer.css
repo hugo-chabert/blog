@@ -11,6 +11,7 @@
 
 .footer1{
     display:flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 33.333%;
@@ -22,17 +23,27 @@
     align-items: center;
     justify-content: center;
 }
+.footer2 h2{
+    border-left: 2px solid var(--LightGrey-);
+    border-right: 2px solid var(--LightGrey-);
+    font-family: Dreams;
+    display: flex;
+    align-items: center;
+    margin:0 1% 0 1%;
+    height: 70%;
+}
 
 .footer3{
     display:flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 33.333%;
 }
 
 .socialMedia{
-    width: 25px;
-    margin: 3px;
+    width: 30px;
+    margin: 10px;
 }
 
 .socialMedia2{

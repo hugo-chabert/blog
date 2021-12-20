@@ -2,9 +2,14 @@
 <footer>
     <div class="footer">
         <div class="footer1">
+        Accueil<a href="<?php if($nomFichier != 'index.php'){ echo '../';}?>index.php"><img class="socialMedia" alt="Accueil" src="https://cdn-icons-png.flaticon.com/512/1239/1239292.png"></a>
+        Articles<a href="<?php if($nomFichier == 'index.php'){ echo 'php/';}?>articles.php"><img class="socialMedia" alt="Articles" src="http://cdn.onlinewebfonts.com/svg/img_351420.png"></a>
+        <?php if(empty($_SESSION['user'])){ echo 'Connexion<a href="'; if($nomFichier == "index.php"){ echo "php/";}; echo 'connexion.php"><img class="socialMedia" alt="Connexion" src="http://cdn.onlinewebfonts.com/svg/img_201469.png"></a>';}?>
+        <?php if(empty($_SESSION['user'])){ echo 'Inscription<a href="'; if($nomFichier == "index.php"){ echo "php/";} echo 'inscription.php"><img class="socialMedia" alt="Inscription" src="https://www.vbvb.fr/wp-content/uploads/2016/04/icone_sinscrire.png"></a>';}?>
+        <?php if(!empty($_SESSION['user'])){ echo 'Profil<a href="'; if($nomFichier == "index.php"){ echo "php/";} echo 'profil.php"><img class="socialMedia" alt="Profil" src="http://cdn.onlinewebfonts.com/svg/img_311846.png"></a>';}?>
         </div>
         <div class="footer2">
-            Copyright © 2021 Hugo, François & Remi. All Rights Reserved
+            <h2>Copyright © 2021 Hugo, François & Remi. All Rights Reserved</h2>
         </div>
         <div class="footer3">
             <a href="https://twitter.com/"><img class="socialMedia" alt="Twitter" src="<?php if($nomFichier != 'index.php'){ echo '../';} ?>images/Twitter.png"></a>

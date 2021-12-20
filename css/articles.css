@@ -1,6 +1,6 @@
 /*PARAMETRE PAGE*/
 html,body,main{
-    height: fit-content;
+    height: 110%;
     width: 100%;
     margin:0;
     padding:0;
@@ -20,18 +20,20 @@ html,body,main{
     flex-direction: column;
     align-items: center;
     width: 90%;
-    height: 100%;
-    background-color: var(--DarkGrey-);
+    height: 75%;
+    background-color: var(--White-);
+    margin-top: 5%;
 }
 .box-articles{
-    background-color: var(--Grey-);
+    background-color: var(--WhiteGrey-);
     display: flex;
     align-items: center;
     padding: 3%;
-    flex-direction: column;
-    width: 60%;
-    height: 80%;
+    flex-direction: wrap;
+    width: 90%;
+    height: 40%;
     gap: 20px;
+    box-shadow:0 8px 8px var(--Shadow-);
 }
 .articles{
     display: flex;
@@ -43,6 +45,7 @@ html,body,main{
     background-color: var(--WhiteBlue-);
     border-radius: 5px;
     font-size: 120%;
+    box-shadow:0 2px 3px var(--Shadow-);
 }
 
 /*PARAMETRE MODAL*/
@@ -59,7 +62,7 @@ html,body,main{
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(77, 77, 77, .7);
+    background: var(--Shadow-);
     transition: all .4s;
 }
 
@@ -93,7 +96,10 @@ html,body,main{
     text-decoration: none;
 }
 /*PARAMETRE  BUTTON MODAL*/
-
+a{
+    text-decoration: none;
+    color: var(--Black-);
+}
 .button {
     font-family: Dreams;
     width: 100%;
@@ -209,22 +215,6 @@ html,body,main{
 ::selection {
     color: var(--White-);
     background: var(--LightBlue-);
-}
-.container {
-    background: var(--White-);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 30px;
-    box-shadow: 0px 0.5vh 5px 0px rgba(0, 0, 0, 0.25);
-}
-.container .title {
-    font-size: 50px;
-    font-weight: 600;
-}
-.container p {
-    font-size: 19px;
 }
 .pagination {
     margin: 25px 0 15px 0;

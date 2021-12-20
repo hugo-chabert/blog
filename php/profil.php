@@ -31,7 +31,6 @@ if(!isset($_SESSION['user'])){
                     <div class="box-info">
                         <h2>Informations</h2>
                         <?php if(isset($_SESSION['user']['login'])){echo Info();}?>
-                        <?php echo 'oui';?>
                     </div>
                 </div>
             </div>

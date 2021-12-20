@@ -59,6 +59,9 @@ $Cate = mysqli_fetch_all($requeteCate, MYSQLI_ASSOC);
                             <a href='modif-user-admin.php'> <button class ='button'> Gestion des utilisateurs </button></a>
                         </div>
                         <div>
+                            <a href='modif-articles-admin.php'><button class ='button'> Gestion des articles </button></a>
+                        </div>
+                        <div>
                             <a href='modif-cat-admin.php'><button class ='button'> Gestion des catégories </button></a>
                         </div>
                     </div>

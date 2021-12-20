@@ -28,7 +28,6 @@ function convert_time() {
     $request = mysqli_query($bdd,"SELECT date FROM articles");
     $recup = mysqli_fetch_assoc($request);
     $timestamp = $recup["date"];
-
     foreach ($recup as $key => $value) {
         echo strftime('%A', strtotime($timestamp)).' '.strftime('%e', strtotime($timestamp)).' '.strftime('%B', strtotime($timestamp)).' '.strftime('%Y', strtotime($timestamp)).' '.strftime('%T', strtotime($timestamp));
     }
@@ -56,6 +55,7 @@ function connect_user() {
                 else {
                 $_SESSION['user'] = $fetch;
                 header('Location: profil.php');
+                exit();
                 }
             }
         }
@@ -68,27 +68,18 @@ function connect_user() {
     }
 }
 
-function recup_nb_com() {
-    $bdd = connect_database();
-    $request_nb_com = mysqli_query($bdd,"SELECT COUNT(commentaire) AS number_com,
-    id_utilisateur AS id_users
-    FROM commentaires
-    GROUP BY id_utilisateur");
-    $recup_info_profil = mysqli_fetch_all($request_nb_com, MYSQLI_ASSOC);
-    foreach ($recup_info_profil as $nb_com) {
-        echo '<div class="show_profil">'.$nb_com["number_com"].'</div>';
-    }
-}
 
 function disp_com() {
-
     $bdd = connect_database();
     $recup_atc= recup_article();
     $compt= 0;
+    $get_id_article = $_GET['id'];
     $request = mysqli_query($bdd,"SELECT commentaire AS comment_is,
     id_article,
-    utilisateurs.login AS commented_by,
-    commentaires.date AS created_at
+    commentaires.id_utilisateur AS commented_by,
+    commentaires.date AS created_at,
+    utilisateurs.id AS id_users,
+    commentaires.id AS idCom
     FROM commentaires
     INNER JOIN articles
     INNER JOIN utilisateurs
@@ -98,10 +89,48 @@ function disp_com() {
         if ($recup_atc["id_article"] == $com["id_article"]) {
             $compt++;
             echo '<div class="ComAndProfil">';
-            //recup_nb_com();
-            echo '<div class="show_com">#'.$compt.'</br>'.' Commenté par : '.$com["commented_by"].' '.'le '.$com["created_at"].'</br>'.$com["comment_is"].'</br></div></br>';
-            echo '</div>';
-
+            $idUser = $com["commented_by"];
+            $idToLogin = mysqli_query($bdd,"SELECT * FROM utilisateurs WHERE $idUser = id");
+            $Row = mysqli_num_rows($idToLogin);
+            if($Row == 1){
+                $fetch_idToLogin = mysqli_fetch_all($idToLogin, MYSQLI_ASSOC);
+                foreach($fetch_idToLogin as $login){
+                    $idDroit = $login['id_droits'];
+                    $nomIdDroit = mysqli_query($bdd,"SELECT * FROM droits WHERE $idDroit = id");
+                    $Row2 = mysqli_num_rows($nomIdDroit);
+                    if($Row2 == 1){
+                        $fetch_nomIdDroit = mysqli_fetch_all($nomIdDroit, MYSQLI_ASSOC);
+                        foreach($fetch_nomIdDroit as $droit){
+                            echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : '.$login["login"].'</br> le '.$com["created_at"].'</br>Rôle : '.$droit["nom"].'</br></br></br>';
+                            if(!empty($_SESSION['user'])){
+                                $login = $_SESSION['user']['login'];
+                                $id_droits = '1337';
+                                $requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='".$login."' AND id_droits='".$id_droits."'");
+                                $Row69= mysqli_num_rows($requete);
+                                if($Row69 == 1){
+                                    echo '<form method = POST><button class = "deco2" type = "submit" name = "supprimer" value ="Supprimer">SUPPRIMER</button></form></div>';
+                                    if(isset($_POST['supprimer'])){
+                                        $idCom = $com['idCom'];
+                                        $DeleteCom = mysqli_query($bdd, "DELETE FROM commentaires WHERE id='$idCom'");
+                                        header('Location: article.php?id='.$get_id_article);
+                                        exit();
+                                    }
+                                }
+                                else{
+                                    echo '</div>';
+                                }
+                            }
+                            else{
+                                echo '</div>';
+                            }
+                        }
+                    }
+                }
+            }
+            else{
+                echo '<div class="show_profil">#'.$compt.'</br>'.' Commenté par : <a class="UserDelete">Utilisateur supprimé</a></br> le '.$com["created_at"].'</br></br></br></div>';
+            }
+            echo '<div class="show_com">'.$com["comment_is"].'</br></div></br></div>';
         }
     }
 }
@@ -147,11 +176,11 @@ function new_com() {
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if (!$_SESSION) {
         echo 'Veuillez vous connecter pour poster un commentaire.';
     } else {
-        echo '<p class="comm" >Votre commentaire :<br /><textarea name="commentaire" rows="10%" cols="90%"></textarea></p>';
+        echo '<a class="comm" >Votre commentaire :<br /><textarea class = "send_com" name="commentaire" rows="10%" cols="90%"></textarea></a>';
         if (isset($_POST["commentaire"]) && $_POST["commentaire"] != NULL) {
             $send_comm = $_POST["commentaire"];
             $id_user = $_SESSION['user']['id'];
@@ -164,38 +193,46 @@ function new_com() {
             $q->execute();
             header('Location: article.php?id='.$get_id_article);
             exit();
-        } else {
-            echo '<p class="comm" >Veuillez écrire un commentaire</p>';
         }
     }
 }
 
 function create_article() {
-
+    $bdd = connect_database();
     $dbhost     = "localhost";
     $dbname     = "blog";
     $dbuser     = "root";
     $dbpass     = "root";
-    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
         if (!$_POST['txt_article']) {
             echo '';
         }
         elseif ($_POST['cat'] == "choose") {
             echo 'Veuillez choisir une catégorie';
-        }  else {
+        }
+        else {
             $title = $_POST['txt_article'];
             $id_user = $_SESSION['user']['id'];
             $id_cat = $_POST['cat'];
             $nom_article = $_POST['nom_article'];
-            $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
-            (:title,:nom_article, :id_user,:id_cat)";
-            $q = $conn->prepare($sql);
-            $q->bindValue('title' ,$title ,PDO::PARAM_STR);
-            $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
-            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
-            $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
-            $q->execute();
+            $articleExist = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article = '".$nom_article."' AND id_categorie = '".$id_cat."'");
+            $check_if_same_cat= mysqli_num_rows($articleExist);
+            if($check_if_same_cat == 1){
+                echo 'Cet article existe déjà';
+            }
+            else{
+                $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
+                (:title,:nom_article, :id_user,:id_cat)";
+                $q = $conn->prepare($sql);
+                $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+                $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
+                $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+                $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
+                $q->execute();
+                header('Location: articles.php');
+                exit();
+            }
         }
     }
 }
@@ -232,6 +269,7 @@ function new_user() {
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: connexion.php');
+                exit();
             }
         }
     }
@@ -250,10 +288,12 @@ function verif_admin(){
         $Row= mysqli_num_rows($requete);
         if($Row != 1){
             header('Location: ../index.php');
+            exit();
         }
     }
     else{
         header('Location: ../index.php');
+        exit();
     }
 }
 
@@ -267,27 +307,28 @@ function new_user_admin() {
         $request_verif_email = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE email='$email' ");
         $check_is_use_email= mysqli_num_rows($request_verif_email);
         if ($password != $Confirmedpassword) {
-            echo'<p style="color:#FF0000";> <strong> Your password and your confirmed password is wrong</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Mot depasses non identiques</strong></p>';
         }
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo'<p style="color:#FF0000";> <strong> Please enter a valid email ex: user@wanadoo.com </strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Entrez une adresse valide ex: user@wanadoo.com </strong></p>';
         }
         else if ($check_is_use_email == 1) {
-            echo'<p style="color:#FF0000";> <strong> This email is already use</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Email déjà utilisée </strong></p>';
         }
         else if ($login == NULL ||  $email == NULL || $password == NULL || $Confirmedpassword == NULL ) {
-            echo'<p style="color:#FF0000";> <strong> You have an empty fields</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Remplissez tous les champs</strong></p>';
         }
         else {
             $request_verif_login = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $check_is_use_login= mysqli_num_rows($request_verif_login);
             $pw_hash = password_hash($password, PASSWORD_DEFAULT);
             if($check_is_use_login == 1) {
-                echo'<p style="color:#FF0000";> <strong> This login is already use</strong></p>';
+                echo'<p style="color:#FF0000";> <strong>Login existant</strong></p>';
             }
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
                 header('Location: admin.php');
+                exit();
             }
         }
     }
@@ -301,26 +342,34 @@ function change_role(){
     if(!empty($_POST['login'])){
         $login = $_POST['login'];
         $role = '1337';
-        $Requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' AND id_droits='$role'");
+        $Requete = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login'");
         $Rows= mysqli_num_rows($Requete);
         foreach ($_POST as $key => $value) {
             if($value == 'user'){
                 $id_droits = '1';
             }
-            if($value == 'modo'){
+            else if($value == 'modo'){
                 $id_droits = '42';
             }
         }
-        if($Rows != 1){
-            $Requete2 = mysqli_query($bdd, "UPDATE `utilisateurs` SET id_droits = '$id_droits' WHERE login = '$login'");
-            header('Location: modif-user-admin.php');
+        if($Rows == 1){
+            $check_if_admin = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' AND id_droits='$role'");
+            $Rows420= mysqli_num_rows($check_if_admin);
+            if($Rows420 != 1){
+                $Requete2 = mysqli_query($bdd, "UPDATE `utilisateurs` SET id_droits = '$id_droits' WHERE login = '$login'");
+                header('Location: modif-user-admin.php');
+                exit();
+            }
+            else{
+                echo "<p>Vous n'avez pas le droit de changer le role d'un admin</p><style>p{color : var(--RedError-);}</style>";
+            }
         }
         else{
-            echo "Vous n'avez pas le droit de changer le role d'un admin";
+            echo "<p>Utilisateur inexistant</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['login'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -348,17 +397,18 @@ function delete_user(){
             if($Rows == 1){
                 $Requete2 = mysqli_query($bdd, "DELETE FROM utilisateurs WHERE login='$login'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
-                echo "Cet utilisateur n'existe pas";
+                echo "<p>Cet utilisateur n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else if(isset($_POST['loginSupp'])){
-            echo 'Remplissez tout les champs';
+            echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else{
-        echo "Vous n'avez pas le droit de supprimer un admin";
+        echo "<p>Vous n'avez pas le droit de supprimer un admin</p><style>p{color : var(--RedError-);}</style>";
     }
 }
 
@@ -375,17 +425,18 @@ function change_login_user(){
             if($Rows == 1){
                 $requete_change = mysqli_query($bdd, "UPDATE `utilisateurs` SET login = '$Nlogin' WHERE login = '$login'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
-                echo "Cet utilisateur n'existe pas";
+                echo "<p>Cet utilisateur n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else{
-            echo "Vous ne pouvez pas utiliser ce login";
+            echo "<p>Vous ne pouvez pas utiliser ce login</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['loginChange']) || isset($_POST['loginChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -405,17 +456,18 @@ function change_email_user(){
             else if($Rows == 1){
                 $requete_change = mysqli_query($bdd, "UPDATE `utilisateurs` SET email = '$Nemail' WHERE email = '$email'");
                 header('Location: modif-user-admin.php');
+                exit();
             }
             else{
-                echo "Cet email n'existe pas";
+                echo "<p>Cet email n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else{
-            echo "Vous ne pouvez pas utiliser cet email";
+            echo "<p>Vous ne pouvez pas utiliser cet email</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['emailChange']) || isset($_POST['emailChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -428,13 +480,14 @@ function create_categorie(){
         if($Rows != 1){
             $RequeteInsert = mysqli_query($bdd, "INSERT INTO categories (nom) VALUES ('$categorie')");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
-            echo 'Cette catégorie est déjà existante';
+            echo '<p>Cette catégorie est déjà existante</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else if(isset($_POST['categorieCreate'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -448,13 +501,14 @@ function change_categorie(){
         if($Rows == 1){
             $RequeteChange = mysqli_query($bdd, "UPDATE categories SET nom = '$Ncategorie' WHERE nom = '$categorie'");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
-            echo "Cette catégorie n'existe pas";
+            echo "<p>Cette catégorie n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['categorieChange']) || isset($_POST['categorieChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -467,13 +521,14 @@ function delete_categorie(){
         if($Rows == 1){
             $RequeteDelete =  mysqli_query($bdd, "DELETE FROM categories WHERE nom='$categorie'");
             header('Location: modif-cat-admin.php');
+            exit();
         }
         else{
-            echo "Cette catégorie n'existe pas";
+            echo "<p>Cette catégorie n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['categorieDelete'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -483,6 +538,7 @@ function Deconnect(){// Fonction permettant de Deconnexion
     if (isset($_POST['deconnexion'])) {
         session_destroy();
         header('Location: ../index.php');
+        exit();
     }
 }
 function DecoOrCo(){// Fonction permettant de savoir si le user est connecté ou pas
@@ -499,6 +555,7 @@ function Reco(){// Fonction permettant de Reconnexion
     if (isset($_POST['reconnexion'])) {
         session_destroy();
         header('Location: ../connexion.php');
+        exit();
     }
 }
 function ChangeEmail(){
@@ -539,6 +596,7 @@ function ChangeEmail(){
     }
     else{
         header("Location:connexion.php");
+        exit();
     }
 }
 function ChangeLogin(){
@@ -568,6 +626,7 @@ function ChangeLogin(){
                         $newpre = mysqli_query($Bdd, "UPDATE utilisateurs SET login='$newlogin' WHERE login='$username'");
                         session_destroy();
                         header('Location: connexion.php');
+                        exit();
                     }
                     else{
                         echo "<p>Votre ancien Login est incorrect</p><style>p{color : var(--RedError-); font-size: 1.4em;}</style>";
@@ -584,6 +643,7 @@ function ChangeLogin(){
     }
     else{
         header("Location:connexion.php");
+        exit();
     }
 }
 function ChangeMdp(){
@@ -687,7 +747,7 @@ function Recup_articles(){
                 <div class='articles'>
                     <p><?=$article['article_title']?></p>
                     <div class='wrapper'>
-                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+                    <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
                     </div>
                     <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                         <div class='modal-content'>
@@ -698,7 +758,7 @@ function Recup_articles(){
                                 dans la catégorie <u> <?= $article['category_name'] ?></u><br>
                                 le <u><?= $article['created_at']?></u></p>
                                 <form method="get">
-                                <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                                <?php echo "<button class ='button-com'><a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a></button>"; ?>
                                 </form>
                             </div>
                             <a href='#' class='modal-close'>&times;</a>
@@ -728,7 +788,7 @@ function Recup_articles(){
             <div class='articles'>
                 <p><?=$article['article_title']?></p>
                 <div class='wrapper'>
-                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Plus d'informations</button></a>
+                <a href='#demo-modal <?= $article['article_id']?>'><button class='button'>Lire la suite</button></a>
                 </div>
                 <div id='demo-modal <?= $article['article_id'] ?>' class='modal'>
                     <div class='modal-content'>
@@ -739,7 +799,7 @@ function Recup_articles(){
                             dans la catégorie <u> <?= $article['category_name'] ?></u><br>
                             le <u><?= $article['created_at']?></u></p>
                             <form method="get">
-                            <?php echo "<a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a>"; ?>
+                            <?php echo "<button class ='button-com'><a href='article.php?id=".$article['article_id']."'>Voir/Laisser un commentaire</a></button>"; ?>
                             </form>
                         </div>
                         <a href='#' class='modal-close'>&times;</a>
@@ -796,10 +856,14 @@ function recup_article_index($place){
             ?>
             <form methode="get">
             <?php
-            echo "<a>".$value["article"]."</a>";
+            echo "<a>".$value["article"]."</a></br></br></br>";
+            echo "<button class ='button'><a href='php/article.php?id=".$value['id']."'>Voir/Laisser un commentaire</a></button>";
             ?>
             </form>
             <?php
+        }
+        if(empty($row)){
+            echo '</br></br></br><a class="DELETE">Article supprimé</a>';
         }
     }
 }
@@ -847,7 +911,7 @@ function pagination(){
             <?php
         }
         else{
-            echo 'Catégorie inexistante !!';
+            echo '<p>Catégorie inexistante !!</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else if(!isset($id_cat)){
@@ -871,6 +935,109 @@ function pagination(){
                 </ul>
             </nav>
             <?php
+    }
+}
+
+function show_article_admin(){
+    $bdd = connect_database();
+    $requeteArticles = mysqli_query($bdd, "SELECT * FROM articles");
+    $Articles = mysqli_fetch_all($requeteArticles, MYSQLI_ASSOC);
+    foreach($Articles as $Art){
+        $idCate = $Art['id_categorie'];
+        $nomCate = mysqli_query($bdd,"SELECT * FROM categories WHERE $idCate = id");
+        $Row = mysqli_num_rows($nomCate);
+        if($Row == 1){
+            $fetch_nomCate = mysqli_fetch_all($nomCate, MYSQLI_ASSOC);
+            foreach($fetch_nomCate as $C){
+                echo '<tr><td>'.$Art['id'].'</td>';
+                echo '<td>'.$Art['nom_article'].'</td>';
+                echo '<td>'.$C['nom'].'</td>';
+            }
+        }
+    }
+}
+
+function change_article_nom(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleChange']) && !empty($_POST['articleChangeN'])){
+        $article = $_POST['articleChange'];
+        $Narticle = $_POST['articleChangeN'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$article'");
+        $Rows = mysqli_num_rows($Requete);
+        $ArticleD = mysqli_fetch_all($Requete, MYSQLI_ASSOC);
+        foreach($ArticleD as $D){
+            $id_cat = $D['id_categorie'];
+        }
+        if($Rows == 1){
+            $articleCheck = mysqli_query($bdd, "SELECT * FROM articles");
+            $articleExist = mysqli_query($bdd, "SELECT * FROM articles WHERE nom_article = '".$Narticle."' AND id_categorie = '".$id_cat."'");
+            $check_if_same_cat= mysqli_num_rows($articleExist);
+            if($check_if_same_cat != 1){
+                $RequeteChange = mysqli_query($bdd, "UPDATE articles SET nom_article = '$Narticle' WHERE id = '$article'");
+                header('Location: modif-articles-admin.php');
+                exit();
+            }
+            else{
+                echo "<p>Cet article existe déjà</p><style>p{color : var(--RedError-);}</style>";
+            }
+        }
+        else{
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
+        }
+    }
+    else if(isset($_POST['articleChange']) || isset($_POST['articleChangeN'])){
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
+    }
+}
+
+function modif_article(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleModifName']) && !empty($_POST['articleModif'])){
+        $articleName = $_POST['articleModifName'];
+        $articleModif = $_POST['articleModif'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$articleName'");
+        $Rows = mysqli_num_rows($Requete);
+        if($Rows == 1){
+            $RequeteChange = mysqli_query($bdd, "UPDATE articles SET article = '$articleModif' WHERE id = '$articleName'");
+            header('Location: modif-articles-admin.php');
+            exit();
+        }
+        else{
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
+        }
+    }
+    else if(isset($_POST['articleModifName']) || isset($_POST['articleModif'])){
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
+    }
+}
+
+function delete_article(){
+    $bdd = connect_database();
+    if(!empty($_POST['articleDelete'])){
+        $article = $_POST['articleDelete'];
+        $Requete = mysqli_query($bdd, "SELECT * FROM articles WHERE id ='$article'");
+        $Rows = mysqli_num_rows($Requete);
+        if($Rows == 1){
+            $RequeteDelete =  mysqli_query($bdd, "DELETE FROM articles WHERE id='$article'");
+            header('Location: modif-articles-admin.php');
+            exit();
+        }
+        else{
+            echo "<p>Cet article n'existe pas</p><style>p{color : var(--RedError-);}</style>";
+        }
+    }
+    else if(isset($_POST['articleDelete'])){
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
+    }
+}
+
+function display_article(){
+    $bdd = connect_database();
+    $id_article = $_GET['id'];
+    $display_article = mysqli_query($bdd, "SELECT * FROM articles WHERE id = '$id_article'");
+    $ArticleD = mysqli_fetch_all($display_article, MYSQLI_ASSOC);
+    foreach($ArticleD as $D){
+        echo "<div class = 'Controller'><div class='display_article'><p>".$D['article']."</p></div></div>";
     }
 }
 ?>
