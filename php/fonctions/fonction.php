@@ -299,23 +299,23 @@ function new_user_admin() {
         $request_verif_email = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE email='$email' ");
         $check_is_use_email= mysqli_num_rows($request_verif_email);
         if ($password != $Confirmedpassword) {
-            echo'<p style="color:#FF0000";> <strong> Your password and your confirmed password is wrong</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Mot depasses non identiques</strong></p>';
         }
         else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            echo'<p style="color:#FF0000";> <strong> Please enter a valid email ex: user@wanadoo.com </strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Entrez une adresse valide ex: user@wanadoo.com </strong></p>';
         }
         else if ($check_is_use_email == 1) {
-            echo'<p style="color:#FF0000";> <strong> This email is already use</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Email déjà utilisée </strong></p>';
         }
         else if ($login == NULL ||  $email == NULL || $password == NULL || $Confirmedpassword == NULL ) {
-            echo'<p style="color:#FF0000";> <strong> You have an empty fields</strong></p>';
+            echo'<p style="color:#FF0000";> <strong> Remplissez tous les champs</strong></p>';
         }
         else {
             $request_verif_login = mysqli_query($bdd, "SELECT * FROM utilisateurs WHERE login='$login' ");
             $check_is_use_login= mysqli_num_rows($request_verif_login);
             $pw_hash = password_hash($password, PASSWORD_DEFAULT);
             if($check_is_use_login == 1) {
-                echo'<p style="color:#FF0000";> <strong> This login is already use</strong></p>';
+                echo'<p style="color:#FF0000";> <strong>Login existant</strong></p>';
             }
             else  {
                 $requete = mysqli_query($bdd, "INSERT INTO utilisateurs (email, login, password, id_droits) VALUES ('$email','$login','$pw_hash', 1)");
@@ -350,11 +350,11 @@ function change_role(){
             exit();
         }
         else{
-            echo "Vous n'avez pas le droit de changer le role d'un admin";
+            echo "<p>Vous n'avez pas le droit de changer le role d'un admin</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['login'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -385,15 +385,15 @@ function delete_user(){
                 exit();
             }
             else{
-                echo "Cet utilisateur n'existe pas";
+                echo "<p>Cet utilisateur n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else if(isset($_POST['loginSupp'])){
-            echo 'Remplissez tout les champs';
+            echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else{
-        echo "Vous n'avez pas le droit de supprimer un admin";
+        echo "<p>Vous n'avez pas le droit de supprimer un admin</p><style>p{color : var(--RedError-);}</style>";
     }
 }
 
@@ -413,15 +413,15 @@ function change_login_user(){
                 exit();
             }
             else{
-                echo "Cet utilisateur n'existe pas";
+                echo "<p>Cet utilisateur n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else{
-            echo "Vous ne pouvez pas utiliser ce login";
+            echo "<p>Vous ne pouvez pas utiliser ce login</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['loginChange']) || isset($_POST['loginChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -444,15 +444,15 @@ function change_email_user(){
                 exit();
             }
             else{
-                echo "Cet email n'existe pas";
+                echo "<p>Cet email n'existe pas</p><style>p{color : var(--RedError-);}</style>";
             }
         }
         else{
-            echo "Vous ne pouvez pas utiliser cet email";
+            echo "<p>Vous ne pouvez pas utiliser cet email</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['emailChange']) || isset($_POST['emailChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -468,11 +468,11 @@ function create_categorie(){
             exit();
         }
         else{
-            echo 'Cette catégorie est déjà existante';
+            echo '<p>Cette catégorie est déjà existante</p><style>p{color : var(--RedError-);}</style>';
         }
     }
     else if(isset($_POST['categorieCreate'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -489,11 +489,11 @@ function change_categorie(){
             exit();
         }
         else{
-            echo "Cette catégorie n'existe pas";
+            echo "<p>Cette catégorie n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['categorieChange']) || isset($_POST['categorieChangeN'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
@@ -509,11 +509,11 @@ function delete_categorie(){
             exit();
         }
         else{
-            echo "Cette catégorie n'existe pas";
+            echo "<p>Cette catégorie n'existe pas</p><style>p{color : var(--RedError-);}</style>";
         }
     }
     else if(isset($_POST['categorieDelete'])){
-        echo 'Remplissez tout les champs';
+        echo '<p>Remplissez tout les champs</p><style>p{color : var(--RedError-);}</style>';
     }
 }
 
