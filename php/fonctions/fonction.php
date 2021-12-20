@@ -1,7 +1,7 @@
 <?php
 
 function connect_database() {
-    $bdd =  mysqli_connect('localhost', 'root', 'root', 'blog');
+    $bdd =  mysqli_connect('localhost', 'francois-niang1', 'bdblog', 'francois-niang_blog');
     mysqli_set_charset($bdd, 'utf8');
     return $bdd;
 }
@@ -173,9 +173,9 @@ function auto_list() {
 
 function new_com() {
     $dbhost     = "localhost";
-    $dbname     = "blog";
-    $dbuser     = "root";
-    $dbpass     = "root";
+    $dbname     = "francois-niang_blog";
+    $dbuser     = "francois-niang1";
+    $dbpass     = "bdblog";
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if (!$_SESSION) {
         echo 'Veuillez vous connecter pour poster un commentaire.';
@@ -200,9 +200,9 @@ function new_com() {
 function create_article() {
     $bdd = connect_database();
     $dbhost     = "localhost";
-    $dbname     = "blog";
-    $dbuser     = "root";
-    $dbpass     = "root";
+    $dbname     = "francois-niang_blog";
+    $dbuser     = "francois-niang1";
+    $dbpass     = "bdblog";
     $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass, array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
     if(isset($_POST['txt_article']) && isset($_POST['cat']) && isset($_POST['nom_article'])) {
         if (!$_POST['txt_article']) {
@@ -571,7 +571,7 @@ function ChangeEmail(){
                     echo'<p style="color:#FF0000";> <strong> Please enter a valid email ex: user@wanadoo.com </strong></p>';
                 }
                 else if ($newemail == $repeatnewemail) {
-                    $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
+                    $Bdd = mysqli_connect('localhost', 'francois-niang1', 'bdblog', 'francois-niang_blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND email = '$email'");
                     $rows = mysqli_num_rows($Requete);
                     if ($newemail == $user_email){
@@ -610,7 +610,7 @@ function ChangeLogin(){
             $repeatnewlogin = $_POST['repeatnewlogin'];
             if ($login && $newlogin && $repeatnewlogin) {
                 if ($newlogin == $repeatnewlogin) {
-                    $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
+                    $Bdd = mysqli_connect('localhost', 'francois-niang1', 'bdblog', 'francois-niang_blog') or die('Erreur');
                     $Requete = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE login = '$username' AND login = '$login'");
                     //! $requete_error = mysqli_query($Bdd, "SELECT * FROM utilisateurs WHERE id = '$user_id'");
                     $rows = mysqli_num_rows($Requete);
@@ -679,7 +679,7 @@ function ChangeMdp(){
 function Info(){
     if (isset($_SESSION['user'])){
         $ConnectedUser = $_SESSION['user']['login'];
-        $Bdd = mysqli_connect('localhost', 'root', 'root', 'blog') or die('Erreur');
+        $Bdd = mysqli_connect('localhost', 'francois-niang1', 'bdblog', 'francois-niang_blog') or die('Erreur');
         $Requete =  mysqli_query($Bdd, "SELECT * FROM `utilisateurs` INNER JOIN `droits` WHERE utilisateurs.id_droits = droits.id and  `login` = '".$ConnectedUser."'");
         $rows = mysqli_num_rows($Requete);
         if ($rows == 1){
