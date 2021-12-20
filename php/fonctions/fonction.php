@@ -198,7 +198,7 @@ function new_com() {
 }
 
 function create_article() {
-
+    $bdd = connect_database();
     $dbhost     = "localhost";
     $dbname     = "blog";
     $dbuser     = "root";
@@ -210,21 +210,30 @@ function create_article() {
         }
         elseif ($_POST['cat'] == "choose") {
             echo 'Veuillez choisir une catégorie';
-        }  else {
+        }
+        else {
             $title = $_POST['txt_article'];
             $id_user = $_SESSION['user']['id'];
             $id_cat = $_POST['cat'];
             $nom_article = $_POST['nom_article'];
-            $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
-            (:title,:nom_article, :id_user,:id_cat)";
-            $q = $conn->prepare($sql);
-            $q->bindValue('title' ,$title ,PDO::PARAM_STR);
-            $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
-            $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
-            $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
-            $q->execute();
-            header('Location: articles.php');
-            exit() ;
+            $articleExist = mysqli_query($bdd, "SELECT * FROM articles
+                                                    WHERE nom_article = '".$nom_article."' AND id_categorie = '".$id_cat."'");
+            $check_if_same_cat= mysqli_num_rows($articleExist);
+            if($check_if_same_cat == 1){
+                echo 'Cet article existe déjà';
+            }
+            else{
+                $sql = "INSERT INTO articles (article,nom_article, id_utilisateur,id_categorie) VALUES
+                (:title,:nom_article, :id_user,:id_cat)";
+                $q = $conn->prepare($sql);
+                $q->bindValue('title' ,$title ,PDO::PARAM_STR);
+                $q->bindValue('nom_article' ,$nom_article ,PDO::PARAM_STR);
+                $q->bindValue('id_user' ,$id_user ,PDO::PARAM_INT);
+                $q->bindValue('id_cat' ,$id_cat ,PDO::PARAM_INT);
+                $q->execute();
+                header('Location: articles.php');
+                exit();
+            }
         }
     }
 }
