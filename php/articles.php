@@ -13,6 +13,8 @@ session_start();
         <link rel="stylesheet" href="../css/articles.css">
         <link rel="stylesheet" href="../css/font.css">
         <link rel="stylesheet" href="../css/root.css">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <title>Articles</title>
     </head>
     <body>
@@ -33,4 +35,7 @@ session_start();
         </main>
         <?php require 'footer.php';?>
     </body>
+    <script>
+        AOS.init();
+    </script>
 </html>
